@@ -8,22 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		AD01E66D1D24768A00751657 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E66C1D24768A00751657 /* AppDelegate.swift */; };
-		AD01E66F1D24768A00751657 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E66E1D24768A00751657 /* MasterViewController.swift */; };
-		AD01E6711D24768A00751657 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E6701D24768A00751657 /* DetailViewController.swift */; };
 		AD01E6741D24768A00751657 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD01E6721D24768A00751657 /* Main.storyboard */; };
 		AD01E6761D24768A00751657 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD01E6751D24768A00751657 /* Assets.xcassets */; };
 		AD01E6791D24768A00751657 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD01E6771D24768A00751657 /* LaunchScreen.storyboard */; };
+		AD01E6871D258CFE00751657 /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E6861D258CFE00751657 /* Class.swift */; };
+		AD01E68B1D258F4E00751657 /* ClassViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E68A1D258F4E00751657 /* ClassViewCell.swift */; };
+		AD01E6931D25941D00751657 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E68E1D25941D00751657 /* SwiftyJSON.swift */; };
+		AD01E6941D25941D00751657 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E68F1D25941D00751657 /* ViewController.swift */; };
+		AD01E6961D25941D00751657 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E6921D25941D00751657 /* MasterViewController.swift */; };
+		E31B158E72A268104C65A95D /* Pods_crammunity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 692D5EFC2CE45CF1E9CE172B /* Pods_crammunity.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B322EF38DBB3BDDADD3403C /* Pods-crammunity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-crammunity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-crammunity/Pods-crammunity.debug.xcconfig"; sourceTree = "<group>"; };
+		692D5EFC2CE45CF1E9CE172B /* Pods_crammunity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_crammunity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD01E6691D24768A00751657 /* crammunity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = crammunity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD01E66C1D24768A00751657 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AD01E66E1D24768A00751657 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		AD01E6701D24768A00751657 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		AD01E6731D24768A00751657 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD01E6751D24768A00751657 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD01E6781D24768A00751657 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD01E67A1D24768A00751657 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD01E6861D258CFE00751657 /* Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
+		AD01E68A1D258F4E00751657 /* ClassViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewCell.swift; sourceTree = "<group>"; };
+		AD01E68E1D25941D00751657 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		AD01E68F1D25941D00751657 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../Helpers/Chat/ViewController.swift; sourceTree = "<group>"; };
+		AD01E6921D25941D00751657 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		E89F6B9773580FF5A27F14BB /* Pods-crammunity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-crammunity.release.xcconfig"; path = "Pods/Target Support Files/Pods-crammunity/Pods-crammunity.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +41,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E31B158E72A268104C65A95D /* Pods_crammunity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59428670B5DBFC1B98F0F440 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				692D5EFC2CE45CF1E9CE172B /* Pods_crammunity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AD01E6601D24768A00751657 = {
 			isa = PBXGroup;
 			children = (
 				AD01E66B1D24768A00751657 /* crammunity */,
 				AD01E66A1D24768A00751657 /* Products */,
+				FF8AD4B71AAF6FBF46D3FDE5 /* Pods */,
+				59428670B5DBFC1B98F0F440 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +77,67 @@
 		AD01E66B1D24768A00751657 /* crammunity */ = {
 			isa = PBXGroup;
 			children = (
+				AD01E68C1D25941D00751657 /* Helpers */,
+				AD01E6851D258CD100751657 /* Models */,
+				AD01E6821D24784500751657 /* Views */,
+				AD01E6901D25941D00751657 /* View Controllers */,
 				AD01E66C1D24768A00751657 /* AppDelegate.swift */,
-				AD01E66E1D24768A00751657 /* MasterViewController.swift */,
-				AD01E6701D24768A00751657 /* DetailViewController.swift */,
 				AD01E6721D24768A00751657 /* Main.storyboard */,
 				AD01E6751D24768A00751657 /* Assets.xcassets */,
 				AD01E6771D24768A00751657 /* LaunchScreen.storyboard */,
 				AD01E67A1D24768A00751657 /* Info.plist */,
 			);
 			path = crammunity;
+			sourceTree = "<group>";
+		};
+		AD01E6821D24784500751657 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AD01E68A1D258F4E00751657 /* ClassViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AD01E6851D258CD100751657 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AD01E6861D258CFE00751657 /* Class.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AD01E68C1D25941D00751657 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AD01E68D1D25941D00751657 /* Chat */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		AD01E68D1D25941D00751657 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				AD01E68E1D25941D00751657 /* SwiftyJSON.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		AD01E6901D25941D00751657 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AD01E68F1D25941D00751657 /* ViewController.swift */,
+				AD01E6921D25941D00751657 /* MasterViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		FF8AD4B71AAF6FBF46D3FDE5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3B322EF38DBB3BDDADD3403C /* Pods-crammunity.debug.xcconfig */,
+				E89F6B9773580FF5A27F14BB /* Pods-crammunity.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +147,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD01E67D1D24768A00751657 /* Build configuration list for PBXNativeTarget "crammunity" */;
 			buildPhases = (
+				EE648907FC15DFC121BE797C /* [CP] Check Pods Manifest.lock */,
 				AD01E6651D24768A00751657 /* Sources */,
 				AD01E6661D24768A00751657 /* Frameworks */,
 				AD01E6671D24768A00751657 /* Resources */,
+				B2263EC11860482C83C47BA8 /* [CP] Embed Pods Frameworks */,
+				B058DB0B98ACA4BE1DFC2BFE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -99,6 +175,7 @@
 				TargetAttributes = {
 					AD01E6681D24768A00751657 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = SCKJJS495B;
 					};
 				};
 			};
@@ -133,14 +210,65 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B058DB0B98ACA4BE1DFC2BFE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-crammunity/Pods-crammunity-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2263EC11860482C83C47BA8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-crammunity/Pods-crammunity-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE648907FC15DFC121BE797C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AD01E6651D24768A00751657 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD01E6711D24768A00751657 /* DetailViewController.swift in Sources */,
-				AD01E66F1D24768A00751657 /* MasterViewController.swift in Sources */,
+				AD01E6941D25941D00751657 /* ViewController.swift in Sources */,
 				AD01E66D1D24768A00751657 /* AppDelegate.swift in Sources */,
+				AD01E68B1D258F4E00751657 /* ClassViewCell.swift in Sources */,
+				AD01E6871D258CFE00751657 /* Class.swift in Sources */,
+				AD01E6961D25941D00751657 /* MasterViewController.swift in Sources */,
+				AD01E6931D25941D00751657 /* SwiftyJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,23 +381,31 @@
 		};
 		AD01E67E1D24768A00751657 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3B322EF38DBB3BDDADD3403C /* Pods-crammunity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = crammunity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orctech.crammunity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		AD01E67F1D24768A00751657 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E89F6B9773580FF5A27F14BB /* Pods-crammunity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = crammunity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orctech.crammunity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -292,6 +428,7 @@
 				AD01E67F1D24768A00751657 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
