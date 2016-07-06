@@ -6,8 +6,11 @@
 //  Copyright © 2016 orctech. All rights reserved.
 //
 
-import Cocoa
 
-class Class: PFObject {
-
+class Class {
+	var className = ""
+	init()
+	{
+		className = "Cool Class Name"
+	}
 }
