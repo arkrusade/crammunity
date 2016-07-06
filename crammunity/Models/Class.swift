@@ -6,6 +6,7 @@
 //  Copyright © 2016 orctech. All rights reserved.
 //
 
+<<<<<<< HEAD
 
 class Class {
 	var className = ""
@@ -13,4 +14,10 @@ class Class {
 	{
 		className = "Cool Class Name"
 	}
+=======
+import Cocoa
+
+class Class: PFObject {
+
+>>>>>>> working
 }
