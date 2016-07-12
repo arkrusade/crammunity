@@ -8,6 +8,9 @@
 
 import UIKit
 import TwilioIPMessagingClient
+import Firebase
+import FirebaseAuth
+
 
 class ViewController: UIViewController {
 	
@@ -16,12 +19,14 @@ class ViewController: UIViewController {
 	var generalChannel: TWMChannel? = nil
 	var identity = ""
 	var messages: [TWMMessage] = []
-	
+	var ref = FIRDatabase.database().reference()
+
 	@IBOutlet weak var titleBar: UINavigationItem!
 	@IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 	@IBOutlet weak var textField: UITextField!
 	@IBOutlet weak var tableView: UITableView!
 	
+
 	// MARK: Class naming
 	var titleClass: Class? = nil
 	
@@ -39,6 +44,25 @@ class ViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		var rootRef = FIRDatabase.database().reference()
+		FIRDatabase.database().persistenceEnabled = true
+		FIRAuth.auth()!.signInAnonymouslyWithCompletion() { (user, error) in
+			if let error = error {
+				print("Sign in failed:", error.localizedDescription)
+			} else {
+				print ("Signed in with uid:", user!.uid)
+			}
+		}
+		let email: String = ""
+		let pass = ""
+		FIRAuth.auth()!.createUserWithEmail(email, password: pass) { (user, error) in
+			if let error = error {
+				print("Create user failed:", error.localizedDescription)
+			} else {
+				print ("Created user with uid:", user!.uid)
+			}
+		}
 		configureView()
 		// Fetch Access Token form the server and initialize IPM Client - this assumes you are running
 		// the PHP starter app on your local machine, as instructed in the quick start guide
