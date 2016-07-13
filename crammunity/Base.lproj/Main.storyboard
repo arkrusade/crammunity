@@ -160,20 +160,6 @@
             </objects>
             <point key="canvasLocation" x="1411" y="129"/>
         </scene>
-        <!--Split View Controller-->
-        <scene sceneID="Nki-YV-4Qg">
-            <objects>
-                <splitViewController id="H1p-Uh-vWS" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <connections>
-                        <segue destination="RMx-3f-FxP" kind="relationship" relationship="masterViewController" id="BlO-5A-QYV"/>
-                        <segue destination="vC3-pB-5Vb" kind="relationship" relationship="detailViewController" id="Tll-UG-LXB"/>
-                    </connections>
-                </splitViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cZU-Oi-B1e" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-856" y="-330"/>
-        </scene>
         <!--Master-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
@@ -183,7 +169,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Class" textLabel="Arm-wq-HPj" style="IBUITableViewCellStyleDefault" id="WCw-Qf-5nD" customClass="ClassViewCell" customModule="crammunity" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ClassCell" textLabel="Arm-wq-HPj" style="IBUITableViewCellStyleDefault" id="WCw-Qf-5nD" customClass="ClassViewCell" customModule="crammunity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="86" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
@@ -201,7 +187,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
+                                    <segue destination="JEX-9P-axG" kind="show" identifier="MainToClassChat" id="I20-Ur-Uvv"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -216,21 +202,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="709" y="-630"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="r7l-gg-dq7">
-            <objects>
-                <navigationController id="vC3-pB-5Vb" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="JEX-9P-axG" kind="relationship" relationship="rootViewController" id="GKi-kA-LjT"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SLD-UC-DBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-45" y="129"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="itj-7k-k5i">
@@ -363,12 +334,13 @@
                         <outlet property="PasswordTextField" destination="4jT-ON-EKb" id="hPT-qe-Ctf"/>
                         <outlet property="SignUpButton" destination="K7I-n6-OV3" id="MnV-HC-vi0"/>
                         <outlet property="UsernameTextField" destination="YgW-BI-f8u" id="hqa-tf-1ma"/>
+                        <segue destination="RMx-3f-FxP" kind="show" identifier="SignUpToMain" id="MgQ-GR-vxU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KlI-tP-7uU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="GxD-wA-7us" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1568" y="-768"/>
+            <point key="canvasLocation" x="-797" y="162"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="APu-Zb-CfT">
@@ -413,10 +385,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9q-CF-LoO">
-                                <rect key="frame" x="237" y="475" width="126" height="30"/>
+                                <rect key="frame" x="237" y="396" width="126" height="30"/>
                                 <state key="normal" title="Need an Account?"/>
                                 <connections>
-                                    <segue destination="xeA-kQ-9s7" kind="show" identifier="SignUp" id="ADL-xj-PFU"/>
+                                    <segue destination="xeA-kQ-9s7" kind="show" identifier="LoginToSignUp" id="ADL-xj-PFU"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sCf-d0-zmR">
@@ -433,9 +405,18 @@
                                     </mask>
                                 </variation>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZIN-vA-4Ta">
+                                <rect key="frame" x="237" y="527" width="126" height="30"/>
+                                <state key="normal" title="Forgot Password?"/>
+                                <connections>
+                                    <action selector="didRequestPasswordReset:" destination="ygQ-p3-S8o" eventType="touchUpInside" id="jLj-eh-7NQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ZIN-vA-4Ta" firstAttribute="centerX" secondItem="ivs-PZ-jA2" secondAttribute="centerX" id="1q5-1J-8UP"/>
+                            <constraint firstItem="ZIN-vA-4Ta" firstAttribute="top" secondItem="g9q-CF-LoO" secondAttribute="bottom" constant="22" id="474-5Z-jF3"/>
                             <constraint firstItem="sCf-d0-zmR" firstAttribute="leading" secondItem="0HT-LX-M5U" secondAttribute="leading" id="8Ds-TZ-Ji3"/>
                             <constraint firstItem="sCf-d0-zmR" firstAttribute="top" secondItem="0HT-LX-M5U" secondAttribute="bottom" constant="70" id="9Mg-Zt-OJY"/>
                             <constraint firstItem="lHe-jX-uiE" firstAttribute="width" secondItem="sCf-d0-zmR" secondAttribute="width" id="BGz-sZ-aHn"/>
@@ -452,7 +433,7 @@
                             <constraint firstItem="0HT-LX-M5U" firstAttribute="centerX" secondItem="ivs-PZ-jA2" secondAttribute="centerX" id="nDp-e2-QeO"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="sCf-d0-zmR" secondAttribute="trailing" constant="50" id="ok4-Qu-XlW"/>
                             <constraint firstItem="o2y-uY-pll" firstAttribute="centerX" secondItem="ivs-PZ-jA2" secondAttribute="centerX" id="ovk-Zf-OyU"/>
-                            <constraint firstItem="g9q-CF-LoO" firstAttribute="top" secondItem="o2y-uY-pll" secondAttribute="bottom" constant="159" id="qOF-Ts-TBp"/>
+                            <constraint firstItem="g9q-CF-LoO" firstAttribute="top" secondItem="o2y-uY-pll" secondAttribute="bottom" constant="80" id="qOF-Ts-TBp"/>
                             <constraint firstItem="0HT-LX-M5U" firstAttribute="top" secondItem="LJh-o3-PHP" secondAttribute="bottom" constant="60" id="wXP-oO-MFl"/>
                         </constraints>
                         <variation key="default">
@@ -465,14 +446,15 @@
                         <outlet property="EmailTextField" destination="sCf-d0-zmR" id="o0x-Yq-TVE"/>
                         <outlet property="LoginButton" destination="o2y-uY-pll" id="VaM-2L-oDD"/>
                         <outlet property="PasswordTextField" destination="lHe-jX-uiE" id="UeE-5c-Uvt"/>
+                        <segue destination="RMx-3f-FxP" kind="show" identifier="LoginToMain" id="ghB-br-LgQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WtD-Bo-pHP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1568" y="-8"/>
+            <point key="canvasLocation" x="-797" y="-630"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="MgQ-GR-vxU"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -24,10 +24,32 @@ class SignUpViewController: UIViewController {
 			if let error = error {
 				print("Create user failed:", error.localizedDescription)
 			} else {
-				FIRDatabase.database().reference().child("users").child(user!.uid).setValue(["username": self.UsernameTextField.text!])
-				print ("Created user with uid: \(user!.uid) and username: \(self.UsernameTextField.text!)")
+				
+				self.signedUp(user)
 			}
 		}
+	}
+	func signedUp(user: FIRUser?)
+	{
+		FIRDatabase.database().reference().child ("users").child(user!.uid).setValue(["username": self.UsernameTextField.text!])
+		print ("Created user with uid: \(user!.uid) and username: \(self.UsernameTextField.text!)")
+		
+		let changeRequest = user!.profileChangeRequest()
+		changeRequest.displayName = user!.email!.componentsSeparatedByString("@")[0]
+		changeRequest.commitChangesWithCompletion(){ (error) in
+			if let error = error {
+				print(error.localizedDescription)
+				return
+			}
+		}
+		MeasurementHelper.sendLoginEvent()//analytics
+		
+		AppState.sharedInstance.displayName = user?.displayName ?? user?.email
+		AppState.sharedInstance.photoUrl = user?.photoURL
+		AppState.sharedInstance.signedIn = true
+		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
+		self.performSegueWithIdentifier(Constants.Segues.SignUpToMain, sender: nil)
+		
 	}
     override func viewDidLoad() {
         super.viewDidLoad()

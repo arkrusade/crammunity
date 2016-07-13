@@ -41,28 +41,8 @@ class ViewController: UIViewController {
 	// MARK: UI controls
 	
 	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		var rootRef = FIRDatabase.database().reference()
-		FIRDatabase.database().persistenceEnabled = true
-		FIRAuth.auth()!.signInAnonymouslyWithCompletion() { (user, error) in
-			if let error = error {
-				print("Sign in failed:", error.localizedDescription)
-			} else {
-				print ("Signed in with uid:", user!.uid)
-			}
-		}
-		let email: String = ""
-		let pass = ""
-		FIRAuth.auth()!.createUserWithEmail(email, password: pass) { (user, error) in
-			if let error = error {
-				print("Create user failed:", error.localizedDescription)
-			} else {
-				print ("Created user with uid:", user!.uid)
-			}
-		}
 		configureView()
 		// Fetch Access Token form the server and initialize IPM Client - this assumes you are running
 		// the PHP starter app on your local machine, as instructed in the quick start guide
