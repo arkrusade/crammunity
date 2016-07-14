@@ -1,17 +1,104 @@
 PODS:
-  - Bolts (1.7.0):
-    - Bolts/AppLinks (= 1.7.0)
-    - Bolts/Tasks (= 1.7.0)
-  - Bolts/AppLinks (1.7.0):
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
-  - Bolts/Tasks (1.7.0)
+  - Bolts/Tasks (1.8.4)
   - Bond (4.0.0)
   - ConvenienceKit (0.4.0)
   - DateTools (1.7.0)
-  - FBSDKCoreKit (4.13.1):
+  - FBSDKCoreKit (4.14.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.13.1):
+  - FBSDKLoginKit (4.14.0):
     - FBSDKCoreKit
+  - Firebase (3.3.0):
+    - Firebase/Core (= 3.3.0)
+  - Firebase/AdMob (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+    - Google-Mobile-Ads-SDK (= 7.8.1)
+  - Firebase/Analytics (3.3.0):
+    - FirebaseAnalytics (= 3.2.1)
+  - Firebase/AppIndexing (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+    - FirebaseAppIndexing (= 1.0.3)
+  - Firebase/Auth (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+    - FirebaseAuth (= 3.0.3)
+  - Firebase/Core (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+  - Firebase/Crash (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+    - FirebaseCrash (= 1.0.6)
+  - Firebase/Database (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+    - FirebaseDatabase (= 3.0.2)
+  - Firebase/DynamicLinks (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+    - FirebaseDynamicLinks (= 1.1.0)
+  - Firebase/Messaging (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+    - FirebaseMessaging (= 1.1.0)
+  - Firebase/RemoteConfig (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+    - FirebaseRemoteConfig (= 1.1.1)
+  - Firebase/Storage (3.3.0):
+    - Firebase/Analytics (= 3.3.0)
+    - FirebaseStorage (= 1.0.2)
+  - FirebaseAnalytics (3.2.1):
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
+    - GoogleUtilities (~> 1.3)
+  - FirebaseAppIndexing (1.0.3)
+  - FirebaseAuth (3.0.3):
+    - FirebaseAnalytics (~> 3.2)
+    - GoogleNetworkingUtilities (~> 1.2)
+    - GoogleParsingUtilities (~> 1.1)
+    - GoogleUtilities (~> 1.3)
+  - FirebaseCrash (1.0.6):
+    - FirebaseAnalytics (~> 3.0)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleInterchangeUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
+  - FirebaseDatabase (3.0.2):
+    - FirebaseAnalytics (~> 3.2)
+  - FirebaseDynamicLinks (1.1.0):
+    - FirebaseAnalytics (~> 3.2)
+  - FirebaseInstanceID (1.0.7)
+  - FirebaseMessaging (1.1.0):
+    - FirebaseAnalytics (~> 3.2)
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleIPhoneUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
+  - FirebaseRemoteConfig (1.1.1):
+    - FirebaseAnalytics (~> 3.2)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleIPhoneUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
+    - GoogleUtilities (~> 1.3)
+  - FirebaseStorage (1.0.2):
+    - FirebaseAnalytics (~> 3.2)
+    - GoogleNetworkingUtilities (~> 1.2)
+  - Google-Mobile-Ads-SDK (7.8.1)
+  - GoogleInterchangeUtilities (1.2.1):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleIPhoneUtilities (1.2.1):
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
+  - GoogleNetworkingUtilities (1.2.1):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleParsingUtilities (1.1.1):
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleSymbolUtilities (1.1.1)
+  - GoogleUtilities (1.3.1):
+    - GoogleSymbolUtilities (~> 1.0)
+  - JSQMessagesViewController (7.3.3):
+    - JSQSystemSoundPlayer (~> 2.0.1)
+  - JSQSystemSoundPlayer (2.0.1)
   - Parse (1.13.0):
     - Bolts/Tasks (~> 1.6)
   - ParseFacebookUtilsV4 (1.11.1):
@@ -23,32 +110,58 @@ PODS:
   - ParseUI (1.2.0):
     - Bolts/Tasks (~> 1.3)
     - Parse (~> 1.9)
-  - TwilioCommon (0.2.2)
-  - TwilioIPMessagingClient (0.14.2):
-    - TwilioCommon (~> 0.2.2)
 
 DEPENDENCIES:
   - Bond (= 4.0.0)
   - ConvenienceKit
   - DateTools
+  - Firebase
+  - Firebase/AdMob
+  - Firebase/AppIndexing
+  - Firebase/Auth
+  - Firebase/Core
+  - Firebase/Crash
+  - Firebase/Database
+  - Firebase/DynamicLinks
+  - Firebase/Messaging
+  - Firebase/RemoteConfig
+  - Firebase/Storage
+  - JSQMessagesViewController
   - Parse
   - ParseFacebookUtilsV4
   - ParseUI
-  - TwilioIPMessagingClient (~> 0.14.0)
 
 SPEC CHECKSUMS:
-  Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Bond: b729cdb22552def86efd4adfd8b8d93061eb4649
   ConvenienceKit: ba1ad8797897dc0d011676e961a2f3e9b270c841
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
-  FBSDKCoreKit: 2807fe0da2ddb49a1469da6d6ff597f99912980f
-  FBSDKLoginKit: 6d350cb6a22d6956e9d078885de6ee8a0ebc51b4
+  FBSDKCoreKit: 6e020b5db0b5bd1e01f5fb0902131befd129a502
+  FBSDKLoginKit: da563567a108050ef83739c8c8c001ee9e25fa13
+  Firebase: 6250071f0e2440a5c4c67b8cb6b868f868237ac3
+  FirebaseAnalytics: 0fd6532cb2c3d03cd5cf26ad295ccb091efd3104
+  FirebaseAppIndexing: abbefc167746ac131b4f70cb09ea98bd62c5ae30
+  FirebaseAuth: 5efddc3fae47042b73585f083f956462be4f5b8e
+  FirebaseCrash: 899d0abc23b411d01087094e3da24527eaecabf7
+  FirebaseDatabase: 59bea2e7dfd81b3b8b2f8e396caf1a52c2ced6f7
+  FirebaseDynamicLinks: bcf3c63482c1a120bbab65312e62573bb5a0d068
+  FirebaseInstanceID: a9d923f3d0b6fbf9fac89310860357aaadc34be5
+  FirebaseMessaging: 8a92e9ea70673605aa7d1803d2d5aa3eb946009c
+  FirebaseRemoteConfig: 3260ced812d2adcbb9bcefe0dc78fdce7b8090e6
+  FirebaseStorage: fa2a87dee81f682f553af6839daa37a750e65f6a
+  Google-Mobile-Ads-SDK: 3c2a6656117989469bfe7645640aa1de024a4c6c
+  GoogleInterchangeUtilities: def8415a862effc67d549d5b5b0b9c7a2f97d4de
+  GoogleIPhoneUtilities: 63f25e93a3ddcb66884d182aab3a660d98f1479b
+  GoogleNetworkingUtilities: 3e83269048cfb498dc7ec83ab36813360965c74f
+  GoogleParsingUtilities: 30b3896f9ee167dc78747f013d3de157ced1cadf
+  GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
+  GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
+  JSQMessagesViewController: 0ee3f80237268192a3e8337fd0d787f1a1bf5a7a
+  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
-  TwilioCommon: b697446b6f151255c4118f065e959c3dedee44e5
-  TwilioIPMessagingClient: 78bf6943b66ab1e6a99982620a6c3c3e2a2fc843
 
-PODFILE CHECKSUM: 4ed456d1f61364ba2124352cf18d6a803652e228
+PODFILE CHECKSUM: 2b0b96ee9fa53b59060140d709098d90f17beddd
 
 COCOAPODS: 1.0.1

@@ -10,7 +10,7 @@ import UIKit
 
 class MasterViewController: UITableViewController {
 
-	var topViewController: ViewController? = nil
+	var topViewController: ClassViewController? = nil
 	var objects = [Class]()
 
 
@@ -21,14 +21,10 @@ class MasterViewController: UITableViewController {
 
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_:)))
 		self.navigationItem.rightBarButtonItem = addButton
-		if let split = self.splitViewController {
-		    let controllers = split.viewControllers
-		    self.topViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? ViewController
-		}
 	}
 
 	override func viewWillAppear(animated: Bool) {
-		self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
+//		self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
 		super.viewWillAppear(animated)
 	}
 
@@ -46,13 +42,14 @@ class MasterViewController: UITableViewController {
 	// MARK: - Segues
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == "showDetail" {
+		if segue.identifier == Constants.Segues.MainToClassChat
+		{
 		    if let indexPath = self.tableView.indexPathForSelectedRow {
 		        let object = objects[indexPath.row]
-		        let controller = (segue.destinationViewController as! UINavigationController).topViewController as! ViewController
-				controller.titleClass = object
-		        controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-		        controller.navigationItem.leftItemsSupplementBackButton = true
+		        let controller = (segue.destinationViewController as! UINavigationController).topViewController
+					as! ClassViewController
+				controller.classChat = object
+//		        controller.navigationItem.leftItemsSupplementBackButton = true
 		    }
 		}
 	}
@@ -68,9 +65,9 @@ class MasterViewController: UITableViewController {
 	}
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("Class") as! ClassViewCell
-
+		let cell = tableView.dequeueReusableCellWithIdentifier("ClassCell") as! ClassViewCell
 		cell.textLabel!.text = objects[indexPath.section].className
+		cell.thisClass = objects[indexPath.section]
 		return cell
 	}
 

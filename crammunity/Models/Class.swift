@@ -6,10 +6,12 @@
 //  Copyright © 2016 orctech. All rights reserved.
 //
 
-import Parse
+import Firebase
 
 class Class {
-	var className = ""
+	var className: String!
+	var messages: [FIRDataSnapshot]! = []
+	var users: [FIRDataSnapshot]! = []
 	init()
 	{
 		className = "Cool Class Name"
