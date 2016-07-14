@@ -24,7 +24,7 @@
         <!--ClassView-->
         <scene sceneID="yUG-lL-AsK">
             <objects>
-                <viewController title="ClassView" id="JEX-9P-axG" customClass="ViewController" customModule="crammunity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ClassView" id="JEX-9P-axG" customClass="ClassViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SYR-Wa-9uf"/>
                         <viewControllerLayoutGuide type="bottom" id="GAO-Cl-Wes"/>
@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Say hi!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zm2-bZ-xX2">
-                                <rect key="frame" x="0.0" y="550" width="600" height="30"/>
+                                <rect key="frame" x="0.0" y="560" width="600" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
@@ -43,7 +43,7 @@
                                 </connections>
                             </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0wa-g7-GJg">
-                                <rect key="frame" x="0.0" y="94" width="600" height="448"/>
+                                <rect key="frame" x="0.0" y="94" width="600" height="458"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <prototypes>
@@ -82,7 +82,7 @@
                         <color key="backgroundColor" red="0.53725490200000003" green="0.53725490200000003" blue="0.53725490200000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="0wa-g7-GJg" secondAttribute="trailing" constant="-20" id="LKS-aD-ACb"/>
-                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="zm2-bZ-xX2" secondAttribute="bottom" constant="20" id="OIL-pK-h31"/>
+                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="zm2-bZ-xX2" secondAttribute="bottom" constant="10" id="OIL-pK-h31"/>
                             <constraint firstItem="0wa-g7-GJg" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="-20" id="V1X-cn-A4j"/>
                             <constraint firstItem="zm2-bZ-xX2" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="-20" id="ZmV-aH-o4v"/>
                             <constraint firstItem="0wa-g7-GJg" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="30" id="cXz-Cc-Cwh"/>
@@ -99,10 +99,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="bottomConstraint" destination="OIL-pK-h31" id="se6-py-J2X"/>
-                        <outlet property="tableView" destination="0wa-g7-GJg" id="QgO-Gd-8ZA"/>
-                        <outlet property="textField" destination="zm2-bZ-xX2" id="v7W-fE-IJK"/>
-                        <outlet property="titleBar" destination="mOI-FS-AaM" id="uEB-6e-z7s"/>
+                        <outlet property="bottomConstraint" destination="OIL-pK-h31" id="ga3-Xt-HdD"/>
+                        <outlet property="tableView" destination="0wa-g7-GJg" id="o4l-7b-UNz"/>
+                        <outlet property="textField" destination="zm2-bZ-xX2" id="B73-BX-kgE"/>
+                        <outlet property="titleBar" destination="mOI-FS-AaM" id="Juw-jP-fL0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
@@ -112,7 +112,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="709" y="129"/>
+            <point key="canvasLocation" x="1521" y="129"/>
         </scene>
         <!--Title-->
         <scene sceneID="GYI-AV-vEa">
@@ -153,12 +153,17 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Title" id="Y8U-lp-RIR">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="WKM-5A-K71"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="WKM-5A-K71">
+                            <connections>
+                                <segue destination="qav-TB-Ay8" kind="unwind" unwindAction="unwindToClassViewController:" id="oYg-8c-zFi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ehg-S0-QgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="qav-TB-Ay8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1411" y="129"/>
+            <point key="canvasLocation" x="2223" y="129"/>
         </scene>
         <!--Master-->
         <scene sceneID="smW-Zh-WAh">
@@ -187,7 +192,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="JEX-9P-axG" kind="show" identifier="MainToClassChat" id="I20-Ur-Uvv"/>
+                                    <segue destination="X3b-Mb-4yG" kind="show" identifier="MainToClassChat" id="I20-Ur-Uvv"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -405,8 +410,8 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZIN-vA-4Ta">
-                                <rect key="frame" x="237" y="527" width="126" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZIN-vA-4Ta">
+                                <rect key="frame" x="239" y="448" width="123" height="30"/>
                                 <state key="normal" title="Forgot Password?"/>
                                 <connections>
                                     <action selector="didRequestPasswordReset:" destination="ygQ-p3-S8o" eventType="touchUpInside" id="jLj-eh-7NQ"/>
@@ -453,8 +458,26 @@
             </objects>
             <point key="canvasLocation" x="-797" y="-630"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="s3v-ml-IIF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="X3b-Mb-4yG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WVW-f3-Mq9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="JEX-9P-axG" kind="relationship" relationship="rootViewController" id="q7q-D0-ac2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="irm-dh-wt7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="709" y="129"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="MgQ-GR-vxU"/>
+        <segue reference="ghB-br-LgQ"/>
     </inferredMetricsTieBreakers>
 </document>

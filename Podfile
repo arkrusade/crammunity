@@ -12,7 +12,6 @@ target 'crammunity' do
   pod 'ParseFacebookUtilsV4'
   pod 'ParseUI'
   pod 'DateTools'
-  pod 'TwilioIPMessagingClient', '~> 0.14.0'
   pod 'Firebase'
   pod 'Firebase/Database’
   pod 'Firebase/Core'
@@ -26,6 +25,7 @@ target 'crammunity' do
   pod 'Firebase/Auth'
   pod 'Firebase/AppIndexing'
   pod 'Firebase/Storage'
-  
+  pod 'JSQMessagesViewController'
+
 
 end

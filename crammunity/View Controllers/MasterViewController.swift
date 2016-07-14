@@ -10,7 +10,7 @@ import UIKit
 
 class MasterViewController: UITableViewController {
 
-	var topViewController: ViewController? = nil
+	var topViewController: ClassViewController? = nil
 	var objects = [Class]()
 
 
@@ -46,9 +46,10 @@ class MasterViewController: UITableViewController {
 		{
 		    if let indexPath = self.tableView.indexPathForSelectedRow {
 		        let object = objects[indexPath.row]
-		        let controller = segue.destinationViewController  as! ViewController
-				controller.titleClass = object
-		        controller.navigationItem.leftItemsSupplementBackButton = true
+		        let controller = (segue.destinationViewController as! UINavigationController).topViewController
+					as! ClassViewController
+				controller.classChat = object
+//		        controller.navigationItem.leftItemsSupplementBackButton = true
 		    }
 		}
 	}
@@ -65,8 +66,8 @@ class MasterViewController: UITableViewController {
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("ClassCell") as! ClassViewCell
-
 		cell.textLabel!.text = objects[indexPath.section].className
+		cell.thisClass = objects[indexPath.section]
 		return cell
 	}
 

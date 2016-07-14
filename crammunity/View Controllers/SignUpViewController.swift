@@ -31,11 +31,13 @@ class SignUpViewController: UIViewController {
 	}
 	func signedUp(user: FIRUser?)
 	{
-		FIRDatabase.database().reference().child ("users").child(user!.uid).setValue(["username": self.UsernameTextField.text!])
-		print ("Created user with uid: \(user!.uid) and username: \(self.UsernameTextField.text!)")
+		let username = self.UsernameTextField.text!
+		FIRDatabase.database().reference().child ("users").child(user!.uid).setValue(["username": username])
+		print ("Created user with uid: \(user!.uid) and username: \(username)")
 		
 		let changeRequest = user!.profileChangeRequest()
-		changeRequest.displayName = user!.email!.componentsSeparatedByString("@")[0]
+//		changeRequest.displayName = user!.email!.componentsSeparatedByString("@")[0]
+		changeRequest.displayName = username
 		changeRequest.commitChangesWithCompletion(){ (error) in
 			if let error = error {
 				print(error.localizedDescription)
