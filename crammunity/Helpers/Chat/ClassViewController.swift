@@ -23,6 +23,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	// Instance variables
 	@IBOutlet weak var sendButton: UIButton!
 	var ref: FIRDatabaseReference!
+	var messagesRef: FIRDatabaseReference!
 	var messages: [FIRDataSnapshot]! = []
 	var msglength: NSNumber = 10
 	private var _refHandle: FIRDatabaseHandle!
@@ -97,7 +98,6 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	}
 	
 	// MARK: Keyboard Dodging Logic
-	//TODO: re-add constraint
 	func keyboardWillShow(notification: NSNotification) {
 		let keyboardHeight = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.height
 		UIView.animateWithDuration(0.1, animations: { () -> Void in
@@ -120,7 +120,6 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	// MARK: UI Logic
 	
 	// Dismiss keyboard if container view is tapped
-	//TODO: re-add textfield
 	//TODO: add tapped controller
 	@IBAction func viewTapped(sender: AnyObject) {
 		self.textField.resignFirstResponder()
@@ -143,6 +142,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	
 	func configureDatabase() {
 		ref = FIRDatabase.database().reference()
+		messagesRef = ref.child("messages")
 		//find new messages
 		_refHandle = self.ref.child("messages").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
 			self.messages.append(snapshot)
@@ -339,18 +339,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	func imagePickerControllerDidCancel(picker: UIImagePickerController) {
 		picker.dismissViewControllerAnimated(true, completion:nil)
 	}
-	//TODO: add signout
-	@IBAction func signOut(sender: UIButton) {
-		let firebaseAuth = FIRAuth.auth()
-		do {
-			try firebaseAuth?.signOut()
-			AppState.sharedInstance.signedIn = false
-			MeasurementHelper.sendLogoutEvent()//send to analytics
-			dismissViewControllerAnimated(true, completion: nil)
-		} catch let signOutError as NSError {
-			print ("Error signing out: \(signOutError)")
-		}
-	}
+	
 	
 	func showAlert(title:String, message:String) {
 		dispatch_async(dispatch_get_main_queue()) {

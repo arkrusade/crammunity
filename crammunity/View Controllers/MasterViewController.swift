@@ -7,15 +7,17 @@
 //
 
 import UIKit
-
+import Firebase
 class MasterViewController: UITableViewController {
 
 	var topViewController: ClassViewController? = nil
 	var objects = [Class]()
-
+	var classes: [FIRDataSnapshot] = []
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		
 		// Do any additional setup after loading the view, typically from a nib.
 		self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
@@ -38,7 +40,20 @@ class MasterViewController: UITableViewController {
 		let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 		self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 	}
-
+	
+	//TODO: add signout
+	@IBAction func signOut(sender: AnyObject) {
+		let firebaseAuth = FIRAuth.auth()
+		do {
+			try firebaseAuth?.signOut()
+			AppState.sharedInstance.signedIn = false
+			MeasurementHelper.sendLogoutEvent()//send to analytics
+			dismissViewControllerAnimated(true, completion: nil)
+		} catch let signOutError as NSError {
+			print ("Error signing out: \(signOutError)")
+		}
+	}
+	
 	// MARK: - Segues
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

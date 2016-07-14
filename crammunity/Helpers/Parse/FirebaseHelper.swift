@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseDatabase
 import CoreLocation
 import FirebaseAuth
 
@@ -20,7 +21,8 @@ class FirebaseHelper
 	static let FirebaseChatMessage = "message"
 	static let FirebasePasswordForUser = "password"
 	static let FirebaseEmailForUser = "email"
-	
+	static let ref = FIRDatabase.database().reference()
+
 	static func createUser(email: String, pw: String)
 	{
 		FIRAuth.auth()?.createUserWithEmail(email, password: pw, completion: { result, error in
@@ -35,6 +37,22 @@ class FirebaseHelper
 			}
 			
 		})
+	}
+	
+	static func loadClasses() -> [FIRDataSnapshot]
+	{
+			// 1
+		let classesQuery = ref.child("classes").queryLimitedToLast(25)
+		var classes: [FIRDataSnapshot] = []
+		classesQuery.observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
+			if !classes.contains(snapshot)
+			{
+				classes.append(snapshot)
+			}
+			
+		}
+		return classes
+		
 	}
 //		vc.ref.child("users").child(User.newID()).setValue(["username": username])
 //		FIRAuth.auth()?.createUserWithEmail(email, password: pw) { (user, error) in
