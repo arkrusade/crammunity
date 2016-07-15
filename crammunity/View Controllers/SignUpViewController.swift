@@ -18,6 +18,7 @@ class SignUpViewController: UIViewController {
 	@IBOutlet weak var PasswordTextField: UITextField!
 	@IBOutlet weak var PasswordConfirmTextField: UITextField!
 	
+	//TODO: Reorganize with helper
 	@IBAction func SignUpButtonTapped()
 	{
 		FIRAuth.auth()?.createUserWithEmail(EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in

@@ -14,6 +14,24 @@ class LoginViewController: UIViewController {
 	@IBOutlet weak var LoginButton: UIButton!
 	
 	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		print("login view loaded")
+		testLogin()
+	}
+	func testLogin()
+	{
+		FIRAuth.auth()!.signInWithEmail("test@gmail.com", password: "testtest") { (user, error) in
+			if let error = error {
+				print("Test Sign in failed:", error.localizedDescription)
+			} else {
+				print ("Test Signed in with uid:", user!.uid)
+				self.signedIn(user)
+			}
+		}
+	}
+	//TODO: Reorganize with helper
+
 	@IBAction func LoginButtonTouched(sender: AnyObject) {
 		//TODO: add checks for proper email, pass
 		//also with sign in
@@ -45,7 +63,8 @@ class LoginViewController: UIViewController {
 		prompt.addAction(okAction)
 		presentViewController(prompt, animated: true, completion: nil);
 	}
-	
+	//TODO: Reorganize with helper
+
 	func signedIn(user: FIRUser?)
 	{
 		MeasurementHelper.sendLoginEvent()
@@ -56,10 +75,7 @@ class LoginViewController: UIViewController {
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
 		performSegueWithIdentifier(Constants.Segues.LoginToMain, sender: nil)
 	}
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		print("login view loaded")
-	}
+	
 	@IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
 		print("unwinding to login")
 	}
