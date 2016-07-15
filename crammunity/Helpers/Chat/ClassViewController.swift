@@ -22,7 +22,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	
 	// Instance variables
 	@IBOutlet weak var sendButton: UIButton!
-	var ref: FIRDatabaseReference!
+	var rootRef: FIRDatabaseReference!
 	var messagesRef: FIRDatabaseReference!
 	var messages: [FIRDataSnapshot]! = []
 	var msglength: NSNumber = 10
@@ -137,18 +137,19 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	}
 	// MARK: Firebase stuff
 	deinit {
-		self.ref.child("messages").removeObserverWithHandle(_refHandle)
+		self.messagesRef.removeObserverWithHandle(_refHandle)
 	}
 	
 	func configureDatabase() {
-		ref = FIRDatabase.database().reference()
-		messagesRef = ref.child("messages")
+		rootRef = FIRDatabase.database().reference()
+		messagesRef = rootRef.child(Constants.Firebase.CramClassArray).child(Constants.CramClass.CramClassMessages)
 		//find new messages
-		_refHandle = self.ref.child("messages").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
+		_refHandle = self.messagesRef.observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
 			self.messages.append(snapshot)
 			self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: .Automatic)
 		})
 	}
+	//TODO: add storage in specific class
 	func configureStorage() {
 		storageRef = FIRStorage.storage().referenceForURL("gs://crammunity.appspot.com/")
 	}
@@ -201,8 +202,6 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	
 	@IBAction func didPressCrash(sender: AnyObject) {
 		FIRCrashMessage("Cause Crash button clicked")
-		print("hi")
-		
 		fatalError("asdf")
 	}
 	
@@ -280,7 +279,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		}
 		// Push data to Firebase Database
 		//TODO: make classes
-		self.ref.child("messages").childByAutoId().setValue(mdata)
+		self.messagesRef.childByAutoId().setValue(mdata)
 		//Send to Analytics
 		MeasurementHelper.sendMessageEvent()
 	}
@@ -303,7 +302,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		picker.dismissViewControllerAnimated(true, completion:nil)
 		
 		// if it's a photo from the library, not an image from the camera
-		if #available(iOS 8.0, *), let referenceUrl = info[UIImagePickerControllerReferenceURL] {
+		if /*#available(iOS 8.0, *),*/ let referenceUrl = info[UIImagePickerControllerReferenceURL] {
 			let assets = PHAsset.fetchAssetsWithALAssetURLs([referenceUrl as! NSURL], options: nil)
 			let asset = assets.firstObject
 			asset?.requestContentEditingInputWithOptions(nil, completionHandler: { (contentEditingInput, info) in

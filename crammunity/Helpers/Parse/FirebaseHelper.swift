@@ -14,15 +14,20 @@ import FirebaseAuth
 
 class FirebaseHelper
 {
+	//TODO: add structs
 	
-	static let FirebaseArrayOfUsers = "users"
-	static let FirebaseUsername = "username"
-	static let FirebaseClassChat = "class"
-	static let FirebaseChatMessage = "message"
-	static let FirebasePasswordForUser = "password"
-	static let FirebaseEmailForUser = "email"
 	static let ref = FIRDatabase.database().reference()
-
+	
+	//TODO: add completion with error
+	static func getStringFromDatabaseKey(key: String, snapshot: FIRDataSnapshot) -> String
+	{
+//		if key == "name" {
+//			return "name"
+//		}
+		let snap = snapshot.value!
+		let name = snap[key]
+		return name.description
+	}
 	static func createUser(email: String, pw: String)
 	{
 		FIRAuth.auth()?.createUserWithEmail(email, password: pw, completion: { result, error in
@@ -32,8 +37,6 @@ class FirebaseHelper
 			} else {
 				let uid = result?.uid
 				NSUserDefaults.standardUserDefaults().setValue(uid, forKey: "uid")
-				//pass the parameters to another function to auth the user
-//				self.authUserWithAuthData( email, password: pw )
 			}
 			
 		})
@@ -54,6 +57,16 @@ class FirebaseHelper
 		return classes
 		
 	}
+//	static func loading() -> [FIRDataSnapshot]
+//	{
+//		var messages: [FIRDataSnapshot] = []
+//		let _refHandle = ref.child("messages").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
+//			messages.append(snapshot)
+//			
+//		})
+//		return messages
+//
+//	}
 //		vc.ref.child("users").child(User.newID()).setValue(["username": username])
 //		FIRAuth.auth()?.createUserWithEmail(email, password: pw) { (user, error) in
 //			if error != nil {

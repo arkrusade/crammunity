@@ -22,6 +22,7 @@
 		ADAA3BAF1D36BB480038EEC4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA3BAE1D36BB480038EEC4 /* Constants.swift */; };
 		ADAA629A1D35672B0037BCC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA62991D35672B0037BCC9 /* LoginViewController.swift */; };
 		ADAA629C1D356C950037BCC9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA629B1D356C950037BCC9 /* SignUpViewController.swift */; };
+		ADACA1921D398E7500C22DB8 /* File in Resources */ = {isa = PBXBuildFile; fileRef = ADACA1911D398E7500C22DB8 /* File */; };
 		ADC4BE771D34363100EEF793 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC4BE761D34363100EEF793 /* FirebaseHelper.swift */; };
 		ADEF33E21D2D800B00A9C74A /* PhotoTakingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEF33E11D2D800B00A9C74A /* PhotoTakingHelper.swift */; };
 		E31B158E72A268104C65A95D /* Pods_crammunity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 692D5EFC2CE45CF1E9CE172B /* Pods_crammunity.framework */; };
@@ -47,6 +48,7 @@
 		ADAA3BAE1D36BB480038EEC4 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		ADAA62991D35672B0037BCC9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		ADAA629B1D356C950037BCC9 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		ADACA1911D398E7500C22DB8 /* File */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = File; sourceTree = "<group>"; };
 		ADC4BE761D34363100EEF793 /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		ADEF33E11D2D800B00A9C74A /* PhotoTakingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTakingHelper.swift; sourceTree = "<group>"; };
 		E89F6B9773580FF5A27F14BB /* Pods-crammunity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-crammunity.release.xcconfig"; path = "Pods/Target Support Files/Pods-crammunity/Pods-crammunity.release.xcconfig"; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				AD01E67A1D24768A00751657 /* Info.plist */,
 				AD52A7801D340BAD003D9D11 /* GoogleService-Info.plist */,
 				AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */,
+				ADACA1911D398E7500C22DB8 /* File */,
 			);
 			path = crammunity;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				AD52A7811D340BAD003D9D11 /* GoogleService-Info.plist in Resources */,
 				AD01E6761D24768A00751657 /* Assets.xcassets in Resources */,
 				AD01E6741D24768A00751657 /* Main.storyboard in Resources */,
+				ADACA1921D398E7500C22DB8 /* File in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,4 +24,23 @@ struct Constants {
 		static let photoUrl = "photoUrl"
 		static let imageUrl = "imageUrl"
 	}
+	struct CramClass {
+		static let CramClass = "class"
+		static let CramClassName = "name"
+		static let CramClassMessages = "messages"
+	}
+	
+	struct Firebase {
+		static let UserArray = "users"
+		static let CramClassArray = "classes"
+	}
+	
+	struct User {
+		static let UserEmail = "email"
+		static let Username = "username"
+		static let UserPassword = "password"
+	}
+	
+	
+
 }

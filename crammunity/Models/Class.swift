@@ -16,5 +16,12 @@ class Class {
 	{
 		className = "Cool Class Name"
 	}
+	//TODO: add messages and users
+	//change init to create database values instead of take?
+	init(cramClass: FIRDataSnapshot)
+	{
+		className = FirebaseHelper.getStringFromDatabaseKey(Constants.CramClass.CramClassName, snapshot: cramClass)
+		
+	}
 }
 	
