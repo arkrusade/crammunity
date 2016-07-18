@@ -17,6 +17,10 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 
+
+##Breakpoints
+*.Breakpoints_v2.xcbkptlist
+
 ## Other
 *.moved-aside
 *.xcuserstate

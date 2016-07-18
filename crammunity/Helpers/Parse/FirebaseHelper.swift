@@ -24,6 +24,7 @@ class FirebaseHelper
 		let snap = snapshot.value!
 		let name = snap[key]
 		return name.description
+		return ""
 	}
 	static func createUser(email: String, pw: String)
 	{
@@ -38,22 +39,32 @@ class FirebaseHelper
 			
 		})
 	}
-	
-	static func loadClasses() -> [FIRDataSnapshot]
+
+	static func createClass(name: String) -> FIRDatabaseReference
 	{
-			// 1
-		let classesQuery = ref.child("classes").queryLimitedToLast(25)
-		var classes: [FIRDataSnapshot] = []
-		classesQuery.observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
-			if !classes.contains(snapshot)
-			{
-				classes.append(snapshot)
-			}
-			
-		}
-		return classes
-		
+		let nameData = [Constants.CramClass.Name: name]
+		let classRef = self.ref.child("classes").childByAutoId()
+		classRef.setValue(nameData)
+		classRef.child("members").child("\((FIRAuth.auth()?.currentUser?.uid)!)").child("username").setValue(AppState.sharedInstance.displayName!)
+		print("created class \(name)")
+		return classRef
 	}
+	
+//	static func loadClasses() -> [FIRDataSnapshot]
+//	{
+//			// 1
+//		let classesQuery = ref.child("classes").queryLimitedToLast(25)
+//		var classes: [FIRDataSnapshot] = []
+//		classesQuery.observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
+//			if !classes.contains(snapshot)
+//			{
+//				classes.append(snapshot)
+//			}
+//			
+//		}
+//		return classes
+//		
+//	}
 //	static func loading() -> [FIRDataSnapshot]
 //	{
 //		var messages: [FIRDataSnapshot] = []

@@ -25,7 +25,7 @@ class MasterViewController: UITableViewController {
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_:)))
 		self.navigationItem.rightBarButtonItem = addButton
 		_refHandle = self.ref.child(Constants.Firebase.CramClassArray).observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
-			print(FirebaseHelper.getStringFromDatabaseKey(Constants.CramClass.CramClassName, snapshot: snapshot))
+			print(FirebaseHelper.getStringFromDatabaseKey(Constants.CramClass.Name, snapshot: snapshot))
 			//TODO: implemet method to sync classes and table view
 			self.classes.insert(snapshot, atIndex: 0)
 			let indexPath = NSIndexPath(forRow: 0, inSection: 0)
@@ -40,22 +40,22 @@ class MasterViewController: UITableViewController {
 	}
 	
 	deinit {
-		if let refhandler = _refHandle
+		if _refHandle != nil
 		{
-			self.ref.child(Constants.Firebase.CramClassArray).removeObserverWithHandle(refhandler)
+			self.ref.child(Constants.Firebase.CramClassArray).removeObserverWithHandle(_refHandle)
 		}
 	}
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-//TODO: add segue to cramclass creation window
 //TODO: add cramclass creation
 	func insertNewObject(sender: AnyObject) {
 		//TODO: add proper saving to datbase
-		classes.insert(FIRDataSnapshot(), atIndex: 0)
-		let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-		self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//		classes.insert(FIRDataSnapshot(), atIndex: 0)
+		FirebaseHelper.createClass("newclass")
+//		let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+//		self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 	}
 	
 	//TODO: add signout
@@ -101,7 +101,7 @@ class MasterViewController: UITableViewController {
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("ClassCell") as! ClassViewCell
 		
-		cell.textLabel!.text = FirebaseHelper.getStringFromDatabaseKey(Constants.CramClass.CramClassName, snapshot: classes[indexPath.section])
+		cell.textLabel!.text = FirebaseHelper.getStringFromDatabaseKey(Constants.CramClass.Name, snapshot: classes[indexPath.section])
 		return cell
 	}
 
