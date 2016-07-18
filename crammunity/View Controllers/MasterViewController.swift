@@ -84,6 +84,9 @@ class MasterViewController: UITableViewController {
 				let cramclass = classes[indexPath.row]
 				let controller = (segue.destinationViewController) as! ClassViewController
 				controller.classChat = Class(cramClass: cramclass)
+				//TODO: Change to loading inside of class view instead of sending to view
+
+				controller.cramChat = cramclass
 				controller.navigationItem.leftItemsSupplementBackButton = true
 			}
 		}

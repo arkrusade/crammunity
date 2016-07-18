@@ -46,6 +46,8 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	
 	// MARK: Class naming
 	var classChat: Class!
+	var cramChat: FIRDataSnapshot!
+	//TODO: Change to loading inside of class view instead of sending to view
 	
 	func configureView() {
 //		// Update the user interface for the detail item.
@@ -142,12 +144,19 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	
 	func configureDatabase() {
 		rootRef = FIRDatabase.database().reference()
-		messagesRef = rootRef.child(Constants.Firebase.CramClassArray).child(Constants.CramClass.CramClassMessages)
+		messagesRef = rootRef.child(Constants.Firebase.CramClassArray).child(cramChat.key).child("messages")
+		
 		//find new messages
-		_refHandle = self.messagesRef.observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
-			self.messages.append(snapshot)
-			self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: .Automatic)
-		})
+		_refHandle = messagesRef.observeEventType(.ChildAdded, withBlock: { snapshot in
+				if snapshot.exists() {
+					self.messages.append(snapshot)
+					self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: .Automatic)
+
+				} else {
+					print("error in message loading")
+					
+				}
+			})
 	}
 	//TODO: add storage in specific class
 	func configureStorage() {
@@ -232,6 +241,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	func textFieldShouldReturn(textField: UITextField) -> Bool {
 		let data = [Constants.MessageFields.text: textField.text! as String]
 		sendMessage(data)
+		textField.text! = ""
 		return true
 	}
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

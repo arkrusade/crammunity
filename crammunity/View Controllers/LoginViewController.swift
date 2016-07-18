@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
 		AppState.sharedInstance.photoUrl = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
-		performSegueWithIdentifier(Constants.Segues.LoginToMain, sender: nil)
+		performSegueWithIdentifier(Constants.Segues.LoginToMain, sender: self)
 	}
 	
 	@IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
