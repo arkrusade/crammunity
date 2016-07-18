@@ -21,9 +21,6 @@ class FirebaseHelper
 	//TODO: add completion with error
 	static func getStringFromDatabaseKey(key: String, snapshot: FIRDataSnapshot) -> String
 	{
-//		if key == "name" {
-//			return "name"
-//		}
 		let snap = snapshot.value!
 		let name = snap[key]
 		return name.description

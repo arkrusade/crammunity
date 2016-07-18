@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		print("login view loaded")
-		testLogin()
+//		testLogin()
 	}
 	func testLogin()
 	{
