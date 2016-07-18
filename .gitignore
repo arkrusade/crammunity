@@ -51,7 +51,7 @@
 # c.f. the "OPTIONAL" section at bottom though, for tool-specific variations!
 #
 # In particular, if you're using CocoaPods, you'll want to comment-out this line:
-*.lock
+#*.lock
 
 
 #
@@ -192,7 +192,7 @@ xcuserdata/
 # c.f. http://guides.cocoapods.org/using/using-cocoapods.html#what-is-a-podfilelock
 # c.f. http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
 #
-!Podfile.lock
+#!Podfile.lock
 Pods/
 #
 # RUBY:
