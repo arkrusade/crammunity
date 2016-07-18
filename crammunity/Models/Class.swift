@@ -20,7 +20,7 @@ class Class {
 	//change init to create database values instead of take?
 	init(cramClass: FIRDataSnapshot)
 	{
-		className = FirebaseHelper.getStringFromDatabaseKey(Constants.CramClass.CramClassName, snapshot: cramClass)
+		className = FirebaseHelper.getStringFromDatabaseKey(Constants.CramClass.Name, snapshot: cramClass)
 		
 	}
 }

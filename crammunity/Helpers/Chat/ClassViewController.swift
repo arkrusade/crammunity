@@ -244,9 +244,22 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		textField.text! = ""
 		return true
 	}
+	
+	func sendMessage(data: [String: String]) {
+		var mdata = data
+		mdata[Constants.MessageFields.name] = AppState.sharedInstance.displayName
+		if let photoUrl = AppState.sharedInstance.photoUrl {
+			mdata[Constants.MessageFields.photoUrl] = photoUrl.absoluteString
+		}
+		// Push data to Firebase Database
+		self.messagesRef.childByAutoId().setValue(mdata)
+		//Send to Analytics
+		MeasurementHelper.sendMessageEvent()
+	}
+	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		// Dequeue cell
-		let cell: UITableViewCell! = self.tableView .dequeueReusableCellWithIdentifier("MessageCell", forIndexPath: indexPath)
+		let cell: UITableViewCell! = self.tableView.dequeueReusableCellWithIdentifier("MessageCell", forIndexPath: indexPath)
 		// Unpack message from Firebase DataSnapshot
 		let messageSnapshot: FIRDataSnapshot! = self.messages[indexPath.row]
 		let message = messageSnapshot.value as! Dictionary<String, String>
@@ -281,18 +294,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		return cell!
 	}
 	
-	func sendMessage(data: [String: String]) {
-		var mdata = data
-		mdata[Constants.MessageFields.name] = AppState.sharedInstance.displayName
-		if let photoUrl = AppState.sharedInstance.photoUrl {
-			mdata[Constants.MessageFields.photoUrl] = photoUrl.absoluteString
-		}
-		// Push data to Firebase Database
-		//TODO: make classes
-		self.messagesRef.childByAutoId().setValue(mdata)
-		//Send to Analytics
-		MeasurementHelper.sendMessageEvent()
-	}
+	
 	
 	// MARK: - Image Picker
 	//TODO: add image button

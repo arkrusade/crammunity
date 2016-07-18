@@ -25,9 +25,10 @@ struct Constants {
 		static let imageUrl = "imageUrl"
 	}
 	struct CramClass {
-		static let CramClass = "class"
-		static let CramClassName = "name"
-		static let CramClassMessages = "messages"
+		static let Class = "class"
+		static let Members = "members"
+		static let Name = "name"
+		static let Messages = "messages"
 	}
 	
 	struct Firebase {
@@ -36,9 +37,9 @@ struct Constants {
 	}
 	
 	struct User {
-		static let UserEmail = "email"
+		static let Email = "email"
 		static let Username = "username"
-		static let UserPassword = "password"
+		static let Password = "password"
 	}
 	
 	
