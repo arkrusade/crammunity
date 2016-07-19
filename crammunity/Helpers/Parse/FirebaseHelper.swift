@@ -24,7 +24,7 @@ class FirebaseHelper
 		let snap = snapshot.value!
 		let name = snap[key]
 		return name.description
-		return ""
+//		return ""
 	}
 	static func createUser(email: String, pw: String)
 	{

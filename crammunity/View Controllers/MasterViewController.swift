@@ -12,7 +12,8 @@ class MasterViewController: UITableViewController {
 
 	var topViewController: ClassViewController? = nil
 	var classes: [FIRDataSnapshot] = []
-	var _refHandle: FIRDatabaseHandle!
+	var _addHandle: FIRDatabaseHandle!
+	var _removeHandle: FIRDatabaseHandle!
 	let ref = FIRDatabase.database().reference()
 
 	override func viewDidLoad() {
@@ -24,13 +25,29 @@ class MasterViewController: UITableViewController {
 
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_:)))
 		self.navigationItem.rightBarButtonItem = addButton
-		_refHandle = self.ref.child(Constants.Firebase.CramClassArray).observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
-			print(FirebaseHelper.getStringFromDatabaseKey(Constants.CramClass.Name, snapshot: snapshot))
+		_addHandle = self.ref.child(Constants.Firebase.CramClassArray).observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
 			//TODO: implemet method to sync classes and table view
 			self.classes.insert(snapshot, atIndex: 0)
 			let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 			self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-
+			
+		})
+		_removeHandle = self.ref.child(Constants.Firebase.CramClassArray).observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
+			//TODO: implemet method to sync classes and table view
+			var i = 0
+//			var classesToDelete: [FIRDataSnapshot] = []
+			for snap in self.classes{
+//				print(self.classes[i])
+				if FirebaseHelper.getStringFromDatabaseKey("name", snapshot: snap) == FirebaseHelper.getStringFromDatabaseKey("name", snapshot: snapshot)
+				{
+					self.classes.removeAtIndex(i)
+					break
+//					classesToDelete.append(snapshot)
+				}
+				i += 1
+			}
+			
+			self.tableView.reloadData()
 		})
 		
 	}
@@ -40,22 +57,25 @@ class MasterViewController: UITableViewController {
 	}
 	
 	deinit {
-		if _refHandle != nil
-		{
-			self.ref.child(Constants.Firebase.CramClassArray).removeObserverWithHandle(_refHandle)
-		}
+		self.ref.child(Constants.Firebase.CramClassArray).removeAllObservers()
+//		if _addHandle != nil
+//		{
+//			self.ref.child(Constants.Firebase.CramClassArray).removeObserverWithHandle(_addHandle)
+//		}
+//		if _removeHandle != nil
+//		{
+//			self.ref.child(Constants.Firebase.CramClassArray).removeObserverWithHandle(_removeHandle)
+//		}
 	}
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-//TODO: add cramclass creation
+//TODO: edit cramclass creation
 	func insertNewObject(sender: AnyObject) {
-		//TODO: add proper saving to datbase
-//		classes.insert(FIRDataSnapshot(), atIndex: 0)
-		FirebaseHelper.createClass("newclass")
-//		let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-//		self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+
+		performSegueWithIdentifier("MainToClassCreation", sender: nil)
+
 	}
 	
 	//TODO: add signout
@@ -87,7 +107,7 @@ class MasterViewController: UITableViewController {
 			}
 		}
 	}
-
+	
 	// MARK: - Table View
 
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -112,7 +132,10 @@ class MasterViewController: UITableViewController {
 
 	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 		if editingStyle == .Delete {
+			ref.child(Constants.Firebase.CramClassArray).child(classes[indexPath.row].key).removeValue()
+
 			classes.removeAtIndex(indexPath.row)
+			
 		    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 		} else if editingStyle == .Insert {
 		    print("inserted")

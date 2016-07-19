@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
 	}
 	//TODO: Reorganize with helper
 
-	@IBAction func LoginButtonTouched(sender: AnyObject) {
+	@IBAction func onLoginButtonTap(sender: AnyObject) {
 		//TODO: add checks for proper email, pass
 		//also with sign in
 		FIRAuth.auth()!.signInWithEmail(EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in

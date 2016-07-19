@@ -26,8 +26,7 @@ class PhotoTakingHelper : NSObject {
         
         
     }
-    
-    
+	
     
     func showPhotoSourceSelection() {
         let alertController = UIAlertController(title: nil, message: "Where do you want to get your picture from?", preferredStyle: .ActionSheet)

@@ -32,11 +32,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	var remoteConfig: FIRRemoteConfig!
 	
 	@IBOutlet weak var banner: GADBannerView!
-	
-	
-//	@IBOutlet weak var titleBar: UINavigationItem!
-//	@IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-//	@IBOutlet weak var textField: UITextField!
+
 	@IBOutlet weak var tableView: UITableView!
 	
 	@IBOutlet weak var titleBar: UINavigationItem!

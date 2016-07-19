@@ -15,6 +15,7 @@
 		AD01E68B1D258F4E00751657 /* ClassViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E68A1D258F4E00751657 /* ClassViewCell.swift */; };
 		AD01E6941D25941D00751657 /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E68F1D25941D00751657 /* ClassViewController.swift */; };
 		AD01E6961D25941D00751657 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E6921D25941D00751657 /* MasterViewController.swift */; };
+		AD074DF31D3D99B00072A102 /* ClassCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD074DF21D3D99B00072A102 /* ClassCreationViewController.swift */; };
 		AD1B55C31D3055B800195749 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1B55C01D3055B800195749 /* ErrorHandling.swift */; };
 		AD52A7811D340BAD003D9D11 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD52A7801D340BAD003D9D11 /* GoogleService-Info.plist */; };
 		AD96F5461D36DCED00038FD7 /* MeasurementHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */; };
@@ -41,6 +42,7 @@
 		AD01E68A1D258F4E00751657 /* ClassViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewCell.swift; sourceTree = "<group>"; };
 		AD01E68F1D25941D00751657 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClassViewController.swift; path = ../Helpers/Chat/ClassViewController.swift; sourceTree = "<group>"; };
 		AD01E6921D25941D00751657 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		AD074DF21D3D99B00072A102 /* ClassCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCreationViewController.swift; sourceTree = "<group>"; };
 		AD1B55C01D3055B800195749 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		AD52A7801D340BAD003D9D11 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementHelper.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				AD01E6921D25941D00751657 /* MasterViewController.swift */,
 				ADAA62991D35672B0037BCC9 /* LoginViewController.swift */,
 				ADAA629B1D356C950037BCC9 /* SignUpViewController.swift */,
+				AD074DF21D3D99B00072A102 /* ClassCreationViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			files = (
 				AD01E6941D25941D00751657 /* ClassViewController.swift in Sources */,
 				ADAA3BAF1D36BB480038EEC4 /* Constants.swift in Sources */,
+				AD074DF31D3D99B00072A102 /* ClassCreationViewController.swift in Sources */,
 				AD96F5461D36DCED00038FD7 /* MeasurementHelper.swift in Sources */,
 				AD01E66D1D24768A00751657 /* AppDelegate.swift in Sources */,
 				AD01E68B1D258F4E00751657 /* ClassViewCell.swift in Sources */,
