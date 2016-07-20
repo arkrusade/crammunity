@@ -15,10 +15,10 @@ class ClassCreationViewController: UIViewController {
 	
 	@IBAction func onCreateClassTap(sender: AnyObject) {
 		
-
+//TODO: add cancel button
+		
 		if !self.newClassNameTextField.text!.isEmpty {
 			FirebaseHelper.createClass(self.newClassNameTextField.text!)
-			print("help")
 			self.dismissViewControllerAnimated(true, completion: nil)
 		}
 		else{

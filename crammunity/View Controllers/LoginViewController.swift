@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		print("login view loaded")
-		testLogin()
+//		testLogin()
 	}
 	func testLogin()
 	{
@@ -85,10 +85,7 @@ class LoginViewController: UIViewController {
 		{
 			print("Seguing to \(id)")
 			
-//			if(id == "SignUp")
-//			{
-//				print("seguing to signup")
-//			}
+			
 		}
 	}
 }

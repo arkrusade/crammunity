@@ -22,7 +22,6 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	
 	// Instance variables
 	@IBOutlet weak var sendButton: UIButton!
-	var rootRef: FIRDatabaseReference!
 	var messagesRef: FIRDatabaseReference!
 	var messages: [FIRDataSnapshot]! = []
 	var msglength: NSNumber = 10
@@ -135,12 +134,11 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	}
 	// MARK: Firebase stuff
 	deinit {
-		self.messagesRef.removeObserverWithHandle(_refHandle)
+		self.messagesRef.removeAllObservers()
 	}
 	
 	func configureDatabase() {
-		rootRef = FIRDatabase.database().reference()
-		messagesRef = rootRef.child(Constants.Firebase.CramClassArray).child(cramChat.key).child("messages")
+		messagesRef = Constants.Firebase.CramClassArray.child(cramChat.key).child("messages")
 		
 		//find new messages
 		_refHandle = messagesRef.observeEventType(.ChildAdded, withBlock: { snapshot in

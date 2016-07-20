@@ -43,11 +43,11 @@
 		AD01E68F1D25941D00751657 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClassViewController.swift; path = ../Helpers/Chat/ClassViewController.swift; sourceTree = "<group>"; };
 		AD01E6921D25941D00751657 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		AD074DF21D3D99B00072A102 /* ClassCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCreationViewController.swift; sourceTree = "<group>"; };
-		AD1B55C01D3055B800195749 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
+		AD1B55C01D3055B800195749 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandling.swift; path = Parse/ErrorHandling.swift; sourceTree = "<group>"; };
 		AD52A7801D340BAD003D9D11 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementHelper.swift; sourceTree = "<group>"; };
 		ADAA3BAC1D36BB330038EEC4 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		ADAA3BAE1D36BB480038EEC4 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		ADAA3BAE1D36BB480038EEC4 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Models/Constants.swift; sourceTree = "<group>"; };
 		ADAA62991D35672B0037BCC9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		ADAA629B1D356C950037BCC9 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		ADACA1911D398E7500C22DB8 /* File */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = File; sourceTree = "<group>"; };
@@ -107,6 +107,7 @@
 				AD01E6771D24768A00751657 /* LaunchScreen.storyboard */,
 				AD01E67A1D24768A00751657 /* Info.plist */,
 				AD52A7801D340BAD003D9D11 /* GoogleService-Info.plist */,
+				ADAA3BAE1D36BB480038EEC4 /* Constants.swift */,
 				AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */,
 				ADACA1911D398E7500C22DB8 /* File */,
 			);
@@ -126,7 +127,6 @@
 			children = (
 				AD01E6861D258CFE00751657 /* Class.swift */,
 				ADAA3BAC1D36BB330038EEC4 /* AppState.swift */,
-				ADAA3BAE1D36BB480038EEC4 /* Constants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -134,7 +134,8 @@
 		AD01E68C1D25941D00751657 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				AD1B55BF1D3054A500195749 /* Parse */,
+				AD1B55C01D3055B800195749 /* ErrorHandling.swift */,
+				AD1B55BF1D3054A500195749 /* Firebase */,
 				ADEF33E01D2D800B00A9C74A /* PhotoTaking */,
 			);
 			path = Helpers;
@@ -152,12 +153,12 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
-		AD1B55BF1D3054A500195749 /* Parse */ = {
+		AD1B55BF1D3054A500195749 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				AD1B55C01D3055B800195749 /* ErrorHandling.swift */,
 				ADC4BE761D34363100EEF793 /* FirebaseHelper.swift */,
 			);
+			name = Firebase;
 			path = Parse;
 			sourceTree = "<group>";
 		};

@@ -8,9 +8,6 @@ target 'crammunity' do
 #
   pod 'Bond', '4.0.0'
   pod 'ConvenienceKit'
-  pod 'Parse'
-  pod 'ParseFacebookUtilsV4'
-  pod 'ParseUI'
   pod 'DateTools'
   pod 'Firebase'
   pod 'Firebase/Database’
@@ -25,7 +22,6 @@ target 'crammunity' do
   pod 'Firebase/Auth'
   pod 'Firebase/AppIndexing'
   pod 'Firebase/Storage'
-  pod 'JSQMessagesViewController'
 
 
 end

@@ -16,7 +16,6 @@ class FirebaseHelper
 {
 	//TODO: add structs
 	
-	static let ref = FIRDatabase.database().reference()
 	
 	//TODO: add completion with error
 	static func getStringFromDatabaseKey(key: String, snapshot: FIRDataSnapshot) -> String
@@ -39,51 +38,27 @@ class FirebaseHelper
 			
 		})
 	}
-
+	
+	static func addUserToClass(user: FIRUser, cramClass: FIRDatabaseReference)
+	{
+		cramClass.child("members").child(user.uid).child("username").setValue(AppState.sharedInstance.displayName!)
+		Constants.Firebase.UserArray.child(user.uid).child("classes").setValue(cramClass.key)
+	}
+	static func addUserToClass(user: FIRUser, cramClassUID: String)
+	{
+		let classRef = Constants.Firebase.CramClassArray.child(cramClassUID)
+		addUserToClass(user, cramClass: classRef)
+	}
 	static func createClass(name: String) -> FIRDatabaseReference
 	{
 		let nameData = [Constants.CramClass.Name: name]
-		let classRef = self.ref.child("classes").childByAutoId()
+		let classRef = Constants.Firebase.CramClassArray.childByAutoId()
 		classRef.setValue(nameData)
-		classRef.child("members").child("\((FIRAuth.auth()?.currentUser?.uid)!)").child("username").setValue(AppState.sharedInstance.displayName!)
+		
+		
+		addUserToClass((FIRAuth.auth()?.currentUser)!, cramClass: classRef)
+		
 		print("created class \(name)")
 		return classRef
 	}
-	
-//	static func loadClasses() -> [FIRDataSnapshot]
-//	{
-//			// 1
-//		let classesQuery = ref.child("classes").queryLimitedToLast(25)
-//		var classes: [FIRDataSnapshot] = []
-//		classesQuery.observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
-//			if !classes.contains(snapshot)
-//			{
-//				classes.append(snapshot)
-//			}
-//			
-//		}
-//		return classes
-//		
-//	}
-//	static func loading() -> [FIRDataSnapshot]
-//	{
-//		var messages: [FIRDataSnapshot] = []
-//		let _refHandle = ref.child("messages").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
-//			messages.append(snapshot)
-//			
-//		})
-//		return messages
-//
-//	}
-//		vc.ref.child("users").child(User.newID()).setValue(["username": username])
-//		FIRAuth.auth()?.createUserWithEmail(email, password: pw) { (user, error) in
-//			if error != nil {
-//				print("error creating user")
-//			} else {
-//				let uid = result["uid"] as! String
-//				NSUserDefaults.standardUserDefaults().setValue(uid, forKey: "uid")
-//				//pass the parameters to another function to auth the user
-//				self.authUserWithAuthData( email, password: pw )
-//			}		}
-//	}
 }

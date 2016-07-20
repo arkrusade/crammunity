@@ -5,9 +5,9 @@
 //  Created by Clara Hwang on 7/13/16.
 //  Copyright © 2016 orctech. All rights reserved.
 //
-
+import Firebase
 struct Constants {
-	
+	static let emailRegex:String = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
 	struct NotificationKeys {
 		static let SignedIn = "onSignInCompleted"
 	}
@@ -32,8 +32,9 @@ struct Constants {
 	}
 	
 	struct Firebase {
-		static let UserArray = "users"
-		static let CramClassArray = "classes"
+		static let rootRef = FIRDatabase.database().reference()
+		static let CramClassArray = FIRDatabase.database().reference().child("classes")
+		static let UserArray = FIRDatabase.database().reference().child("users")
 	}
 	
 	struct User {
