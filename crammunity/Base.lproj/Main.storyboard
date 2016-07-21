@@ -194,7 +194,7 @@
                     <view key="view" contentMode="scaleToFill" id="9K1-Nh-Yfh">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="o5H-R3-GMu"/>
                 </viewController>
@@ -262,21 +262,43 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qqu-ao-Zla">
-                                <rect key="frame" x="252" y="323" width="97" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="241" y="323" width="118" height="30"/>
+                                <state key="normal" title="Create the Class!"/>
                                 <connections>
                                     <action selector="onCreateClassTap:" destination="ckn-6p-43Z" eventType="touchUpInside" id="yuC-qK-aqy"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create a Class!" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tl8-Bd-CLF">
+                                <rect key="frame" x="242" y="77" width="116" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gG2-J1-Dhs">
+                                <rect key="frame" x="276" y="361" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="dismissToMasterViewController:" destination="ckn-6p-43Z" eventType="touchUpInside" id="yHO-rh-wsh"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qqu-ao-Zla" firstAttribute="top" secondItem="XUJ-hj-nnp" secondAttribute="bottom" constant="8" id="ClW-sw-Jfb"/>
+                            <constraint firstItem="gG2-J1-Dhs" firstAttribute="centerX" secondItem="BxS-li-KNY" secondAttribute="centerX" id="GJu-37-cba"/>
+                            <constraint firstItem="XUJ-hj-nnp" firstAttribute="top" secondItem="tl8-Bd-CLF" secondAttribute="bottom" constant="188" id="HEC-og-Ubf"/>
+                            <constraint firstItem="gG2-J1-Dhs" firstAttribute="top" secondItem="qqu-ao-Zla" secondAttribute="bottom" constant="8" id="WrV-cp-YiY"/>
                             <constraint firstItem="qqu-ao-Zla" firstAttribute="width" secondItem="XUJ-hj-nnp" secondAttribute="width" id="abb-5J-Gbc"/>
                             <constraint firstItem="XUJ-hj-nnp" firstAttribute="centerY" secondItem="BxS-li-KNY" secondAttribute="centerY" id="myV-vr-7q1"/>
                             <constraint firstItem="qqu-ao-Zla" firstAttribute="centerX" secondItem="BxS-li-KNY" secondAttribute="centerX" id="p0q-tQ-bko"/>
                             <constraint firstItem="XUJ-hj-nnp" firstAttribute="centerX" secondItem="BxS-li-KNY" secondAttribute="centerX" id="qbN-TH-bXL"/>
+                            <constraint firstItem="tl8-Bd-CLF" firstAttribute="centerX" secondItem="BxS-li-KNY" secondAttribute="centerX" id="x7y-Hn-Smm"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="abb-5J-Gbc"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="newClassNameTextField" destination="XUJ-hj-nnp" id="XDH-Tf-srY"/>
@@ -446,8 +468,7 @@
                                 <rect key="frame" x="281" y="286" width="38" height="30"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
-                                    <action selector="LoginButtonTouched:" destination="ygQ-p3-S8o" eventType="touchUpInside" id="fmk-Gn-atM"/>
-                                    <segue destination="X6m-gL-Apk" kind="show" identifier="LoginToMain" id="gVc-0p-RD0"/>
+                                    <action selector="onLoginButtonTap:" destination="ygQ-p3-S8o" eventType="touchUpInside" id="SIh-67-glj"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MhH-Qw-ssl">
@@ -527,8 +548,8 @@
                     </view>
                     <connections>
                         <outlet property="EmailTextField" destination="sCf-d0-zmR" id="o0x-Yq-TVE"/>
-                        <outlet property="LoginButton" destination="o2y-uY-pll" id="VaM-2L-oDD"/>
                         <outlet property="PasswordTextField" destination="lHe-jX-uiE" id="UeE-5c-Uvt"/>
+                        <segue destination="X6m-gL-Apk" kind="show" identifier="LoginToMain" id="ecS-QQ-s7e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WtD-Bo-pHP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -562,6 +583,6 @@
         <image name="message-7" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ijW-7J-VNv"/>
+        <segue reference="ecS-QQ-s7e"/>
     </inferredMetricsTieBreakers>
 </document>

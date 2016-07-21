@@ -51,7 +51,7 @@
 		ADAA62991D35672B0037BCC9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		ADAA629B1D356C950037BCC9 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		ADACA1911D398E7500C22DB8 /* File */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = File; sourceTree = "<group>"; };
-		ADC4BE761D34363100EEF793 /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		ADC4BE761D34363100EEF793 /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FirebaseHelper.swift; path = Parse/FirebaseHelper.swift; sourceTree = "<group>"; };
 		ADEF33E11D2D800B00A9C74A /* PhotoTakingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTakingHelper.swift; sourceTree = "<group>"; };
 		E89F6B9773580FF5A27F14BB /* Pods-crammunity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-crammunity.release.xcconfig"; path = "Pods/Target Support Files/Pods-crammunity/Pods-crammunity.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,7 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				AD1B55C01D3055B800195749 /* ErrorHandling.swift */,
-				AD1B55BF1D3054A500195749 /* Firebase */,
+				ADC4BE761D34363100EEF793 /* FirebaseHelper.swift */,
 				ADEF33E01D2D800B00A9C74A /* PhotoTaking */,
 			);
 			path = Helpers;
@@ -151,15 +151,6 @@
 				AD074DF21D3D99B00072A102 /* ClassCreationViewController.swift */,
 			);
 			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		AD1B55BF1D3054A500195749 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				ADC4BE761D34363100EEF793 /* FirebaseHelper.swift */,
-			);
-			name = Firebase;
-			path = Parse;
 			sourceTree = "<group>";
 		};
 		ADEF33E01D2D800B00A9C74A /* PhotoTaking */ = {

@@ -14,11 +14,10 @@ import FirebaseAuth
 
 class FirebaseHelper
 {
-	//TODO: add structs
 	
 	
 	//TODO: add completion with error
-	static func getStringFromDatabaseKey(key: String, snapshot: FIRDataSnapshot) -> String
+	static func getStringFromDataSnapshot(key: String, snapshot: FIRDataSnapshot) -> String
 	{
 		let snap = snapshot.value!
 		let name = snap[key]
@@ -42,7 +41,7 @@ class FirebaseHelper
 	static func addUserToClass(user: FIRUser, cramClass: FIRDatabaseReference)
 	{
 		cramClass.child("members").child(user.uid).child("username").setValue(AppState.sharedInstance.displayName!)
-		Constants.Firebase.UserArray.child(user.uid).child("classes").setValue(cramClass.key)
+		Constants.Firebase.UserArray.child(user.uid).child("classes").child(cramClass.key).setValue(cramClass.child(Constants.ClassName))
 	}
 	static func addUserToClass(user: FIRUser, cramClassUID: String)
 	{
@@ -51,12 +50,13 @@ class FirebaseHelper
 	}
 	static func createClass(name: String) -> FIRDatabaseReference
 	{
-		let nameData = [Constants.CramClass.Name: name]
+		let classData = [Constants.ClassName: name]
 		let classRef = Constants.Firebase.CramClassArray.childByAutoId()
-		classRef.setValue(nameData)
+		classRef.setValue(classData)
 		
-		
-		addUserToClass((FIRAuth.auth()?.currentUser)!, cramClass: classRef)
+//		addUserToClass((FIRAuth.auth()?.currentUser)!, cramClass: classRef)
+		classRef.child("members").child((FIRAuth.auth()?.currentUser)!.uid).child("username").setValue(AppState.sharedInstance.displayName!)
+		Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser)!.uid).child("classes").child(classRef.key).child(Constants.ClassName).setValue(name)
 		
 		print("created class \(name)")
 		return classRef

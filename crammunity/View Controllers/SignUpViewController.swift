@@ -75,17 +75,18 @@ class SignUpViewController: UIViewController {
 		Constants.Firebase.UserArray.child(user!.uid).setValue(["username": username])
 		print ("Created user with uid: \(user!.uid) and username: \(username)")
 		
-		let changeRequest = user!.profileChangeRequest()
-		changeRequest.displayName = username
-		changeRequest.commitChangesWithCompletion(){ (error) in
-			if let error = error {
-				print(error.localizedDescription)
-				return
-			}
-		}
+		//TODO: add profile changing
+//		let changeRequest = user!.profileChangeRequest()
+//		changeRequest.displayName = username
+//		changeRequest.commitChangesWithCompletion(){ (error) in
+//			if let error = error {
+//				print(error.localizedDescription)
+//				return
+//			}
+//		}
 		MeasurementHelper.sendLoginEvent()//analytics
 		
-		AppState.sharedInstance.displayName = user?.displayName ?? user?.email
+		AppState.sharedInstance.displayName = username ?? user?.email
 		AppState.sharedInstance.photoUrl = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)

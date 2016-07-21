@@ -24,12 +24,12 @@ struct Constants {
 		static let photoUrl = "photoUrl"
 		static let imageUrl = "imageUrl"
 	}
-	struct CramClass {
+//	struct CramClass {
 		static let Class = "class"
 		static let Members = "members"
-		static let Name = "name"
+		static let ClassName = "className"
 		static let Messages = "messages"
-	}
+//	}
 	
 	struct Firebase {
 		static let rootRef = FIRDatabase.database().reference()
@@ -37,11 +37,11 @@ struct Constants {
 		static let UserArray = FIRDatabase.database().reference().child("users")
 	}
 	
-	struct User {
+//	struct User {
 		static let Email = "email"
 		static let Username = "username"
 		static let Password = "password"
-	}
+//	}
 	
 	
 

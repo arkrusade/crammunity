@@ -19,7 +19,7 @@ class ClassCreationViewController: UIViewController {
 		
 		if !self.newClassNameTextField.text!.isEmpty {
 			FirebaseHelper.createClass(self.newClassNameTextField.text!)
-			self.dismissViewControllerAnimated(true, completion: nil)
+			self.dismissToMasterViewController(self)
 		}
 		else{
 			let alertController = UIAlertController(title: nil, message: "You must fill in the class name", preferredStyle: .Alert)
@@ -32,8 +32,10 @@ class ClassCreationViewController: UIViewController {
 	
 	}
 
-	@IBAction func unwindToMasterViewController(segue: UIStoryboardSegue) {
-		print("unwinding to master view")
+	@IBAction func dismissToMasterViewController(sender: AnyObject) {
+	
+		print("dismissing to master view")
+		self.dismissViewControllerAnimated(true, completion: nil)
 	}
 	
     override func viewDidLoad() {

@@ -18,22 +18,29 @@ class MasterViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		
+		//TODO: change observers to personal classes
 		// Do any additional setup after loading the view, typically from a nib.
 		self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_:)))
 		self.navigationItem.rightBarButtonItem = addButton
-		_addHandle = Constants.Firebase.CramClassArray.observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
+		_addHandle = Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
 			self.classes.insert(snapshot, atIndex: 0)
 			let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 			self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 			
 		})
-		_removeHandle = Constants.Firebase.CramClassArray.observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
+
+//		_addHandle = Constants.Firebase.CramClassArray.observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
+//			self.classes.insert(snapshot, atIndex: 0)
+//			let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+//			self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//			
+//		})
+		_removeHandle = Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
 			var i = 0
 			for snap in self.classes{
-				if FirebaseHelper.getStringFromDatabaseKey("name", snapshot: snap) == FirebaseHelper.getStringFromDatabaseKey("name", snapshot: snapshot)
+				if FirebaseHelper.getStringFromDataSnapshot(Constants.ClassName, snapshot: snap) == FirebaseHelper.getStringFromDataSnapshot(Constants.ClassName, snapshot: snapshot)
 				{
 					self.classes.removeAtIndex(i)
 					break
@@ -115,7 +122,7 @@ class MasterViewController: UITableViewController {
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("ClassCell") as! ClassViewCell
 		
-		cell.textLabel!.text = FirebaseHelper.getStringFromDatabaseKey(Constants.CramClass.Name, snapshot: classes[indexPath.section])
+		cell.textLabel!.text = FirebaseHelper.getStringFromDataSnapshot(Constants.ClassName, snapshot: classes[indexPath.section])
 		return cell
 	}
 
@@ -124,12 +131,12 @@ class MasterViewController: UITableViewController {
 		return true
 	}
 
+	//class deletion
 	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 		if editingStyle == .Delete {
 			Constants.Firebase.CramClassArray.child(classes[indexPath.row].key).removeValue()
-
+			Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").child(classes[indexPath.row].key).removeValue()
 			classes.removeAtIndex(indexPath.row)
-			
 		    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 		} else if editingStyle == .Insert {
 		    print("inserted")
