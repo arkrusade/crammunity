@@ -117,7 +117,6 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	// MARK: UI Logic
 	
 	// Dismiss keyboard if container view is tapped
-	//TODO: add tapped controller
 	@IBAction func viewTapped(sender: AnyObject) {
 		self.textField.resignFirstResponder()
 	}
@@ -258,20 +257,42 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		let messageSnapshot: FIRDataSnapshot! = self.messages[indexPath.row]
 		let message = messageSnapshot.value as! Dictionary<String, String>
 		let name = message[Constants.MessageFields.name] as String!
+		
+		
+		
+		
+		
+		
 		if let imageUrl = message[Constants.MessageFields.imageUrl] {
+			var image = UIImage(named: "ic_account_circle")
 			if imageUrl.hasPrefix("gs://") {
 				FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX){ (data, error) in
 					if let error = error {
 						print("Error downloading: \(error)")
 						return
 					}
-					cell.imageView?.image = UIImage.init(data: data!)
+//					print(data?.description)
+					image = UIImage(data: data!)
+					cell!.imageView?.image = image
+					print("not")
+					print("in here")
+					cell!.textLabel?.text = "sent by: \(name)"
 				}
-			} else if let url = NSURL(string:imageUrl), data = NSData(contentsOfURL: url) {
+			}
+			
+			else if let url = NSURL(string:imageUrl), data = NSData(contentsOfURL: url) {
 				cell.imageView?.image = UIImage.init(data: data)
 			}
-			cell!.textLabel?.text = "sent by: \(name)"
-		} else {
+//			let image = UIImage(named: "ic_account_circle")
+			cell!.imageView?.image = image
+//			print("in here")
+//			cell!.textLabel?.text = "sent by: \(name)"
+		}
+		
+		
+		
+		
+		else {
 			let text = message[Constants.MessageFields.text] as String!
 			if name != nil
 			{
@@ -291,8 +312,9 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	
 	
 	// MARK: - Image Picker
-	//TODO: add image button
+	//TODO: add image button and image sending capability
 	@IBAction func didTapAddPhoto(sender: AnyObject) {
+		
 		let picker = UIImagePickerController()
 		picker.delegate = self
 		if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
@@ -313,7 +335,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 			let asset = assets.firstObject
 			asset?.requestContentEditingInputWithOptions(nil, completionHandler: { (contentEditingInput, info) in
 				let imageFile = contentEditingInput?.fullSizeImageURL
-				let filePath = "\(FIRAuth.auth()?.currentUser?.uid)/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000))/\(referenceUrl.lastPathComponent!)"
+				let filePath = "\(FIRAuth.auth()!.currentUser!.uid)/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000))/\(referenceUrl.lastPathComponent!)"
 				self.storageRef.child(filePath)
 					.putFile(imageFile!, metadata: nil) { (metadata, error) in
 						if let error = error {

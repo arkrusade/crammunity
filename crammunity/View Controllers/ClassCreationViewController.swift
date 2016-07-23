@@ -15,7 +15,7 @@ class ClassCreationViewController: UIViewController {
 	
 	@IBAction func onCreateClassTap(sender: AnyObject) {
 		
-//TODO: add cancel button
+//TODO: add friends to class
 		
 		if !self.newClassNameTextField.text!.isEmpty {
 			FirebaseHelper.createClass(self.newClassNameTextField.text!)

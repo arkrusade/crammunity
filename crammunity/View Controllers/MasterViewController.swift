@@ -18,7 +18,7 @@ class MasterViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		//TODO: change observers to personal classes
+		//TODO: add search class functionality
 		// Do any additional setup after loading the view, typically from a nib.
 		self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
@@ -72,7 +72,7 @@ class MasterViewController: UITableViewController {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-//TODO: edit cramclass creation
+
 	func insertNewObject(sender: AnyObject) {
 
 		performSegueWithIdentifier("MainToClassCreation", sender: nil)
@@ -101,8 +101,6 @@ class MasterViewController: UITableViewController {
 				let cramclass = classes[indexPath.row]
 				let controller = (segue.destinationViewController) as! ClassViewController
 				controller.classChat = Class(cramClass: cramclass)
-				//TODO: Change to loading inside of class view instead of sending to view
-
 				controller.cramChat = cramclass
 				controller.navigationItem.leftItemsSupplementBackButton = true
 			}

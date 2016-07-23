@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
 	//TODO: Reorganize with helper
 
 	@IBAction func onLoginButtonTap(sender: AnyObject) {
-		//TODO: add checks for proper email, pass
+		//TODO: add alertviewcontrollers
 		//also with sign in
 		FIRAuth.auth()!.signInWithEmail(EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in
 			if let error = error {
@@ -100,7 +100,7 @@ class LoginViewController: UIViewController {
 		prompt.addAction(okAction)
 		presentViewController(prompt, animated: true, completion: nil);
 	}
-	//TODO: Reorganize with helper
+	//TODO: Reorganize with helper, send login methods to helper
 
 	func signedIn(user: FIRUser?)
 	{

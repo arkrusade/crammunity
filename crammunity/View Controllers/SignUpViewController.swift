@@ -75,7 +75,7 @@ class SignUpViewController: UIViewController {
 		Constants.Firebase.UserArray.child(user!.uid).setValue(["username": username])
 		print ("Created user with uid: \(user!.uid) and username: \(username)")
 		
-		//TODO: add profile changing
+		//TODO: add profile changing, change pass and profile picture (first get ability to add one)
 //		let changeRequest = user!.profileChangeRequest()
 //		changeRequest.displayName = username
 //		changeRequest.commitChangesWithCompletion(){ (error) in
