@@ -160,8 +160,9 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		remoteConfig = FIRRemoteConfig.remoteConfig()
 		// Create Remote Config Setting to enable developer mode.
 		// Fetching configs from the server is normally limited to 5 requests per hour.
-		// Enabling developer mode allows many more requests to be made per hour, so developers
+		// Enabling developer mode allows many more requests to be made per hoøur, so developers
 		// can test different config values during development.
+		//TODO: change config
 		let remoteConfigSettings = FIRRemoteConfigSettings(developerModeEnabled: true)
 		remoteConfig.configSettings = remoteConfigSettings!
 	}
@@ -271,11 +272,8 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 						print("Error downloading: \(error)")
 						return
 					}
-//					print(data?.description)
 					image = UIImage(data: data!)
 					cell!.imageView?.image = image
-					print("not")
-					print("in here")
 					cell!.textLabel?.text = "sent by: \(name)"
 				}
 			}
@@ -283,10 +281,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 			else if let url = NSURL(string:imageUrl), data = NSData(contentsOfURL: url) {
 				cell.imageView?.image = UIImage.init(data: data)
 			}
-//			let image = UIImage(named: "ic_account_circle")
 			cell!.imageView?.image = image
-//			print("in here")
-//			cell!.textLabel?.text = "sent by: \(name)"
 		}
 		
 		
@@ -335,7 +330,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 			let asset = assets.firstObject
 			asset?.requestContentEditingInputWithOptions(nil, completionHandler: { (contentEditingInput, info) in
 				let imageFile = contentEditingInput?.fullSizeImageURL
-				let filePath = "\(FIRAuth.auth()!.currentUser!.uid)/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000))/\(referenceUrl.lastPathComponent!)"
+				let filePath = "\(Constants.currentUser!.uid)/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000))/\(referenceUrl.lastPathComponent!)"
 				self.storageRef.child(filePath)
 					.putFile(imageFile!, metadata: nil) { (metadata, error) in
 						if let error = error {
@@ -348,7 +343,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		} else {
 			let image = info[UIImagePickerControllerOriginalImage] as! UIImage
 			let imageData = UIImageJPEGRepresentation(image, 0.8)
-			let imagePath = FIRAuth.auth()!.currentUser!.uid +
+			let imagePath = Constants.currentUser!.uid +
 				"/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000)).jpg"
 			let metadata = FIRStorageMetadata()
 			metadata.contentType = "image/jpeg"

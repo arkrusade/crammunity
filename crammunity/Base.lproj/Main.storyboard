@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Say hi!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zm2-bZ-xX2">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Say hi!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zm2-bZ-xX2">
                                 <rect key="frame" x="10" y="516" width="504" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
@@ -27,7 +27,7 @@
                                     <outlet property="delegate" destination="JEX-9P-axG" id="s4O-KA-GQ9"/>
                                 </connections>
                             </textField>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0wa-g7-GJg">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0wa-g7-GJg">
                                 <rect key="frame" x="0.0" y="94" width="600" height="414"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -47,7 +47,7 @@
                                     <outletCollection property="gestureRecognizers" destination="mVL-dz-5g6" appends="YES" id="47Y-A0-foG"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrg-zb-Y1B">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrg-zb-Y1B">
                                 <rect key="frame" x="540" y="516" width="40" height="30"/>
                                 <state key="normal" image="camera"/>
                                 <connections>
@@ -185,7 +185,7 @@
                         <attributedString key="attributedTitle">
                             <fragment content="Refreshing">
                                 <attributes>
-                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <font key="NSFont" metaFont="controlContent" size="11"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -218,10 +218,10 @@
             </objects>
             <point key="canvasLocation" x="809" y="-691"/>
         </scene>
-        <!--FriendSearchViewController-->
+        <!--FriendViewController-->
         <scene sceneID="i3g-GB-NDO">
             <objects>
-                <viewController title="FriendSearchViewController" id="khX-iI-CWl" sceneMemberID="viewController">
+                <viewController title="FriendViewController" id="khX-iI-CWl" customClass="FriendViewController" customModule="crammunity" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ce3-Tj-O3g"/>
                         <viewControllerLayoutGuide type="bottom" id="ywP-6H-qCX"/>
@@ -229,15 +229,90 @@
                     <view key="view" contentMode="scaleToFill" id="BXR-V7-zP3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="XZG-mc-qbU">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KFY-I3-98v">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" id="CWt-ur-bfT" customClass="FriendSearchViewCell" customModule="crammunity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CWt-ur-bfT" id="NHl-Yx-sgo">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6D-aM-zmQ">
+                                                    <rect key="frame" x="28" y="11" width="44" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CQz-Pl-1Do">
+                                                    <rect key="frame" x="539" y="2" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="FZK-1d-4oy"/>
+                                                        <constraint firstAttribute="width" constant="40" id="lQz-YD-Lgu"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" image="add"/>
+                                                    <state key="selected" image="check"/>
+                                                    <connections>
+                                                        <action selector="onFriendButtonTapped:" destination="CWt-ur-bfT" eventType="touchUpInside" id="7ts-Y0-3Ci"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="O6D-aM-zmQ" firstAttribute="centerY" secondItem="NHl-Yx-sgo" secondAttribute="centerY" id="GwB-jg-39s"/>
+                                                <constraint firstItem="CQz-Pl-1Do" firstAttribute="centerY" secondItem="NHl-Yx-sgo" secondAttribute="centerY" id="XlU-gC-m8B"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="O6D-aM-zmQ" secondAttribute="leading" constant="-20" id="bHZ-20-K68"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="CQz-Pl-1Do" secondAttribute="trailing" constant="13" id="zBU-wg-nDM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="friendButton" destination="CQz-Pl-1Do" id="93C-KS-jCb"/>
+                                            <outlet property="usernameLabel" destination="O6D-aM-zmQ" id="ast-1P-fTU"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="khX-iI-CWl" id="epv-o1-4fu"/>
+                                    <outlet property="delegate" destination="khX-iI-CWl" id="euu-76-gs7"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="KFY-I3-98v" firstAttribute="width" secondItem="XZG-mc-qbU" secondAttribute="width" id="6jR-yH-dC1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KFY-I3-98v" secondAttribute="trailing" id="A3m-BG-zyF"/>
+                            <constraint firstItem="XZG-mc-qbU" firstAttribute="leading" secondItem="BXR-V7-zP3" secondAttribute="leadingMargin" constant="-20" id="HIi-nt-Qtf"/>
+                            <constraint firstItem="KFY-I3-98v" firstAttribute="centerX" secondItem="XZG-mc-qbU" secondAttribute="centerX" id="HyM-lQ-gm0"/>
+                            <constraint firstItem="KFY-I3-98v" firstAttribute="top" secondItem="XZG-mc-qbU" secondAttribute="bottom" id="LCs-dG-qgJ"/>
+                            <constraint firstItem="XZG-mc-qbU" firstAttribute="top" secondItem="Ce3-Tj-O3g" secondAttribute="bottom" id="NgB-qh-XB3"/>
+                            <constraint firstItem="ywP-6H-qCX" firstAttribute="top" secondItem="KFY-I3-98v" secondAttribute="bottom" id="Pel-ve-YnD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XZG-mc-qbU" secondAttribute="trailing" constant="-20" id="Qft-UR-Ckk"/>
+                            <constraint firstItem="KFY-I3-98v" firstAttribute="leading" secondItem="BXR-V7-zP3" secondAttribute="leadingMargin" id="ZQ6-lu-hX4"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="A3m-BG-zyF"/>
+                                <exclude reference="ZQ6-lu-hX4"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="people" selectedImage="tabbar" id="j4j-j3-zSh">
+                    <tabBarItem key="tabBarItem" title="" image="people" id="j4j-j3-zSh">
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="searchBar" destination="XZG-mc-qbU" id="Kg6-9S-WoG"/>
+                        <outlet property="tableView" destination="KFY-I3-98v" id="Q9c-tv-wsW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y6d-cc-olo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-59" y="955"/>
+            <point key="canvasLocation" x="-59" y="950"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="5Id-Jw-rDh">
@@ -614,11 +689,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add" width="42" height="42"/>
         <image name="camera" width="40" height="30"/>
+        <image name="check" width="42" height="42"/>
         <image name="message" width="30" height="30"/>
         <image name="message-7" width="30" height="30"/>
         <image name="people" width="42" height="42"/>
-        <image name="tabbar" width="321" height="49"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ecS-QQ-s7e"/>

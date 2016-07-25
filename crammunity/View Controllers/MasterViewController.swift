@@ -24,7 +24,7 @@ class MasterViewController: UITableViewController {
 
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_:)))
 		self.navigationItem.rightBarButtonItem = addButton
-		_addHandle = Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
+		_addHandle = Constants.Firebase.UserArray.child((Constants.currentUser!.uid)).child("classes").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
 			self.classes.insert(snapshot, atIndex: 0)
 			let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 			self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -37,7 +37,7 @@ class MasterViewController: UITableViewController {
 //			self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 //			
 //		})
-		_removeHandle = Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
+		_removeHandle = Constants.Firebase.UserArray.child((Constants.currentUser!.uid)).child("classes").observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
 			var i = 0
 			for snap in self.classes{
 				if FirebaseHelper.getStringFromDataSnapshot(Constants.ClassName, snapshot: snap) == FirebaseHelper.getStringFromDataSnapshot(Constants.ClassName, snapshot: snapshot)
@@ -133,7 +133,7 @@ class MasterViewController: UITableViewController {
 	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 		if editingStyle == .Delete {
 			Constants.Firebase.CramClassArray.child(classes[indexPath.row].key).removeValue()
-			Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").child(classes[indexPath.row].key).removeValue()
+			Constants.Firebase.UserArray.child((Constants.currentUser!.uid)).child("classes").child(classes[indexPath.row].key).removeValue()
 			classes.removeAtIndex(indexPath.row)
 		    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 		} else if editingStyle == .Insert {
