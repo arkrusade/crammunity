@@ -13,21 +13,27 @@ class FriendSearchViewCell: UITableViewCell {
 	@IBOutlet weak var friendButton: UIButton!
 	
 	var user = FIRDataSnapshot()
+	var isFriend = false
 	
 	@IBOutlet weak var usernameLabel: UILabel!
 	
+	var delegate: FriendSearchViewCellDelegate?
+	
 	@IBAction func onFriendButtonTapped(sender: UIButton) {
-		print("adding friend")
-		Constants.Firebase.UserArray.child("sD2ME5OT5Og5n2EreB6MUxTVCMs1").observeEventType(.Value) { (snapshot) -> Void in
-				FirebaseHelper.addFriend(snapshot)
-			
+		if !isFriend
+		{
+			print("adding friends between cur: \(Constants.currentUser.uid)) and other: \(user.key)")
+			delegate?.cell(self, didSelectFriendUser: user)
+//			isFriend = true
 		}
-		
+		else
+		{
+			print("removing friends between cur: \(Constants.currentUser.uid)) and other: \(user.key)")
+			delegate?.cell(self, didSelectUnFriendUser: user)
+//			isFriend = false
+		}
 	}
 	
 	
-	func isFriendWithUser() -> Bool
-	{
-		return false
-	}
+
 }

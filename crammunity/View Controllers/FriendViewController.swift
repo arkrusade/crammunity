@@ -10,28 +10,37 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
+protocol FriendSearchViewCellDelegate: class {
+	func cell(cell: FriendSearchViewCell, didSelectFriendUser user: FIRDataSnapshot)
+	func cell(cell: FriendSearchViewCell, didSelectUnFriendUser user: FIRDataSnapshot)
+}
+
 class FriendViewController: UIViewController
 {
 	
 	@IBOutlet weak var searchBar: UISearchBar!
-	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var notFriendTableView: UITableView!
+	@IBOutlet weak var friendTableView: UITableView!
 	
-	var users: [FIRDataSnapshot]?
-	
-	/*
-	This is a local cache. It stores all the users this user is following.
-	It is used to update the UI immediately upon user interaction, instead of
-	having to wait for a server response.
-	*/
-	var followingUsers: [FIRUser]? {
-		didSet {
-			/**
-			the list of following users may be fetched after the tableView has displayed
-			cells. In this case, we reload the data to reflect "following" status
-			*/
-			tableView.reloadData()
+	var notFriends: [FIRDataSnapshot] = []{
+		didSet{
+			notFriendTableView.reloadData()
 		}
 	}
+	var friends: [FIRDataSnapshot] = []{
+		didSet{
+			friendTableView.reloadData()
+		}
+	}
+	var friendsUIDS: [String] = []
+
+	
+	var usersRef: FIRDatabaseReference!
+	var friendsRef: FIRDatabaseReference!
+	var _usersHandle: FIRDatabaseHandle!
+	var _friendsHandle: FIRDatabaseHandle!
+	var _removeFriendsHandle: FIRDatabaseHandle!
+
 	
 	// the current parse query
 	var query: FIRDatabaseQuery? {
@@ -78,52 +87,134 @@ class FriendViewController: UIViewController
 //	}
 	
 	// MARK: View Lifecycle
-	
-	override func viewWillAppear(animated: Bool) {
-		super.viewWillAppear(animated)
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		
-//		state = .DefaultMode
+		state = .DefaultMode
+
+		usersRef = Constants.Firebase.UserArray
+		friendsRef = Constants.Firebase.UserArray.child((Constants.currentUser.uid)).child("friends")
 		
-		// fill the cache of a user's followees
-//		ParseHelper.getFollowingUsersForUser(PFUser.Constants.currentUser()!) { (results: [PFObject]?, error: NSError?) -> Void in
-//			if let error = error {
-//				ErrorHandling.defaultErrorHandler(error)
-//			}
-//			let relations = results ?? []
-//			// use map to extract the User from a Follow object
-//			self.followingUsers = relations.map {
-//				$0[ParseHelper.ParseFollowToUser] as! PFUser
-//			}
-//			
-//		}
+		//find users
+		_friendsHandle = friendsRef!.observeEventType(.ChildAdded, withBlock: { snapshot in
+			if snapshot.exists() {
+				self.friends.append(snapshot)
+				self.friendsUIDS.append(snapshot.key)
+				
+				self.notFriends = self.notFriends.filter({$0.key != snapshot.key})
+				//				self.friendTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.friends.count-1, inSection: 0)], withRowAnimation: .None)
+			} else {
+				print("error in friend loading")
+			}
+		})
+		_removeFriendsHandle = friendsRef!.observeEventType(.ChildRemoved, withBlock: { snapshot in
+			if snapshot.exists() {
+				self.friends = self.friends.filter({$0.key != snapshot.key})
+				self.friendsUIDS = self.friendsUIDS.filter({$0 != snapshot.key})
+
+				self.notFriends.append(snapshot)
+				//				self.friendTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.friends.count-1, inSection: 0)], withRowAnimation: .None)
+//				self.friendTableView.reloadData()
+				
+			} else {
+				print("error in friend removing")
+			}
+		})
+		
+		_usersHandle = usersRef!.observeEventType(.ChildAdded, withBlock: { snapshot in
+			if snapshot.exists() {
+				if !(snapshot.key == Constants.currentUser.uid || self.friendsUIDS.contains(snapshot.key))
+				{
+					self.notFriends.append(snapshot)
+					
+//					self.notFriendTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.notFriends.count-1, inSection: 0)], withRowAnimation: .None)
+					
+//					self.friendTableView.reloadData()
+//					self.tableView.reloadData()
+				}
+			} else {
+				print("error in user loading")
+			}
+		})
+		
+		
+		
 	}
 	
+	
+	deinit {
+		self.usersRef!.removeAllObservers()
+		self.friendsRef!.removeAllObservers()
+	}
 }
 
 // MARK: TableView Data Source
 
 extension FriendViewController: UITableViewDataSource {
-	
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+			// 1
+			// Return the number of sections.
+			return 1
+	}
+
+	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//		let headerCell: CustomHeaderCell
+		if tableView == self.notFriendTableView
+		{
+//			headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! CustomHeaderCell
+//			headerCell.titleLabel.text = "Users"
+			
+			return "Users"
+		}
+		else
+		{
+			return "Friends"
+		}
+		
+		
+	}
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 5
-		return self.users?.count ?? 0
+		let count: Int?
+		if tableView == self.notFriendTableView
+		{
+			count = self.notFriends.count
+		}
+		else
+		{
+			count = self.friends.count
+		}
+		return count!
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("UserCell")// as! FriendTableViewCell
+		let cell: FriendSearchViewCell
 		
-//		let user = users![indexPath.row]
-//		cell.user = user
-//		
-//		if let followingUsers = followingUsers {
-//			// check if current user is already following displayed user
-//			// change button appereance based on result
-//			cell.canFollow = !followingUsers.contains(user)
-//		}
-//		
-//		cell.delegate = self
-//		
-		return cell!
+		if tableView == self.notFriendTableView {
+			cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! FriendSearchViewCell
+			let user = notFriends[indexPath.row]
+			cell.user = user
+			cell.usernameLabel.text = user.value!.valueForKey("username") as? String
+			cell.imageView?.image = UIImage(named: "ic_account_circle")
+			cell.delegate = self
+			
+			cell.isFriend = false
+			return cell
+		}
+		
+		else
+		{ 
+			cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendSearchViewCell
+			let friend = friends[indexPath.row]
+			cell.user = friend
+			cell.usernameLabel.text = friend.value!.valueForKey("username") as? String
+			cell.imageView?.image = UIImage(named: "ic_account_circle")
+			cell.delegate = self
+			
+			cell.isFriend = true
+			return cell
+		}
+		
+		
 	}
 }
 
@@ -135,6 +226,7 @@ extension FriendViewController: UISearchBarDelegate {
 		searchBar.setShowsCancelButton(true, animated: true)
 		state = .SearchMode
 	}
+	
 	
 	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
@@ -151,20 +243,20 @@ extension FriendViewController: UISearchBarDelegate {
 
 // MARK: FriendTableViewCell Delegate
 
-//extension FriendViewController: FriendTableViewCellDelegate {
-//	
-//	func cell(cell: FriendTableViewCell, didSelectFollowUser user: PFUser) {
-//		ParseHelper.addFollowRelationshipFromUser(PFUser.Constants.currentUser()!, toUser: user)
-//		// update local cache
-//		followingUsers?.append(user)
-//	}
-//	
-//	func cell(cell: FriendTableViewCell, didSelectUnfollowUser user: PFUser) {
-//		if let followingUsers = followingUsers {
-//			ParseHelper.removeFollowRelationshipFromUser(PFUser.Constants.currentUser()!, toUser: user)
-//			// update local cache
-//			self.followingUsers = followingUsers.filter({$0 != user})
-//		}
-//	}
-//	
-//}
+extension FriendViewController: FriendSearchViewCellDelegate {
+	
+	func cell(cell: FriendSearchViewCell, didSelectFriendUser user: FIRDataSnapshot) {
+		//set friends in database
+		Constants.Firebase.UserArray.child(user.key).observeSingleEventOfType(.Value) { (snapshot) -> Void in
+			FirebaseHelper.addFriend(snapshot)
+		}
+
+	}
+	
+	func cell(cell: FriendSearchViewCell, didSelectUnFriendUser user: FIRDataSnapshot) {
+		Constants.Firebase.UserArray.child(user.key).child("friends").child(user.key).observeSingleEventOfType(.Value) { (snapshot) -> Void in
+			FirebaseHelper.removeFriend(snapshot)
+		}
+	}
+	
+}

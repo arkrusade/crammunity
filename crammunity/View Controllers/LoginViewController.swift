@@ -106,7 +106,7 @@ class LoginViewController: UIViewController {
 	{
 		MeasurementHelper.sendLoginEvent()
 		
-		Constants.Firebase.UserArray.child((Constants.currentUser!.uid)).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+		Constants.Firebase.UserArray.child((Constants.currentUser.uid)).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
 			// Get username value
 				AppState.sharedInstance.displayName = snapshot.childSnapshotForPath("username").value! as? String
 			})

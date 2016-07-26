@@ -58,8 +58,14 @@ class FirebaseHelper
 		let friendUsername = friendSnap.value!.valueForKey("username") as! String
 		let friendData = ["username": friendUsername]
 		let userData = ["username": AppState.sharedInstance.displayName!]
-		Constants.Firebase.UserArray.child(Constants.currentUser!.uid).child("friends").child(friendSnap.key).setValue(friendData)
-		Constants.Firebase.UserArray.child(friendSnap.key).child("friends").child(Constants.currentUser!.uid).setValue(userData)
+		Constants.Firebase.UserArray.child(Constants.currentUser.uid).child("friends").child(friendSnap.key).setValue(friendData)
+		Constants.Firebase.UserArray.child(friendSnap.key).child("friends").child(Constants.currentUser.uid).setValue(userData)
+	}
+	
+	static func removeFriend(friendSnap: FIRDataSnapshot)
+	{
+		Constants.Firebase.UserArray.child(Constants.currentUser.uid).child("friends").child(friendSnap.key).removeValue()
+		Constants.Firebase.UserArray.child(friendSnap.key).child("friends").child(Constants.currentUser.uid).removeValue()
 	}
 	
 	
@@ -81,8 +87,8 @@ class FirebaseHelper
 		classRef.setValue(classData)
 		
 //		addUserToClass((Constants.currentUser)!, cramClass: classRef)
-		classRef.child("members").child((Constants.currentUser)!.uid).child("username").setValue(AppState.sharedInstance.displayName!)
-		Constants.Firebase.UserArray.child((Constants.currentUser)!.uid).child("classes").child(classRef.key).child(Constants.ClassName).setValue(name)
+		classRef.child("members").child((Constants.currentUser).uid).child("username").setValue(AppState.sharedInstance.displayName!)
+		Constants.Firebase.UserArray.child((Constants.currentUser).uid).child("classes").child(classRef.key).child(Constants.ClassName).setValue(name)
 		
 		print("created class \(name)")
 		return classRef
