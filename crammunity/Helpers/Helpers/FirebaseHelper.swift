@@ -14,8 +14,11 @@ import FirebaseAuth
 
 class FirebaseHelper
 {
-	
-	//MARK: Queries
+	static let lastU = UnicodeScalar(1114111)
+	static let usersRef = Constants.Firebase.UserArray
+	static let friendsRef = usersRef.child((FIRAuth.auth()?.currentUser!.uid)!).child("friends")
+
+
 	//TODO: add completion with error
 	static func getStringFromDataSnapshot(key: String, snapshot: FIRDataSnapshot) -> String
 	{
@@ -24,18 +27,41 @@ class FirebaseHelper
 		return name.description
 //		return ""
 	}
+	//MARK: Queries
+
+	static func usersQuery() -> FIRDatabaseQuery
+	{
+		return usersRef.queryOrderedByChild("username").queryLimitedToFirst(20)
+	}
+	static func usersQuery(limitedTo: UInt) -> FIRDatabaseQuery
+	{
+		return usersRef.queryOrderedByChild("username").queryLimitedToFirst(limitedTo)
+	}
+	static func usersQuery(byUsername: String) -> FIRDatabaseQuery
+	{
+		return usersRef.queryOrderedByChild("username").queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)").queryLimitedToFirst(20)
+	}
+	static func usersQuery(limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
+	{
+		return usersRef.queryOrderedByChild("username").queryLimitedToFirst(limitedTo).queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
+	}
 	
-	static func allUsers() -> FIRDatabaseQuery
+	
+	static func friendsQuery() -> FIRDatabaseQuery
 	{
-		return Constants.Firebase.UserArray.queryOrderedByChild("username")
+		return friendsRef.queryOrderedByChild("username").queryLimitedToFirst(20)
 	}
-	static func allUsers(limitedTo: UInt) -> FIRDatabaseQuery
+	static func friendsQuery(limitedTo: UInt) -> FIRDatabaseQuery
 	{
-		return Constants.Firebase.UserArray.queryOrderedByChild("username").queryLimitedToFirst(limitedTo)
+		return friendsRef.queryOrderedByChild("username").queryLimitedToFirst(limitedTo)
 	}
-	static func allUsers(byUsername: String) -> FIRDatabaseQuery
+	static func friendsQuery(byUsername: String) -> FIRDatabaseQuery
 	{
-		return Constants.Firebase.UserArray.queryOrderedByChild("username")
+		return friendsRef.queryOrderedByChild("username").queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
+	}
+	static func friendsQuery(limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
+	{
+		return friendsRef.queryOrderedByChild("username").queryLimitedToFirst(limitedTo).queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
 	}
 	
 	//MARK: Structure organizers
@@ -58,14 +84,14 @@ class FirebaseHelper
 		let friendUsername = friendSnap.value!.valueForKey("username") as! String
 		let friendData = ["username": friendUsername]
 		let userData = ["username": AppState.sharedInstance.displayName!]
-		Constants.Firebase.UserArray.child(Constants.currentUser.uid).child("friends").child(friendSnap.key).setValue(friendData)
-		Constants.Firebase.UserArray.child(friendSnap.key).child("friends").child(Constants.currentUser.uid).setValue(userData)
+		usersRef.child((FIRAuth.auth()?.currentUser!.uid)!).child("friends").child(friendSnap.key).setValue(friendData)
+		usersRef.child(friendSnap.key).child("friends").child((FIRAuth.auth()?.currentUser!.uid)!).setValue(userData)
 	}
 	
 	static func removeFriend(friendSnap: FIRDataSnapshot)
 	{
-		Constants.Firebase.UserArray.child(Constants.currentUser.uid).child("friends").child(friendSnap.key).removeValue()
-		Constants.Firebase.UserArray.child(friendSnap.key).child("friends").child(Constants.currentUser.uid).removeValue()
+		usersRef.child((FIRAuth.auth()?.currentUser!.uid)!).child("friends").child(friendSnap.key).removeValue()
+		usersRef.child(friendSnap.key).child("friends").child((FIRAuth.auth()?.currentUser!.uid)!).removeValue()
 	}
 	
 	
@@ -73,7 +99,7 @@ class FirebaseHelper
 //	static func addUserToClass(user: FIRUser, cramClass: FIRDatabaseReference)
 //	{
 //		cramClass.child("members").child(user.uid).child("username").setValue(AppState.sharedInstance.displayName!)
-//		Constants.Firebase.UserArray.child(user.uid).child("classes").child(cramClass.key).setValue(cramClass.child(Constants.ClassName))
+//		usersRef.child(user.uid).child("classes").child(cramClass.key).setValue(cramClass.child(Constants.ClassName))
 //	}
 //	static func addUserToClass(user: FIRUser, cramClassUID: String)
 //	{
@@ -86,9 +112,9 @@ class FirebaseHelper
 		let classRef = Constants.Firebase.CramClassArray.childByAutoId()
 		classRef.setValue(classData)
 		
-//		addUserToClass((Constants.currentUser)!, cramClass: classRef)
-		classRef.child("members").child((Constants.currentUser).uid).child("username").setValue(AppState.sharedInstance.displayName!)
-		Constants.Firebase.UserArray.child((Constants.currentUser).uid).child("classes").child(classRef.key).child(Constants.ClassName).setValue(name)
+//		addUserToClass((FIRAuth.auth()?.currentUser!)!, cramClass: classRef)
+		classRef.child("members").child((FIRAuth.auth()?.currentUser!)!.uid).child("username").setValue(AppState.sharedInstance.displayName!)
+		usersRef.child((FIRAuth.auth()?.currentUser!)!.uid).child("classes").child(classRef.key).child(Constants.ClassName).setValue(name)
 		
 		print("created class \(name)")
 		return classRef

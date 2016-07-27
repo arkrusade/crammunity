@@ -330,7 +330,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 			let asset = assets.firstObject
 			asset?.requestContentEditingInputWithOptions(nil, completionHandler: { (contentEditingInput, info) in
 				let imageFile = contentEditingInput?.fullSizeImageURL
-				let filePath = "\(Constants.currentUser.uid)/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000))/\(referenceUrl.lastPathComponent!)"
+				let filePath = "\(FIRAuth.auth()?.currentUser!.uid)/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000))/\(referenceUrl.lastPathComponent!)"
 				self.storageRef.child(filePath)
 					.putFile(imageFile!, metadata: nil) { (metadata, error) in
 						if let error = error {
@@ -343,7 +343,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		} else {
 			let image = info[UIImagePickerControllerOriginalImage] as! UIImage
 			let imageData = UIImageJPEGRepresentation(image, 0.8)
-			let imagePath = Constants.currentUser.uid +
+			let imagePath = (FIRAuth.auth()?.currentUser!.uid)! +
 				"/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000)).jpg"
 			let metadata = FIRStorageMetadata()
 			metadata.contentType = "image/jpeg"

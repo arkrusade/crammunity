@@ -9,7 +9,8 @@
 import UIKit
 import Firebase
 class ProfileViewController: UIViewController {
-	
+	var email: String = ""
+	var pass: String = "asdfqwerasdfqwer"
 	@IBAction func signOut(sender: AnyObject) {
 		let firebaseAuth = FIRAuth.auth()
 		do {
@@ -23,6 +24,21 @@ class ProfileViewController: UIViewController {
 		}
 	}
 	
+	@IBAction func makeRandomUser(sender: AnyObject) {
+		for i in 0...5
+		{
+			email = "user\(i)@gmail.com"
+			FIRAuth.auth()?.createUserWithEmail(email, password: pass) { (user, error) in
+				if let error = error {
+					print("Create user failed:", error.localizedDescription)
+				} else {
+					let username = self.email
+					Constants.Firebase.UserArray.child(user!.uid).setValue(["username": username])
+					print ("Created user with uid: \(user!.uid) and username: \(username)")
+				}
+			}
+		}
+	}
 	override func viewDidLoad() {
         super.viewDidLoad()
 

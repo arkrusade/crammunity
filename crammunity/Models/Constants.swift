@@ -45,7 +45,7 @@ struct Constants {
 		static let remove = UIImage(named: "remove")
 
 	}
-	static let currentUser = (FIRAuth.auth()?.currentUser)!
+//	static let currentUser = (FIRAuth.auth()?.currentUser)!
 //	struct User {
 		static let Email = "email"
 		static let Username = "username"

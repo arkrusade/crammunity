@@ -218,9 +218,18 @@
                                     <action selector="signOut:" destination="dXk-cQ-qN8" eventType="touchUpInside" id="9pT-oi-ytM"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Q0-Rl-rmB">
+                                <rect key="frame" x="265" y="323" width="71" height="30"/>
+                                <state key="normal" title="make user"/>
+                                <connections>
+                                    <action selector="makeRandomUser:" destination="dXk-cQ-qN8" eventType="touchUpInside" id="FKn-Cs-VjN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="5Q0-Rl-rmB" firstAttribute="top" secondItem="eFG-pR-ryj" secondAttribute="bottom" constant="8" id="Gee-NH-XCd"/>
+                            <constraint firstItem="5Q0-Rl-rmB" firstAttribute="centerX" secondItem="9K1-Nh-Yfh" secondAttribute="centerX" id="Hhf-2q-dbB"/>
                             <constraint firstItem="eFG-pR-ryj" firstAttribute="centerX" secondItem="9K1-Nh-Yfh" secondAttribute="centerX" id="JPQ-8X-Aca"/>
                             <constraint firstItem="eFG-pR-ryj" firstAttribute="centerY" secondItem="9K1-Nh-Yfh" secondAttribute="centerY" id="PVA-9x-ANf"/>
                         </constraints>
@@ -233,10 +242,10 @@
             </objects>
             <point key="canvasLocation" x="809" y="-691"/>
         </scene>
-        <!--FriendViewController-->
+        <!--FriendsViewController-->
         <scene sceneID="i3g-GB-NDO">
             <objects>
-                <viewController title="FriendViewController" id="khX-iI-CWl" customClass="FriendViewController" customModule="crammunity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="FriendsViewController" id="khX-iI-CWl" customClass="FriendsViewController" customModule="crammunity" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ce3-Tj-O3g"/>
                         <viewControllerLayoutGuide type="bottom" id="ywP-6H-qCX"/>
@@ -248,6 +257,9 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="XZG-mc-qbU">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="khX-iI-CWl" id="AwN-B5-bw8"/>
+                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KFY-I3-98v">
                                 <rect key="frame" x="0.0" y="308" width="600" height="243"/>

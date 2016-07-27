@@ -76,6 +76,7 @@ class SignUpViewController: UIViewController {
 		print ("Created user with uid: \(user!.uid) and username: \(username)")
 		
 		//TODO: add profile changing, change pass and profile picture (first get ability to add one)
+		//TODO: and check for username/email duplicate
 //		let changeRequest = user!.profileChangeRequest()
 //		changeRequest.displayName = username
 //		changeRequest.commitChangesWithCompletion(){ (error) in

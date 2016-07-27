@@ -22,13 +22,13 @@ class FriendSearchViewCell: UITableViewCell {
 	@IBAction func onFriendButtonTapped(sender: UIButton) {
 		if !isFriend
 		{
-			print("adding friends between cur: \(Constants.currentUser.uid)) and other: \(user.key)")
+			print("adding friends between cur: \(FIRAuth.auth()?.currentUser!.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectFriendUser: user)
 			friendButton.setImage(Constants.Images.add, forState: .Normal)
 		}
 		else
 		{
-			print("removing friends between cur: \(Constants.currentUser.uid)) and other: \(user.key)")
+			print("removing friends between cur: \(FIRAuth.auth()?.currentUser!.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectUnFriendUser: user)
 			friendButton.setImage(Constants.Images.remove, forState: .Normal)
 		}
