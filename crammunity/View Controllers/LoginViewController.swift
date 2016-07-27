@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
 		super.viewDidLoad()
 		print("login view loaded")
 		testLogin()
+		
 	}
 	//TODO: remove testlogin
 	func testLogin()

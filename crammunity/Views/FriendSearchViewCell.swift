@@ -24,13 +24,13 @@ class FriendSearchViewCell: UITableViewCell {
 		{
 			print("adding friends between cur: \(Constants.currentUser.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectFriendUser: user)
-//			isFriend = true
+			friendButton.setImage(Constants.Images.add, forState: .Normal)
 		}
 		else
 		{
 			print("removing friends between cur: \(Constants.currentUser.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectUnFriendUser: user)
-//			isFriend = false
+			friendButton.setImage(Constants.Images.remove, forState: .Normal)
 		}
 	}
 	

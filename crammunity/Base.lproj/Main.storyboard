@@ -199,10 +199,10 @@
             </objects>
             <point key="canvasLocation" x="1601" y="129"/>
         </scene>
-        <!--Item 2-->
+        <!--Profile View Controller-->
         <scene sceneID="qPh-0o-zdM">
             <objects>
-                <viewController id="dXk-cQ-qN8" sceneMemberID="viewController">
+                <viewController id="dXk-cQ-qN8" customClass="ProfileViewController" customModule="crammunity" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="f0s-ZY-RFo"/>
                         <viewControllerLayoutGuide type="bottom" id="oDC-Wk-1vb"/>
@@ -210,9 +210,24 @@
                     <view key="view" contentMode="scaleToFill" id="9K1-Nh-Yfh">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFG-pR-ryj">
+                                <rect key="frame" x="277" y="285" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="signOut:" destination="dXk-cQ-qN8" eventType="touchUpInside" id="9pT-oi-ytM"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="eFG-pR-ryj" firstAttribute="centerX" secondItem="9K1-Nh-Yfh" secondAttribute="centerX" id="JPQ-8X-Aca"/>
+                            <constraint firstItem="eFG-pR-ryj" firstAttribute="centerY" secondItem="9K1-Nh-Yfh" secondAttribute="centerY" id="PVA-9x-ANf"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="o5H-R3-GMu"/>
+                    <tabBarItem key="tabBarItem" title="" image="profile" id="o5H-R3-GMu">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BVP-mw-8hl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -281,7 +296,6 @@
                                                         <constraint firstAttribute="width" constant="40" id="lQz-YD-Lgu"/>
                                                     </constraints>
                                                     <state key="normal" title="Button" image="add"/>
-                                                    <state key="selected" image="check"/>
                                                     <connections>
                                                         <action selector="onFriendButtonTapped:" destination="CWt-ur-bfT" eventType="touchUpInside" id="7ts-Y0-3Ci"/>
                                                     </connections>
@@ -351,8 +365,7 @@
                                                         <constraint firstAttribute="width" constant="40" id="jb1-sk-7uB"/>
                                                         <constraint firstAttribute="height" constant="40" id="yJb-Lx-ed7"/>
                                                     </constraints>
-                                                    <state key="normal" title="Button" image="add"/>
-                                                    <state key="selected" image="check"/>
+                                                    <state key="normal" title="Button" image="remove"/>
                                                     <connections>
                                                         <action selector="onFriendButtonTapped:" destination="4Fr-I3-xNI" eventType="touchUpInside" id="fDc-vS-rbJ"/>
                                                     </connections>
@@ -797,10 +810,11 @@
     <resources>
         <image name="add" width="42" height="42"/>
         <image name="camera" width="40" height="30"/>
-        <image name="check" width="42" height="42"/>
         <image name="message" width="30" height="30"/>
         <image name="message-7" width="30" height="30"/>
         <image name="people" width="42" height="42"/>
+        <image name="profile" width="30" height="30"/>
+        <image name="remove" width="42" height="42"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ecS-QQ-s7e"/>

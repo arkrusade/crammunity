@@ -37,6 +37,14 @@ struct Constants {
 		static let UserArray = FIRDatabase.database().reference().child("users")
 	}
 	
+	struct Images {
+		static let add = UIImage(named: "add")
+		static let camera = UIImage(named: "camera")
+		static let check = UIImage(named: "check")
+		static let defaultProfile = UIImage(named: "ic_account_circle")
+		static let remove = UIImage(named: "remove")
+
+	}
 	static let currentUser = (FIRAuth.auth()?.currentUser)!
 //	struct User {
 		static let Email = "email"

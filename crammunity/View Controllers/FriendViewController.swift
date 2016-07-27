@@ -35,8 +35,8 @@ class FriendViewController: UIViewController
 	var friendsUIDS: [String] = []
 
 	
-	var usersRef: FIRDatabaseReference!
-	var friendsRef: FIRDatabaseReference!
+	var usersRef: FIRDatabaseReference?
+	var friendsRef: FIRDatabaseReference?
 	var _usersHandle: FIRDatabaseHandle!
 	var _friendsHandle: FIRDatabaseHandle!
 	var _removeFriendsHandle: FIRDatabaseHandle!
@@ -143,8 +143,13 @@ class FriendViewController: UIViewController
 	
 	
 	deinit {
-		self.usersRef!.removeAllObservers()
-		self.friendsRef!.removeAllObservers()
+		if let usersRef = usersRef {
+			usersRef.removeAllObservers()
+		}
+		if let friendsRef = friendsRef
+		{
+			friendsRef.removeAllObservers()
+		}
 	}
 }
 
@@ -194,7 +199,7 @@ extension FriendViewController: UITableViewDataSource {
 			let user = notFriends[indexPath.row]
 			cell.user = user
 			cell.usernameLabel.text = user.value!.valueForKey("username") as? String
-			cell.imageView?.image = UIImage(named: "ic_account_circle")
+			cell.imageView?.image = Constants.Images.defaultProfile
 			cell.delegate = self
 			
 			cell.isFriend = false
@@ -207,7 +212,7 @@ extension FriendViewController: UITableViewDataSource {
 			let friend = friends[indexPath.row]
 			cell.user = friend
 			cell.usernameLabel.text = friend.value!.valueForKey("username") as? String
-			cell.imageView?.image = UIImage(named: "ic_account_circle")
+			cell.imageView?.image = Constants.Images.defaultProfile
 			cell.delegate = self
 			
 			cell.isFriend = true

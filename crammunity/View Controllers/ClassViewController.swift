@@ -265,7 +265,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		
 		
 		if let imageUrl = message[Constants.MessageFields.imageUrl] {
-			var image = UIImage(named: "ic_account_circle")
+			var image = Constants.Images.defaultProfile
 			if imageUrl.hasPrefix("gs://") {
 				FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX){ (data, error) in
 					if let error = error {
@@ -292,7 +292,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 			if name != nil
 			{
 				cell!.textLabel?.text = name + ": " + text
-				cell!.imageView?.image = UIImage(named: "ic_account_circle")
+				cell!.imageView?.image = Constants.Images.defaultProfile
 				if let photoUrl = message[Constants.MessageFields.photoUrl], url = NSURL(string:photoUrl), data = NSData(contentsOfURL: url) {
 					cell!.imageView?.image = UIImage(data: data)
 				}

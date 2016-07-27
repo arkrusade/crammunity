@@ -11,4 +11,5 @@ import UIKit
 
 class ClassViewCell: UITableViewCell {
 	var thisClass = Class()
+	//TODO: add number of ppl preview, unread messages
 }
