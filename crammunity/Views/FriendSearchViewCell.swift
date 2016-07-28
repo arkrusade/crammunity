@@ -33,7 +33,4 @@ class FriendSearchViewCell: UITableViewCell {
 			friendButton.setImage(Constants.Images.remove, forState: .Normal)
 		}
 	}
-	
-	
-
 }

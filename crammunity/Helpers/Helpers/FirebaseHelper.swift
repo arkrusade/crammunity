@@ -64,6 +64,24 @@ class FirebaseHelper
 		return friendsRef.queryOrderedByChild("username").queryLimitedToFirst(limitedTo).queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
 	}
 	
+	
+	static func crammatesQuery(classRef: FIRDatabaseReference) -> FIRDatabaseQuery
+	{
+		return classRef.child("members").queryOrderedByChild("username").queryLimitedToFirst(20)
+	}
+	static func crammatesQuery(classRef: FIRDatabaseReference, limitedTo: UInt) -> FIRDatabaseQuery
+	{
+		return classRef.child("members").queryOrderedByChild("username").queryLimitedToFirst(limitedTo)
+	}
+	static func crammatesQuery(classRef: FIRDatabaseReference, byUsername: String) -> FIRDatabaseQuery
+	{
+		return classRef.child("members").queryOrderedByChild("username").queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
+	}
+	static func crammatesQuery(classRef: FIRDatabaseReference, limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
+	{
+		return classRef.child("members").queryOrderedByChild("username").queryLimitedToFirst(limitedTo).queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
+	}
+
 	//MARK: Structure organizers
 	static func createUser(email: String, pw: String)
 	{
@@ -95,17 +113,31 @@ class FirebaseHelper
 	}
 	
 	
-	//TODO: fix user add to class
-//	static func addUserToClass(user: FIRUser, cramClass: FIRDatabaseReference)
-//	{
-//		cramClass.child("members").child(user.uid).child("username").setValue(AppState.sharedInstance.displayName!)
-//		usersRef.child(user.uid).child("classes").child(cramClass.key).setValue(cramClass.child(Constants.ClassName))
-//	}
-//	static func addUserToClass(user: FIRUser, cramClassUID: String)
-//	{
-//		let classRef = Constants.Firebase.CramClassArray.child(cramClassUID)
-//		addUserToClass(user, cramClass: classRef)
-//	}
+	static func addUserToClass(user: FIRDataSnapshot, cramClass: FIRDatabaseReference)
+	{
+		var username = ""
+		username = user.value!.valueForKey("username") as! String
+		cramClass.child("members").child(user.key).child("username").setValue(username)
+		var className: String = ""
+		cramClass.observeSingleEventOfType(.Value, withBlock: {(snapshot) -> Void in
+			className = snapshot.value!.valueForKey("className") as! String
+		})
+		usersRef.child(user.key).child("classes").child(cramClass.key).setValue(className)
+	}
+	static func addUserToClass(user: FIRDataSnapshot, cramClassUID: String)
+	{
+		let classRef = Constants.Firebase.CramClassArray.child(cramClassUID)
+		addUserToClass(user, cramClass: classRef)
+	}
+	
+	static func removeUserFromClass(user: FIRDataSnapshot, cramClass: FIRDatabaseReference)
+	{
+		cramClass.child("members").child(user.key).child("username").removeValue()
+		
+		usersRef.child(user.key).child("classes").child(cramClass.key).removeValue()
+	}
+	
+	
 	static func createClass(name: String) -> FIRDatabaseReference
 	{
 		let classData = [Constants.ClassName: name]

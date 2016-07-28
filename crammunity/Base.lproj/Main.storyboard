@@ -185,7 +185,7 @@
                         <attributedString key="attributedTitle">
                             <fragment content="Refreshing">
                                 <attributes>
-                                    <font key="NSFont" metaFont="controlContent" size="11"/>
+                                    <font key="NSFont" metaFont="smallSystem"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -516,15 +516,22 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="61s-Nx-1Lh">
+                                <rect key="frame" x="277" y="257" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XUJ-hj-nnp" firstAttribute="top" secondItem="tl8-Bd-CLF" secondAttribute="bottom" constant="70" id="2ji-d9-Tcn"/>
                             <constraint firstItem="gG2-J1-Dhs" firstAttribute="top" secondItem="qqu-ao-Zla" secondAttribute="bottom" constant="20" id="36o-SH-s6Y"/>
                             <constraint firstItem="XUJ-hj-nnp" firstAttribute="leading" secondItem="pAu-pX-6Vb" secondAttribute="trailing" constant="23" id="DgY-X5-XfH"/>
+                            <constraint firstItem="qqu-ao-Zla" firstAttribute="top" secondItem="61s-Nx-1Lh" secondAttribute="bottom" constant="60" id="G7l-dp-rEg"/>
                             <constraint firstItem="gG2-J1-Dhs" firstAttribute="centerX" secondItem="BxS-li-KNY" secondAttribute="centerX" id="GJu-37-cba"/>
                             <constraint firstItem="XUJ-hj-nnp" firstAttribute="top" secondItem="tl8-Bd-CLF" secondAttribute="bottom" constant="188" id="HEC-og-Ubf"/>
+                            <constraint firstItem="61s-Nx-1Lh" firstAttribute="centerX" secondItem="qqu-ao-Zla" secondAttribute="centerX" id="KLS-zs-c37"/>
                             <constraint firstItem="XUJ-hj-nnp" firstAttribute="centerX" secondItem="BxS-li-KNY" secondAttribute="centerX" constant="40" id="KVx-tL-cdy"/>
+                            <constraint firstItem="61s-Nx-1Lh" firstAttribute="top" secondItem="XUJ-hj-nnp" secondAttribute="bottom" constant="60" id="MZy-xN-eiE"/>
                             <constraint firstItem="qqu-ao-Zla" firstAttribute="width" secondItem="XUJ-hj-nnp" secondAttribute="width" id="abb-5J-Gbc"/>
                             <constraint firstItem="tl8-Bd-CLF" firstAttribute="top" secondItem="A7M-Ru-19b" secondAttribute="bottom" constant="57" id="hpf-6z-ZhI"/>
                             <constraint firstItem="pAu-pX-6Vb" firstAttribute="centerY" secondItem="XUJ-hj-nnp" secondAttribute="centerY" id="j1x-hU-Oon"/>
@@ -543,6 +550,7 @@
                     </view>
                     <connections>
                         <outlet property="newClassNameTextField" destination="XUJ-hj-nnp" id="XDH-Tf-srY"/>
+                        <segue destination="Dgb-h4-BtI" kind="show" identifier="ClassCreationToCrammatesAddition" id="xKx-Go-cdV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0HY-T3-Sbs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -817,6 +825,226 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rgT-6K-t0g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="803" y="129"/>
+        </scene>
+        <!--Crammate Addition View Controller-->
+        <scene sceneID="Tf5-lb-KDV">
+            <objects>
+                <viewController id="Dgb-h4-BtI" customClass="CrammateAdditionViewController" customModule="crammunity" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Oam-Le-fSi"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nfh-d8-MVp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6xv-2w-BZN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yRl-9q-4f1">
+                                <rect key="frame" x="0.0" y="540" width="600" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="3Il-9C-DK8"/>
+                                </constraints>
+                                <state key="normal" title="Create Class"/>
+                                <connections>
+                                    <action selector="unwindToClassViewControllerFromCrammateAddition:" destination="Dgb-h4-BtI" eventType="touchUpInside" id="QIa-JL-bFm"/>
+                                </connections>
+                            </button>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="u6g-Kh-Ho8">
+                                <rect key="frame" x="0.0" y="20" width="600" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="fPQ-wt-Zsn"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Dgb-h4-BtI" id="siK-cg-HTU"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ucY-m1-7cN">
+                                <rect key="frame" x="0.0" y="300" width="600" height="240"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendHeader" id="cUh-y3-tX9" customClass="CustomHeaderCell" customModule="crammunity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cUh-y3-tX9" id="aJx-mq-tRy">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6XL-mB-tql">
+                                                    <rect key="frame" x="58" y="5" width="64" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="6XL-mB-tql" firstAttribute="leading" secondItem="aJx-mq-tRy" secondAttribute="leadingMargin" constant="50" id="1dB-sU-iNq"/>
+                                                <constraint firstItem="6XL-mB-tql" firstAttribute="centerY" secondItem="aJx-mq-tRy" secondAttribute="centerY" id="2Ea-HK-4tL"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="6XL-mB-tql" id="1gJ-Li-7Ua"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" id="NLn-Yc-erR" customClass="CrammateSearchViewCell" customModule="crammunity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NLn-Yc-erR" id="h4F-Ny-C2Y">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNO-VK-YJx">
+                                                    <rect key="frame" x="58" y="11" width="44" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0As-bY-RDS">
+                                                    <rect key="frame" x="539" y="2" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="1Nc-MH-pAT"/>
+                                                        <constraint firstAttribute="height" constant="40" id="QBs-Ua-hI0"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" image="add"/>
+                                                    <connections>
+                                                        <action selector="onAddCrammateButtonTapped:" destination="NLn-Yc-erR" eventType="touchUpInside" id="5S6-Bs-CpZ"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="bNO-VK-YJx" firstAttribute="centerY" secondItem="h4F-Ny-C2Y" secondAttribute="centerY" id="SfU-Y0-yiw"/>
+                                                <constraint firstItem="0As-bY-RDS" firstAttribute="centerY" secondItem="h4F-Ny-C2Y" secondAttribute="centerY" id="cmh-WM-D05"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="bNO-VK-YJx" secondAttribute="leading" constant="-50" id="lJ9-em-vLk"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="0As-bY-RDS" secondAttribute="trailing" constant="13" id="mxE-90-fYy"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addToClassButton" destination="0As-bY-RDS" id="XKO-3h-wsR"/>
+                                            <outlet property="usernameLabel" destination="bNO-VK-YJx" id="IGf-JM-z1S"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Dgb-h4-BtI" id="tPR-Ay-RHw"/>
+                                    <outlet property="delegate" destination="Dgb-h4-BtI" id="Q8G-z3-J1s"/>
+                                </connections>
+                            </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TKv-1Z-D0p">
+                                <rect key="frame" x="0.0" y="60" width="600" height="240"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CrammateHeader" id="xjw-DV-WVc" customClass="CustomHeaderCell" customModule="crammunity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xjw-DV-WVc" id="gUf-76-GAw">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HN7-JI-d5d">
+                                                    <rect key="frame" x="58" y="5" width="64" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="HN7-JI-d5d" firstAttribute="centerY" secondItem="gUf-76-GAw" secondAttribute="centerY" id="fxl-tP-Bj3"/>
+                                                <constraint firstItem="HN7-JI-d5d" firstAttribute="leading" secondItem="gUf-76-GAw" secondAttribute="leadingMargin" constant="50" id="vLM-2M-61E"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="HN7-JI-d5d" id="4hu-Dv-QYo"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CrammateCell" id="RdS-Rh-eOD" customClass="CrammateSearchViewCell" customModule="crammunity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RdS-Rh-eOD" id="LWv-b5-KZ7">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rfu-bE-Oos">
+                                                    <rect key="frame" x="58" y="11" width="44" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G8p-U1-Sse">
+                                                    <rect key="frame" x="539" y="2" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="1iC-Bl-aIR"/>
+                                                        <constraint firstAttribute="width" constant="40" id="hPf-74-z30"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" image="remove"/>
+                                                    <connections>
+                                                        <action selector="onAddCrammateButtonTapped:" destination="RdS-Rh-eOD" eventType="touchUpInside" id="Lpa-Xw-Zbl"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Rfu-bE-Oos" firstAttribute="centerY" secondItem="LWv-b5-KZ7" secondAttribute="centerY" id="cgw-Qh-uCd"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="Rfu-bE-Oos" secondAttribute="leading" constant="-50" id="fcS-lg-T2I"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="G8p-U1-Sse" secondAttribute="trailing" constant="13" id="m60-5T-8PO"/>
+                                                <constraint firstItem="G8p-U1-Sse" firstAttribute="centerY" secondItem="LWv-b5-KZ7" secondAttribute="centerY" id="pwl-c2-WzC"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addToClassButton" destination="G8p-U1-Sse" id="YBi-Jg-c6j"/>
+                                            <outlet property="usernameLabel" destination="Rfu-bE-Oos" id="Dtq-Ts-7t7"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Dgb-h4-BtI" id="KZX-5N-BEt"/>
+                                    <outlet property="delegate" destination="Dgb-h4-BtI" id="kIj-II-Xsn"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ucY-m1-7cN" firstAttribute="height" secondItem="TKv-1Z-D0p" secondAttribute="height" id="8Q0-KW-csO"/>
+                            <constraint firstItem="ucY-m1-7cN" firstAttribute="top" secondItem="u6g-Kh-Ho8" secondAttribute="bottom" id="9Bn-jj-0Dc"/>
+                            <constraint firstItem="ucY-m1-7cN" firstAttribute="top" secondItem="yRl-9q-4f1" secondAttribute="bottom" id="Dfi-sP-udX"/>
+                            <constraint firstItem="Nfh-d8-MVp" firstAttribute="top" secondItem="yRl-9q-4f1" secondAttribute="bottom" id="EeM-Rb-LfY"/>
+                            <constraint firstItem="TKv-1Z-D0p" firstAttribute="top" secondItem="u6g-Kh-Ho8" secondAttribute="bottom" id="Ixc-Pg-ZN5"/>
+                            <constraint firstItem="ucY-m1-7cN" firstAttribute="leading" secondItem="6xv-2w-BZN" secondAttribute="leadingMargin" id="LSd-z2-nQn"/>
+                            <constraint firstItem="yRl-9q-4f1" firstAttribute="centerX" secondItem="6xv-2w-BZN" secondAttribute="centerX" id="Lwl-X8-Pxp"/>
+                            <constraint firstItem="yRl-9q-4f1" firstAttribute="width" secondItem="6xv-2w-BZN" secondAttribute="width" id="ORA-Bf-Tnp"/>
+                            <constraint firstItem="Nfh-d8-MVp" firstAttribute="top" secondItem="ucY-m1-7cN" secondAttribute="bottom" id="Rx9-8X-yyX"/>
+                            <constraint firstItem="ucY-m1-7cN" firstAttribute="top" secondItem="yRl-9q-4f1" secondAttribute="bottom" id="Sf8-zX-EN9"/>
+                            <constraint firstItem="ucY-m1-7cN" firstAttribute="top" secondItem="TKv-1Z-D0p" secondAttribute="bottom" id="ToO-S1-9wA"/>
+                            <constraint firstItem="TKv-1Z-D0p" firstAttribute="leading" secondItem="6xv-2w-BZN" secondAttribute="leadingMargin" constant="-20" id="VhT-Uv-LNE"/>
+                            <constraint firstItem="u6g-Kh-Ho8" firstAttribute="leading" secondItem="6xv-2w-BZN" secondAttribute="leadingMargin" constant="-20" id="Woj-hv-NUP"/>
+                            <constraint firstItem="TKv-1Z-D0p" firstAttribute="centerX" secondItem="6xv-2w-BZN" secondAttribute="centerX" id="agD-xI-mSu"/>
+                            <constraint firstItem="ucY-m1-7cN" firstAttribute="bottom" secondItem="yRl-9q-4f1" secondAttribute="top" id="c72-hP-KXE"/>
+                            <constraint firstItem="u6g-Kh-Ho8" firstAttribute="top" secondItem="Oam-Le-fSi" secondAttribute="bottom" id="fff-2E-e8o"/>
+                            <constraint firstItem="ucY-m1-7cN" firstAttribute="width" secondItem="u6g-Kh-Ho8" secondAttribute="width" id="h9g-9d-0h4"/>
+                            <constraint firstItem="ucY-m1-7cN" firstAttribute="centerX" secondItem="u6g-Kh-Ho8" secondAttribute="centerX" id="lgw-XO-Dvm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TKv-1Z-D0p" secondAttribute="trailing" constant="-20" id="ofW-aZ-v4I"/>
+                            <constraint firstItem="TKv-1Z-D0p" firstAttribute="centerX" secondItem="u6g-Kh-Ho8" secondAttribute="centerX" id="ouk-p4-l2f"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u6g-Kh-Ho8" secondAttribute="trailing" constant="-20" id="tfW-0o-afb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ucY-m1-7cN" secondAttribute="trailing" id="yZd-z2-fRb"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="ouk-p4-l2f"/>
+                                <exclude reference="9Bn-jj-0Dc"/>
+                                <exclude reference="Dfi-sP-udX"/>
+                                <exclude reference="LSd-z2-nQn"/>
+                                <exclude reference="Sf8-zX-EN9"/>
+                                <exclude reference="yZd-z2-fRb"/>
+                                <exclude reference="Rx9-8X-yyX"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="crammatesTableView" destination="TKv-1Z-D0p" id="LaL-aw-gCQ"/>
+                        <outlet property="friendsTableView" destination="ucY-m1-7cN" id="D8M-DO-JDB"/>
+                        <outlet property="searchBar" destination="u6g-Kh-Ho8" id="fSS-hL-mKS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tD0-1v-D67" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2333" y="875"/>
         </scene>
     </scenes>
     <resources>
