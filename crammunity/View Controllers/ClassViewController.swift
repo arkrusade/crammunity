@@ -307,7 +307,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	
 	
 	// MARK: - Image Picker
-	//TODO: add image button and image sending capability
+	//TODO: add image download/preview
 	@IBAction func didTapAddPhoto(sender: AnyObject) {
 		
 		let picker = UIImagePickerController()
@@ -357,12 +357,9 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 			}
 		}
 	}
-	
 	func imagePickerControllerDidCancel(picker: UIImagePickerController) {
 		picker.dismissViewControllerAnimated(true, completion:nil)
 	}
-	
-	
 	func showAlert(title:String, message:String) {
 		dispatch_async(dispatch_get_main_queue()) {
 			let alert = UIAlertController(title: title,
@@ -372,8 +369,4 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 			self.presentViewController(alert, animated: true, completion: nil)
 		}
 	}
-	
-	
 }
-
-

@@ -17,27 +17,26 @@ class ClassCreationViewController: UIViewController {
 	@IBAction func onCreateClassTap(sender: AnyObject) {
 		
 		
-//TODO: add friends to class
-		
-		if !self.newClassNameTextField.text!.isEmpty {
-			self.classRef = FirebaseHelper.createClass(self.newClassNameTextField.text!)
-//			self.dismissToMasterViewController(self)
-			self.performSegueWithIdentifier("ClassCreationToCrammatesAddition", sender: self)
-			
-		}
-		else{
+//TODO: check for duplicate names
+		if self.newClassNameTextField.text!.isEmpty {
 			let alertController = UIAlertController(title: nil, message: "You must fill in the class name", preferredStyle: .Alert)
 			
 			let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
 			alertController.addAction(okAction)
-			
 			self.presentViewController(alertController, animated: true, completion: nil)
+		}
+		else{
+			
+			self.classRef = FirebaseHelper.createClass(self.newClassNameTextField.text!)
+			self.performSegueWithIdentifier("ClassCreationToCrammatesAddition", sender: self)
+
 		}
 	
 	}
+	//TODO: make it so that 
 	@IBAction func onAddCrammatesButtonTap(sender: UIButton)
 	{
-		
+		performSegueWithIdentifier("ClassCreationToCrammatesAddition", sender: self)
 	}
 	@IBAction func dismissToMasterViewController(sender: AnyObject) {
 	
@@ -45,6 +44,10 @@ class ClassCreationViewController: UIViewController {
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}
 	
+	@IBAction func cancelClassCreation(sender: AnyObject)
+	{
+		print("cancelling classcreation")
+	}
     override func viewDidLoad() {
         super.viewDidLoad()
 

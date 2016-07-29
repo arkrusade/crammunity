@@ -25,7 +25,6 @@ class FirebaseHelper
 		let snap = snapshot.value!
 		let name = snap[key]
 		return name.description
-//		return ""
 	}
 	//MARK: Queries
 
@@ -136,7 +135,17 @@ class FirebaseHelper
 		
 		usersRef.child(user.key).child("classes").child(cramClass.key).removeValue()
 	}
+	static func removeUserFromClass(userUID: String, cramClass: FIRDatabaseReference)
+	{
+		cramClass.child("members").child(userUID).child("username").removeValue()
+		
+		usersRef.child(userUID).child("classes").child(cramClass.key).removeValue()
+	}
 	
+	
+	static func removeCurrentUserFromClass(cramClass: FIRDataSnapshot) {
+		removeUserFromClass((FIRAuth.auth()?.currentUser?.uid)!, cramClass: cramClass.ref)
+	}
 	
 	static func createClass(name: String) -> FIRDatabaseReference
 	{
@@ -151,4 +160,6 @@ class FirebaseHelper
 		print("created class \(name)")
 		return classRef
 	}
+	
+	
 }

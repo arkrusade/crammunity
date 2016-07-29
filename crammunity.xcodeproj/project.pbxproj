@@ -159,8 +159,8 @@
 				ADAA62991D35672B0037BCC9 /* LoginViewController.swift */,
 				ADAA629B1D356C950037BCC9 /* SignUpViewController.swift */,
 				AD074DF21D3D99B00072A102 /* ClassCreationViewController.swift */,
-				ADB3DA531D42F857007A56E9 /* FriendsViewController.swift */,
 				ADDF00D01D495A0E00A3FC2E /* CrammateAdditionViewController.swift */,
+				ADB3DA531D42F857007A56E9 /* FriendsViewController.swift */,
 				ADEA931A1D4837ED00C5DA1F /* ProfileViewController.swift */,
 				ADDF00CE1D49388600A3FC2E /* FVCTableDataSource.swift */,
 			);
