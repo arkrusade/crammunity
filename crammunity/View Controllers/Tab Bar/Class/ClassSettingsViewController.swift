@@ -10,7 +10,7 @@ import UIKit
 
 class ClassSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //	@IBOutlet weak var tableView: UITableView!
-	let settingsList: [(title: String, list: [String])] = [("Class Settings", ["Add Friends","Change Class Name"]),("Chapter Settings", ["Add Files"]),("Other",["Delete Class"])]
+	let settingsList: [(title: String, list: [String])] = [("IN PROGRESS",["These are just placeholders"]),("Class Settings", ["Add Friends","Change Class Name"]),("Chapter Settings", ["Add Files"]),("Other",["Delete Class"])]
 
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var titleBar: UINavigationItem!

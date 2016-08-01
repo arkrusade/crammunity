@@ -33,11 +33,11 @@ class ClassCreationViewController: UIViewController {
 		}
 	
 	}
-	//TODO: make it so that 
-	@IBAction func onAddCrammatesButtonTap(sender: UIButton)
-	{
-		performSegueWithIdentifier("ClassCreationToCrammatesAddition", sender: self)
-	}
+
+	//	@IBAction func onAddCrammatesButtonTap(sender: UIButton)
+//	{
+//		performSegueWithIdentifier("ClassCreationToCrammatesAddition", sender: self)
+//	}
 	@IBAction func dismissToMasterViewController(sender: AnyObject) {
 	
 		print("dismissing to master view from class creation")

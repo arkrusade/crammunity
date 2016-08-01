@@ -355,7 +355,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 			let asset = assets.firstObject
 			asset?.requestContentEditingInputWithOptions(nil, completionHandler: { (contentEditingInput, info) in
 				let imageFile = contentEditingInput?.fullSizeImageURL
-				let filePath = "\(FIRAuth.auth()?.currentUser!.uid)/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000))/\(referenceUrl.lastPathComponent!)"
+				let filePath = "\((FIRAuth.auth()?.currentUser!.uid)!)/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000))/\(referenceUrl.lastPathComponent!)"
 				self.storageRef.child(filePath)
 					.putFile(imageFile!, metadata: nil) { (metadata, error) in
 						if let error = error {
