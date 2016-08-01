@@ -41,6 +41,7 @@ class CrammateAdditionViewController: UIViewController
 	var _friendsHandle: FIRDatabaseHandle!
 	var _crammatesHandle: FIRDatabaseHandle!
 	var _removeCrammatesHandle: FIRDatabaseHandle!
+	var _removeFriendsHandle: FIRDatabaseHandle!
 	
 	
 	//whenever a query changes, update the list and handlers
@@ -49,8 +50,7 @@ class CrammateAdditionViewController: UIViewController
 			// whenever we assign a new query, cancel any previous requests
 			// you can use oldValue to access the previous value of the property
 			oldValue?.removeAllObservers()
-			friendsTableView.reloadData()
-			crammatesTableView.reloadData()
+			
 			crammates = []
 			
 			_crammatesHandle = crammatesQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
@@ -75,6 +75,8 @@ class CrammateAdditionViewController: UIViewController
 					print("error in crammate removing")
 				}
 			})
+			friendsTableView.reloadData()
+			crammatesTableView.reloadData()
 		}
 	}
 	
@@ -84,12 +86,11 @@ class CrammateAdditionViewController: UIViewController
 			// whenever we assign a new query, cancel any previous requests
 			// you can use oldValue to access the previous value of the property
 			oldValue?.removeAllObservers()
-			friendsTableView.reloadData()
-			crammatesTableView.reloadData()
+			
 			friends = []
 			_friendsHandle = friendsQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
 				if snapshot.exists() {
-					if !(self.crammatesUIDS.contains(snapshot.key))
+					if !(self.crammatesUIDS.contains(snapshot.key) || snapshot.key == FIRAuth.auth()?.currentUser!.uid)
 					{
 						self.friends.append(snapshot)
 					}
@@ -97,6 +98,16 @@ class CrammateAdditionViewController: UIViewController
 					print("error in user loading")
 				}
 			})
+			_removeFriendsHandle = friendsQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
+				if snapshot.exists() {
+					//TODO: change to didset?
+					self.friends.removeAtIndex(self.friends.indexOf(snapshot)!)
+				} else {
+					print("error in friend removing")
+				}
+			})
+			friendsTableView.reloadData()
+			crammatesTableView.reloadData()
 		}
 	}
 	

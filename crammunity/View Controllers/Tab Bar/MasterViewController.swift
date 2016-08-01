@@ -23,7 +23,7 @@ class MasterViewController: UITableViewController {
 		// Do any additional setup after loading the view, typically from a nib.
 		self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
-		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_:)))
+		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_: )))
 		self.navigationItem.rightBarButtonItem = addButton
 		_addHandle = Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
 			self.classes.insert(snapshot, atIndex: 0)
@@ -61,22 +61,10 @@ class MasterViewController: UITableViewController {
 
 	func insertNewObject(sender: AnyObject) {
 		self.tableView.editing = false
-		performSegueWithIdentifier("MainToClassCreation", sender: nil)
+		performSegueWithIdentifier("MainToClassCreation", sender: sender)
 
 	}
 	
-	//TODO: better signout
-	@IBAction func signOut(sender: AnyObject) {
-		let firebaseAuth = FIRAuth.auth()
-		do {
-			try firebaseAuth?.signOut()
-			AppState.sharedInstance.signedIn = false
-			MeasurementHelper.sendLogoutEvent()//send to analytics
-			dismissViewControllerAnimated(true, completion: nil)
-		} catch let signOutError as NSError {
-			print ("Error signing out: \(signOutError)")
-		}
-	}
 	
 	// MARK: - Segues
 
@@ -84,9 +72,13 @@ class MasterViewController: UITableViewController {
 		if segue.identifier == Constants.Segues.MainToClassChat
 		{
 			if let indexPath = self.tableView.indexPathForSelectedRow {
-				let cramclass = classes[indexPath.row]
+				let personalCramClass = classes[indexPath.row]
+				let cramclass = Constants.Firebase.CramClassArray.child(personalCramClass.key)
+				
 				let controller = (segue.destinationViewController) as! ClassViewController
-				controller.classChat = Class(cramClass: cramclass)
+				
+				controller.titleBar.title = personalCramClass.value?.valueForKey("className") as? String
+				//TODO: consider making Class, classname, calculated values off of snapshot
 				controller.cramChat = cramclass
 				controller.navigationItem.leftItemsSupplementBackButton = true
 			}
@@ -119,11 +111,10 @@ class MasterViewController: UITableViewController {
 
 	//class deletion
 	//TODO: remove other users?
-	
+	//change to in menu
 	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 		if editingStyle == .Delete {
 			FirebaseHelper.removeCurrentUserFromClass(classes[indexPath.row])
-//			classes.removeAtIndex(indexPath.row)
 		    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 		} else if editingStyle == .Insert {
 		    print("inserted")

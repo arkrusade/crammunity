@@ -17,7 +17,7 @@ class FirebaseHelper
 	static let lastU = UnicodeScalar(1114111)
 	static let usersRef = Constants.Firebase.UserArray
 	static let friendsRef = usersRef.child((FIRAuth.auth()?.currentUser!.uid)!).child("friends")
-
+	//TODO: reset this on signout
 
 	//TODO: add completion with error
 	static func getStringFromDataSnapshot(key: String, snapshot: FIRDataSnapshot) -> String
@@ -25,6 +25,18 @@ class FirebaseHelper
 		let snap = snapshot.value!
 		let name = snap[key]
 		return name.description
+	}
+	static func getKeyFromDatabaseReference(key: String, ref: FIRDatabaseReference) -> String
+	{
+		var str: String = ""
+		ref.observeSingleEventOfType(.Value, withBlock: {(snapshot) -> Void in
+			str = snapshot.value?.valueForKey(key) as! String
+		})
+		return str
+	}
+	static func runCompletionOnDatabaseReference(ref: FIRDatabaseReference, completion: (FIRDataSnapshot) -> Void) -> Void
+	{
+		ref.observeSingleEventOfType(.Value, withBlock: completion)
 	}
 	//MARK: Queries
 
@@ -118,11 +130,14 @@ class FirebaseHelper
 		username = user.value!.valueForKey("username") as! String
 		cramClass.child("members").child(user.key).child("username").setValue(username)
 		var className: String = ""
+		
 		cramClass.observeSingleEventOfType(.Value, withBlock: {(snapshot) -> Void in
 			className = snapshot.value!.valueForKey("className") as! String
+			usersRef.child(user.key).child("classes").child(cramClass.key).child("className").setValue(className)
 		})
-		usersRef.child(user.key).child("classes").child(cramClass.key).setValue(className)
+
 	}
+	
 	static func addUserToClass(user: FIRDataSnapshot, cramClassUID: String)
 	{
 		let classRef = Constants.Firebase.CramClassArray.child(cramClassUID)

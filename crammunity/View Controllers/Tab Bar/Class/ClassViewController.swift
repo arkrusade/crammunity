@@ -39,20 +39,32 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	let lengthOfBottomConstraint: CGFloat = 10
 	@IBOutlet weak var textField: UITextField!
 	
-	// MARK: Class naming
-	var classChat: Class!
-	var cramChat: FIRDataSnapshot!
+//	var classChat: Class!
+	var cramChat: FIRDatabaseReference!
 	//TODO: Change to loading inside of class view instead of sending to view
 	
-	func configureView() {
-//		// Update the user interface for the detail item.
-		if let classTitle = self.classChat {
-			titleBar.title = classTitle.className
-			
-		}
+	// MARK: Class naming
+
+	func configureNavigationBar() {
+		
+		let addFriendsBarButton = UIBarButtonItem(image: Constants.Images.add, style: .Plain, target: self, action: #selector(goToCrammateAddition(_: )))
+		let settingsBarButton = UIBarButtonItem(image: Constants.Images.settings, style: .Plain, target: self, action: #selector(goToClassSettings(_: )))
+
+		self.navigationItem.rightBarButtonItems = [settingsBarButton, addFriendsBarButton]
 		
 	}
 	
+	func goToClassSettings(sender: AnyObject?)
+	{
+		print("go to class settings")
+		performSegueWithIdentifier("CramChatToSettings", sender: self)
+	}
+	
+	func goToCrammateAddition(sender: AnyObject?)
+	{
+		print("go to add crammates")
+		performSegueWithIdentifier("CramChatToCrammateAddition", sender: self)
+	}
 	// MARK: UI controls
 	
 	@IBAction func unwindToClassViewController(segue: UIStoryboardSegue) {
@@ -61,7 +73,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		configureView()
+		configureNavigationBar()
 		
 		configureDatabase()
 		configureStorage()
@@ -94,6 +106,19 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		self.tableView.separatorStyle = .None
 	}
 	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if segue.identifier == "CramChatToSettings"
+		{
+			let vc = segue.destinationViewController as! ClassSettingsViewController
+			vc.navigationItem.leftItemsSupplementBackButton = true
+		}
+		else if segue.identifier! == "CramChatToCrammateAddition"
+		{
+			let vc = segue.destinationViewController as! CrammateAdditionViewController
+			vc.cramClass = self.cramChat
+		}
+
+	}
 	// MARK: Keyboard Dodging Logic
 	func keyboardWillShow(notification: NSNotification) {
 		let keyboardHeight = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.height

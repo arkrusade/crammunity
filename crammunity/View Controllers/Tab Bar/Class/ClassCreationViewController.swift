@@ -11,7 +11,6 @@ import FirebaseDatabase
 class ClassCreationViewController: UIViewController {
 
 	@IBOutlet weak var newClassNameTextField: UITextField!
-	@IBOutlet weak var createClassButton: UIButton!
 	
 	var classRef: FIRDatabaseReference?
 	@IBAction func onCreateClassTap(sender: AnyObject) {
@@ -28,7 +27,8 @@ class ClassCreationViewController: UIViewController {
 		else{
 			
 			self.classRef = FirebaseHelper.createClass(self.newClassNameTextField.text!)
-			self.performSegueWithIdentifier("ClassCreationToCrammatesAddition", sender: self)
+			dismissToMasterViewController(self)
+			//TODO: change to loading class and adding friends
 
 		}
 	
@@ -40,7 +40,7 @@ class ClassCreationViewController: UIViewController {
 	}
 	@IBAction func dismissToMasterViewController(sender: AnyObject) {
 	
-		print("dismissing to master view")
+		print("dismissing to master view from class creation")
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}
 	

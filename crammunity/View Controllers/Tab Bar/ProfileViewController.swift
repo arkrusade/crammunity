@@ -25,19 +25,25 @@ class ProfileViewController: UIViewController {
 	}
 	
 	@IBAction func makeRandomUser(sender: AnyObject) {
+		var emails: [String] = []
 		for i in 0...5
 		{
-			email = "user\(i)@gmail.com"
-			FIRAuth.auth()?.createUserWithEmail(email, password: pass) { (user, error) in
+			emails.append("user\(i)@gmail.com")
+		}
+		for i in 0...5
+		{
+
+			FIRAuth.auth()?.createUserWithEmail(emails[i], password: pass) { (user, error) in
 				if let error = error {
 					print("Create user failed:", error.localizedDescription)
 				} else {
-					let username = self.email
+					let username = emails[i]
 					Constants.Firebase.UserArray.child(user!.uid).setValue(["username": username])
-					print ("Created user with uid: \(user!.uid) and username: \(username)")
+					print ("Created user with uid: \(user!.uid) and username: \(username) and displayName: \(user?.displayName)")
 				}
 			}
 		}
+		
 	}
 	override func viewDidLoad() {
         super.viewDidLoad()

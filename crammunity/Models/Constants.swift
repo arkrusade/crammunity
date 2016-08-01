@@ -43,6 +43,7 @@ struct Constants {
 		static let check = UIImage(named: "check")
 		static let defaultProfile = UIImage(named: "ic_account_circle")
 		static let remove = UIImage(named: "remove")
+		static let settings = UIImage(named: "settings")
 
 	}
 //	static let currentUser = (FIRAuth.auth()?.currentUser)!

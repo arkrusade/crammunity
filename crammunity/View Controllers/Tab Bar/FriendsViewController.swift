@@ -38,6 +38,7 @@ class FriendsViewController: UIViewController
 	var _usersHandle: FIRDatabaseHandle!
 	var _friendsHandle: FIRDatabaseHandle!
 	var _removeFriendsHandle: FIRDatabaseHandle!
+	var _removeUsersHandle: FIRDatabaseHandle!
 	
 	
 	//whenever a query changes, update the list and handlers
@@ -91,6 +92,14 @@ class FriendsViewController: UIViewController
 					}
 				} else {
 					print("error in user loading")
+				}
+			})
+			_removeUsersHandle = usersQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
+				if snapshot.exists() {
+					//TODO: change to didset?
+					self.notFriends.removeAtIndex(self.notFriends.indexOf(snapshot)!)
+				} else {
+					print("error in friend removing")
 				}
 			})
 		}
