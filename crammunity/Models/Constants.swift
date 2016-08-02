@@ -6,6 +6,29 @@
 //  Copyright © 2016 orctech. All rights reserved.
 //
 import Firebase
+
+
+typealias ErrorRef = (title: String, desc: String, ref: FIRDatabaseReference, time: NSDate)
+
+struct ErrorFirebaseKeys {
+	static let title = "title"
+	static let desc = "description"
+	static let ref = "referenceURL"
+	static let time = "time"
+}
+struct ReportFirebaseKeys {
+	static let title = "title"
+	static let userUID = "userUID"
+	static let desc = "description"
+	static let ref = "reference"
+	static let time = "time"
+}
+struct CramClassFKs {
+	static let MembersArray = "members"
+	static let name = "className"
+	static let MessagesArray = "messages"
+}
+
 struct Constants {
 	static let emailRegex:String = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
 	struct NotificationKeys {
@@ -16,6 +39,9 @@ struct Constants {
 		static let LoginToMain = "LoginToMain"
 		static let SignUpToMain = "SignUpToMain"
 		static let MainToClassChat = "MainToClassChat"
+		static let ClassCreationToCrammatesAddition = "ClassCreationToCrammatesAddition"
+		static let CramChatToCrammateAddition = "CramChatToCrammateAddition"
+		static let CramChatToSettings = "CramChatToSettings"
 	}
 	
 	struct MessageFields {
@@ -24,17 +50,17 @@ struct Constants {
 		static let photoUrl = "photoUrl"
 		static let imageUrl = "imageUrl"
 	}
-//	struct CramClass {
-		static let Class = "class"
-		static let Members = "members"
-		static let ClassName = "className"
-		static let Messages = "messages"
-//	}
+
 	
 	struct Firebase {
+		static var currentUser = FIRAuth.auth()?.currentUser!
 		static let rootRef = FIRDatabase.database().reference()
 		static let CramClassArray = FIRDatabase.database().reference().child("classes")
 		static let UserArray = FIRDatabase.database().reference().child("users")
+		static let ErrorsArray = FIRDatabase.database().reference().child("errors")
+		static let ReportsArray = FIRDatabase.database().reference().child("reports")
+		static let MessageReports = ReportsArray.child("messageReports")
+		static let FriendsArray = UserArray.child((currentUser?.uid)!).child("friends")
 	}
 	
 	struct Images {

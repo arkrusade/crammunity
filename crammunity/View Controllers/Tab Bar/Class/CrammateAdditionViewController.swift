@@ -34,7 +34,7 @@ class CrammateAdditionViewController: UIViewController
 		}
 	}
 	var crammatesUIDS: [String] = []
-	
+	var friendsUIDS: [String] = []
 	var cramClass: FIRDatabaseReference?
 	
 	
@@ -52,6 +52,7 @@ class CrammateAdditionViewController: UIViewController
 			oldValue?.removeAllObservers()
 			
 			crammates = []
+			crammatesUIDS = []
 			
 			_crammatesHandle = crammatesQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
 				if snapshot.exists() {
@@ -59,6 +60,7 @@ class CrammateAdditionViewController: UIViewController
 						self.crammates.append(snapshot)
 						self.crammatesUIDS.append(snapshot.key)
 						self.friends = self.friends.filter({$0.key != snapshot.key})
+						self.friendsUIDS = self.friendsUIDS.filter({$0 != snapshot.key})
 					}
 				} else {
 					print("error in crammate loading")
@@ -71,6 +73,7 @@ class CrammateAdditionViewController: UIViewController
 					self.crammatesUIDS = self.crammatesUIDS.filter({$0 != snapshot.key})
 					
 					self.friends.append(snapshot)
+					self.friendsUIDS.append(snapshot.key)
 				} else {
 					print("error in crammate removing")
 				}
@@ -88,11 +91,13 @@ class CrammateAdditionViewController: UIViewController
 			oldValue?.removeAllObservers()
 			
 			friends = []
+			friendsUIDS = []
 			_friendsHandle = friendsQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
 				if snapshot.exists() {
 					if !(self.crammatesUIDS.contains(snapshot.key) || snapshot.key == FIRAuth.auth()?.currentUser!.uid)
 					{
 						self.friends.append(snapshot)
+						self.friendsUIDS.append(snapshot.key)
 					}
 				} else {
 					print("error in user loading")
@@ -101,7 +106,8 @@ class CrammateAdditionViewController: UIViewController
 			_removeFriendsHandle = friendsQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
 				if snapshot.exists() {
 					//TODO: change to didset?
-					self.friends.removeAtIndex(self.friends.indexOf(snapshot)!)
+					self.friends = self.friends.filter({$0.key != snapshot.key})
+					self.friendsUIDS = self.friendsUIDS.filter({$0 != snapshot.key})
 				} else {
 					print("error in friend removing")
 				}

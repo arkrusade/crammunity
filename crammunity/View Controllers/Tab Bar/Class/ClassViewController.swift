@@ -39,7 +39,6 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	let lengthOfBottomConstraint: CGFloat = 10
 	@IBOutlet weak var textField: UITextField!
 	
-//	var classChat: Class!
 	var cramChat: FIRDatabaseReference!
 	//TODO: Change to loading inside of class view instead of sending to view
 	
@@ -57,13 +56,13 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	func goToClassSettings(sender: AnyObject?)
 	{
 		print("go to class settings")
-		performSegueWithIdentifier("CramChatToSettings", sender: self)
+		performSegueWithIdentifier(Constants.Segues.CramChatToSettings, sender: self)
 	}
 	
 	func goToCrammateAddition(sender: AnyObject?)
 	{
 		print("go to add crammates")
-		performSegueWithIdentifier("CramChatToCrammateAddition", sender: self)
+		performSegueWithIdentifier(Constants.Segues.CramChatToCrammateAddition, sender: self)
 	}
 	// MARK: UI controls
 	
@@ -79,8 +78,8 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 		configureStorage()
 		configureRemoteConfig()
 		fetchConfig()
-		self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "MessageCell")
-
+//		self.tableView.registerClass(MessageViewCell.self, forCellReuseIdentifier: "MessageCell")
+		//TODO:-Cells and figure this out
 		loadAd()
 		logViewLoaded()
 
@@ -107,23 +106,26 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	}
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == "CramChatToSettings"
+		if segue.identifier == Constants.Segues.CramChatToSettings
 		{
 			let vc = segue.destinationViewController as! ClassSettingsViewController
 			vc.navigationItem.leftItemsSupplementBackButton = true
 		}
-		else if segue.identifier! == "CramChatToCrammateAddition"
+		else if segue.identifier! == Constants.Segues.CramChatToCrammateAddition
 		{
 			let vc = segue.destinationViewController as! CrammateAdditionViewController
 			vc.cramClass = self.cramChat
+			vc.navigationItem.leftItemsSupplementBackButton = true
+			vc.title = "Add Crammates"
 		}
 
 	}
+	
 	// MARK: Keyboard Dodging Logic
 	func keyboardWillShow(notification: NSNotification) {
 		let keyboardHeight = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.height
 		UIView.animateWithDuration(0.1, animations: { () -> Void in
-			self.bottomConstraint.constant = keyboardHeight! + self.lengthOfBottomConstraint
+			self.bottomConstraint.constant = keyboardHeight! + self.lengthOfBottomConstraint - (self.tabBarController?.tabBar.frame.height)!
 			self.view.layoutIfNeeded()
 		})
 	}
@@ -162,7 +164,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	}
 	
 	func configureDatabase() {
-		messagesRef = Constants.Firebase.CramClassArray.child(cramChat.key).child("messages")
+		messagesRef = Constants.Firebase.CramClassArray.child(cramChat.key).child(CramClassFKs.MessagesArray)
 		
 		//find new messages
 		_refHandle = messagesRef.observeEventType(.ChildAdded, withBlock: { snapshot in
@@ -278,7 +280,10 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		// Dequeue cell
-		let cell: UITableViewCell! = self.tableView.dequeueReusableCellWithIdentifier("MessageCell", forIndexPath: indexPath)
+		let cell = tableView.dequeueReusableCellWithIdentifier("MessageCell") as! MessageViewCell
+		
+		
+		//TODO:-Cells as constants
 		// Unpack message from Firebase DataSnapshot
 		let messageSnapshot: FIRDataSnapshot! = self.messages[indexPath.row]
 		let message = messageSnapshot.value as! Dictionary<String, String>
@@ -295,18 +300,23 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 				FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX){ (data, error) in
 					if let error = error {
 						print("Error downloading: \(error)")
+						self.showAlert("Error downloading image", message: error.description)
+
 						return
 					}
 					image = UIImage(data: data!)
-					cell!.imageView?.image = image
-					cell!.textLabel?.text = "sent by: \(name)"
+					cell.profileImageView?.image = image
+					cell.displayName = "sent by: \(name)"
+					cell.message = ""
 				}
 			}
 			
 			else if let url = NSURL(string:imageUrl), data = NSData(contentsOfURL: url) {
 				cell.imageView?.image = UIImage.init(data: data)
 			}
-			cell!.imageView?.image = image
+			cell.profileImageView?.image = image
+			cell.message = "loading..."
+			cell.displayName = "Image is"
 		}
 		
 		
@@ -316,17 +326,20 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 			let text = message[Constants.MessageFields.text] as String!
 			if name != nil
 			{
-				cell!.textLabel?.text = name + ": " + text
-				cell!.imageView?.image = Constants.Images.defaultProfile
+				cell.displayName = name + ": "
+				cell.message = text
+				cell.profileImageView?.image = Constants.Images.defaultProfile
+
 				if let photoUrl = message[Constants.MessageFields.photoUrl], url = NSURL(string:photoUrl), data = NSData(contentsOfURL: url) {
-					cell!.imageView?.image = UIImage(data: data)
+					cell.imageView?.image = UIImage(data: data)
 				}
 			}
 			else{
 				print("missing name")
 			}
 		}
-		return cell!
+		cell.presentingViewController = self
+		return cell
 	}
 	
 	
@@ -360,6 +373,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 					.putFile(imageFile!, metadata: nil) { (metadata, error) in
 						if let error = error {
 							print("Error uploading: \(error.description)")
+							self.showAlert("Error uploading image", message: error.description)
 							return
 						}
 						self.sendMessage([Constants.MessageFields.imageUrl: self.storageRef.child((metadata?.path)!).description])
@@ -376,6 +390,7 @@ UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDele
 				.putData(imageData!, metadata: metadata) { (metadata, error) in
 					if let error = error {
 						print("Error uploading: \(error)")
+						self.showAlert("Error uploading image", message: error.description)
 						return
 					}
 					self.sendMessage([Constants.MessageFields.imageUrl: self.storageRef.child((metadata?.path)!).description])

@@ -54,20 +54,10 @@ class ClassSettingsViewController: UIViewController, UITableViewDelegate, UITabl
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell", forIndexPath: indexPath)
+		//TODO: change cells to constants
 		cell.textLabel?.text = settingsList[indexPath.section].list[indexPath.row]
 		cell.backgroundColor = UIColor(colorLiteralRed: 230/256, green: 230/256, blue: 230/256, alpha: 1)
 		return cell
-//		if tableView == self.tableView {
-//			cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! FriendSearchViewCell
-//			let user = notFriends[indexPath.row]
-//			cell.user = user
-//			cell.usernameLabel.text = user.value!.valueForKey("username") as? String
-//			cell.imageView?.image = Constants.Images.defaultProfile
-//			cell.delegate = self
-//			
-//			cell.isFriend = false
-//			return cell
-//		}
 	}
 	
 }

@@ -18,18 +18,15 @@ class Class {
 	}
 	init(cramClass: FIRDataSnapshot)
 	{
-		className = FirebaseHelper.getStringFromDataSnapshot(Constants.ClassName, snapshot: cramClass)
+		className = FirebaseHelper.getStringFromDataSnapshot(CramClassFKs.name, snapshot: cramClass)
 		
 	}
 	init(cramClass: FIRDatabaseReference)
 	{
-//		cramClass.observeSingleEventOfType(.Value, withBlock: {(snapshot) -> Void in
-//			self.className = snapshot.value?.valueForKey("className") as! String
-//		})
 		FirebaseHelper.runCompletionOnDatabaseReference(cramClass, completion: {(snapshot) -> Void in
-			self.className = snapshot.value?.valueForKey("className") as! String
+			self.className = snapshot.value?.valueForKey(CramClassFKs.name) as! String
 		})
-//		className = FirebaseHelper.getKeyFromDatabaseReference("className", ref: cramClass)
+
 	}
 }
 	

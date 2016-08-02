@@ -10,10 +10,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-protocol FriendSearchViewCellDelegate: class {
-	func cell(cell: FriendSearchViewCell, didSelectFriendUser user: FIRDataSnapshot)
-	func cell(cell: FriendSearchViewCell, didSelectUnFriendUser user: FIRDataSnapshot)
-}
+
 
 class FriendsViewController: UIViewController
 {
@@ -33,7 +30,7 @@ class FriendsViewController: UIViewController
 		}
 	}
 	var friendsUIDS: [String] = []
-
+	var notFriendsUIDS: [String] = []
 
 	var _usersHandle: FIRDatabaseHandle!
 	var _friendsHandle: FIRDatabaseHandle!
@@ -50,13 +47,14 @@ class FriendsViewController: UIViewController
 			notFriendTableView.reloadData()
 			friendTableView.reloadData()
 			friends = []
-			
+			friendsUIDS = []
 			_friendsHandle = friendsQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
 				if snapshot.exists() {
 					self.friends.append(snapshot)
 					self.friendsUIDS.append(snapshot.key)
 					
 					self.notFriends = self.notFriends.filter({$0.key != snapshot.key})
+					self.notFriendsUIDS = self.notFriendsUIDS.filter({$0 != snapshot.key})
 				} else {
 					print("error in friend loading")
 				}
@@ -68,6 +66,8 @@ class FriendsViewController: UIViewController
 					self.friendsUIDS = self.friendsUIDS.filter({$0 != snapshot.key})
 					
 					self.notFriends.append(snapshot)
+					self.notFriendsUIDS.append(snapshot.key)
+
 				} else {
 					print("error in friend removing")
 				}
@@ -84,11 +84,14 @@ class FriendsViewController: UIViewController
 			notFriendTableView.reloadData()
 			friendTableView.reloadData()
 			notFriends = []
+			notFriendsUIDS = []
 			_usersHandle = usersQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
 				if snapshot.exists() {
 					if !(snapshot.key == FIRAuth.auth()?.currentUser!.uid || self.friendsUIDS.contains(snapshot.key))
 					{
 						self.notFriends.append(snapshot)
+						self.notFriendsUIDS.append(snapshot.key)
+
 					}
 				} else {
 					print("error in user loading")
@@ -97,7 +100,8 @@ class FriendsViewController: UIViewController
 			_removeUsersHandle = usersQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
 				if snapshot.exists() {
 					//TODO: change to didset?
-					self.notFriends.removeAtIndex(self.notFriends.indexOf(snapshot)!)
+					self.notFriends = self.notFriends.filter({$0.key != snapshot.key})
+					self.notFriendsUIDS = self.notFriendsUIDS.filter({$0 != snapshot.key})
 				} else {
 					print("error in friend removing")
 				}
@@ -180,6 +184,10 @@ extension FriendsViewController: UISearchBarDelegate {
 	}
 }
 
+protocol FriendSearchViewCellDelegate: class {
+	func cell(cell: FriendSearchViewCell, didSelectFriendUser user: FIRDataSnapshot)
+	func cell(cell: FriendSearchViewCell, didSelectUnFriendUser user: FIRDataSnapshot)
+}
 // MARK: FriendTableViewCell Delegate
 
 extension FriendsViewController: FriendSearchViewCellDelegate {

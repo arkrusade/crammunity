@@ -31,11 +31,17 @@ class LoginViewController: UIViewController {
 			}
 		}
 	}
+	
+	@IBAction func viewTapped(sender: AnyObject) {
+		self.EmailTextField.resignFirstResponder()
+		self.PasswordTextField.resignFirstResponder()
+	}
 	//TODO: Reorganize with helper
-
+	
 	@IBAction func onLoginButtonTap(sender: AnyObject) {
 		//TODO: add alertviewcontrollers
 		//also with sign in
+		viewTapped(self)
 		FIRAuth.auth()!.signInWithEmail(EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in
 			if let error = error {
 				if(error.code == 17008)
@@ -59,7 +65,7 @@ class LoginViewController: UIViewController {
 				else {
 					print("Unknown error: \(error)")
 				}
-				
+					
 //				{NSUnderlyingError=0x7f8ec1f13030 {Error Domain=FIRAuthInternalErrorDomain Code=3 "(null)" UserInfo={FIRAuthErrorUserInfoDeserializedResponseKey=<CFBasicHash 0x7f8ec4023dd0 [0x10fe30a40]>{type = immutable dict, count = 3,
 //				entries =>
 //				0 : <CFString 0x7f8ec4025930 [0x10fe30a40]>{contents = "message"} = <CFString 0x7f8ec4027b20 [0x10fe30a40]>{contents = "MISSING_PASSWORD"}
@@ -114,6 +120,7 @@ class LoginViewController: UIViewController {
 		AppState.sharedInstance.photoUrl = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
+		Constants.Firebase.currentUser = FIRAuth.auth()?.currentUser
 		performSegueWithIdentifier(Constants.Segues.LoginToMain, sender: self)
 	}
 	

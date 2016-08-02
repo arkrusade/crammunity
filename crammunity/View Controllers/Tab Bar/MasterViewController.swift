@@ -34,7 +34,7 @@ class MasterViewController: UITableViewController {
 		_removeHandle = Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
 			var i = 0
 			for snap in self.classes{
-				if FirebaseHelper.getStringFromDataSnapshot(Constants.ClassName, snapshot: snap) == FirebaseHelper.getStringFromDataSnapshot(Constants.ClassName, snapshot: snapshot)
+				if FirebaseHelper.getStringFromDataSnapshot(CramClassFKs.name, snapshot: snap) == FirebaseHelper.getStringFromDataSnapshot(CramClassFKs.name, snapshot: snapshot)
 				{
 					self.classes.removeAtIndex(i)
 					break
@@ -99,7 +99,7 @@ class MasterViewController: UITableViewController {
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("ClassCell") as! ClassViewCell
 		
-		cell.textLabel!.text = classes[indexPath.section].value!.valueForKey(Constants.ClassName) as? String
+		cell.textLabel!.text = classes[indexPath.section].value!.valueForKey(CramClassFKs.name) as? String
 		
 		return cell
 	}

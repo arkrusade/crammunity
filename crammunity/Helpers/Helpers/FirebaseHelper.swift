@@ -12,11 +12,15 @@ import FirebaseDatabase
 import CoreLocation
 import FirebaseAuth
 
+typealias FIRObserverCallback = FIRDataSnapshot -> Void
 class FirebaseHelper
 {
 	static let lastU = UnicodeScalar(1114111)
 	static let usersRef = Constants.Firebase.UserArray
-	static let friendsRef = usersRef.child((FIRAuth.auth()?.currentUser!.uid)!).child("friends")
+	static let errorRef = Constants.Firebase.ErrorsArray
+	static let reportsRef = Constants.Firebase.ReportsArray
+	static let messageReportsRef = Constants.Firebase.MessageReports
+	static let friendsRef = Constants.Firebase.FriendsArray
 	//TODO: reset this on signout
 
 	//TODO: add completion with error
@@ -26,18 +30,50 @@ class FirebaseHelper
 		let name = snap[key]
 		return name.description
 	}
-	static func getKeyFromDatabaseReference(key: String, ref: FIRDatabaseReference) -> String
-	{
-		var str: String = ""
-		ref.observeSingleEventOfType(.Value, withBlock: {(snapshot) -> Void in
-			str = snapshot.value?.valueForKey(key) as! String
-		})
-		return str
-	}
-	static func runCompletionOnDatabaseReference(ref: FIRDatabaseReference, completion: (FIRDataSnapshot) -> Void) -> Void
+	
+	static func runCompletionOnDatabaseReference(ref: FIRDatabaseReference, completion: FIRObserverCallback) -> Void
 	{
 		ref.observeSingleEventOfType(.Value, withBlock: completion)
 	}
+	
+	static func postErrorReference(title: String, desc: String, ref: FIRDatabaseReference, time: NSDate)
+	{
+		let error = errorRef.childByAutoId()
+		error.child(ErrorFirebaseKeys.title
+			).setValue(title)
+		error.child(ErrorFirebaseKeys.desc).setValue(desc)
+		error.child(ErrorFirebaseKeys.ref).setValue(ref.URL)
+		error.child(ErrorFirebaseKeys.time).setValue(time.description)
+	}
+	enum ReportError: String{
+		case Message = "messageReports"
+	}
+	static func postReport(type: ReportError, title: String, userUID: String, desc: String, ref: FIRDatabaseReference)
+	{
+		let report = reportsRef.child(type.rawValue).childByAutoId()
+		report.child(ReportFirebaseKeys.title).setValue(title)
+		report.child(ReportFirebaseKeys.title).setValue(userUID)
+		report.child(ReportFirebaseKeys.title).setValue(desc)
+		report.child(ReportFirebaseKeys.title).setValue(ref.URL)
+//		report.child(ReportFirebaseKeys.title).setValue(time.description)
+
+	}
+//	static func getErrorReferenceInTableViewCell(ref: FIRDatabaseReference) -> UITableViewCell
+//	{
+//		var text: String = ""
+//		let completion: FIRObserverCallback = {(snapshot) -> Void in
+//			var err: ErrorRef
+//			let dict = snapshot.value
+//			err.title = dict?.valueForKey("title") as! String
+//			err.desc = dict?.valueForKey("desc") as! String
+//			err.ref = snapshot.ref
+//			text = err.title + ": " + err.desc
+//		}
+//		runCompletionOnDatabaseReference(ref, completion: completion)
+//		let cell =
+//		return err
+//	}
+	
 	//MARK: Queries
 
 	static func usersQuery() -> FIRDatabaseQuery
@@ -60,7 +96,9 @@ class FirebaseHelper
 	
 	static func friendsQuery() -> FIRDatabaseQuery
 	{
-		return friendsRef.queryOrderedByChild("username").queryLimitedToFirst(20)
+		print(friendsRef)
+		let q = friendsRef.queryOrderedByChild("username").queryLimitedToFirst(20)
+		return q
 	}
 	static func friendsQuery(limitedTo: UInt) -> FIRDatabaseQuery
 	{
@@ -144,6 +182,7 @@ class FirebaseHelper
 		addUserToClass(user, cramClass: classRef)
 	}
 	
+	
 	static func removeUserFromClass(user: FIRDataSnapshot, cramClass: FIRDatabaseReference)
 	{
 		cramClass.child("members").child(user.key).child("username").removeValue()
@@ -164,13 +203,14 @@ class FirebaseHelper
 	
 	static func createClass(name: String) -> FIRDatabaseReference
 	{
-		let classData = [Constants.ClassName: name]
+		let classData = [CramClassFKs.name: name]
+		
 		let classRef = Constants.Firebase.CramClassArray.childByAutoId()
 		classRef.setValue(classData)
 		
 //		addUserToClass((FIRAuth.auth()?.currentUser!)!, cramClass: classRef)
 		classRef.child("members").child((FIRAuth.auth()?.currentUser!)!.uid).child("username").setValue(AppState.sharedInstance.displayName!)
-		usersRef.child((FIRAuth.auth()?.currentUser!)!.uid).child("classes").child(classRef.key).child(Constants.ClassName).setValue(name)
+		usersRef.child((FIRAuth.auth()?.currentUser!)!.uid).child("classes").child(classRef.key).child(CramClassFKs.name).setValue(name)
 		
 		print("created class \(name)")
 		return classRef

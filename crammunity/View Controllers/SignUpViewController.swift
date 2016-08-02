@@ -35,6 +35,14 @@ class SignUpViewController: UIViewController {
 	@IBOutlet weak var PasswordTextField: UITextField!
 	@IBOutlet weak var PasswordConfirmTextField: UITextField!
 	
+	@IBAction func viewTapped(sender: AnyObject?)
+	{
+		EmailTextField.resignFirstResponder()
+		UsernameTextField.resignFirstResponder()
+		PasswordTextField.resignFirstResponder()
+		PasswordConfirmTextField.resignFirstResponder()
+	}
+	
 	@IBAction func SignUpButtonTapped()
 	{
 		//TODO: change to alerts
@@ -71,6 +79,7 @@ class SignUpViewController: UIViewController {
 	}
 	func signedUp(user: FIRUser?)
 	{
+		//TODO: get this and login to be same method
 		let username = self.UsernameTextField.text!
 		Constants.Firebase.UserArray.child(user!.uid).setValue(["username": username])
 		print ("Created user with uid: \(user!.uid) and username: \(username)")
@@ -91,6 +100,7 @@ class SignUpViewController: UIViewController {
 		AppState.sharedInstance.photoUrl = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
+		Constants.Firebase.currentUser = FIRAuth.auth()?.currentUser
 		self.performSegueWithIdentifier(Constants.Segues.SignUpToMain, sender: nil)
 		
 	}
