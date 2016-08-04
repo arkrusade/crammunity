@@ -17,6 +17,7 @@ class FirebaseHelper
 {
 	static let lastU = UnicodeScalar(1114111)
 	static let usersRef = Constants.Firebase.UserArray
+	static let userSearchRef = Constants.Firebase.UserSearchArray
 	static let errorRef = Constants.Firebase.ErrorsArray
 	static let reportsRef = Constants.Firebase.ReportsArray
 	static let messageReportsRef = Constants.Firebase.MessageReports
@@ -48,14 +49,13 @@ class FirebaseHelper
 	enum ReportError: String{
 		case Message = "messageReports"
 	}
-	static func postReport(type: ReportError, title: String, userUID: String, desc: String, ref: FIRDatabaseReference)
+	static func postReport(type: ReportError, title: String, reportingUserUID: String, desc: String, ref: FIRDatabaseReference)
 	{
 		let report = reportsRef.child(type.rawValue).childByAutoId()
-		report.child(ReportFirebaseKeys.title).setValue(title)
-		report.child(ReportFirebaseKeys.title).setValue(userUID)
-		report.child(ReportFirebaseKeys.title).setValue(desc)
-		report.child(ReportFirebaseKeys.title).setValue(ref.URL)
-//		report.child(ReportFirebaseKeys.title).setValue(time.description)
+		let reportData = [ ReportFirebaseKeys.title : title, ReportFirebaseKeys.userUID : reportingUserUID, ReportFirebaseKeys.desc : desc, ReportFirebaseKeys.ref : ref.URL]
+		report.setValue(reportData)
+//		ReportFirebaseKeys.title).setValue(time.description)
+		ref.child("isReported").setValue("true")
 
 	}
 //	static func getErrorReferenceInTableViewCell(ref: FIRDatabaseReference) -> UITableViewCell

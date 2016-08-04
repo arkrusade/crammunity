@@ -57,6 +57,7 @@ struct Constants {
 		static let rootRef = FIRDatabase.database().reference()
 		static let CramClassArray = FIRDatabase.database().reference().child("classes")
 		static let UserArray = FIRDatabase.database().reference().child("users")
+		static let UserSearchArray = FIRDatabase.database().reference().child("userSearch")
 		static let ErrorsArray = FIRDatabase.database().reference().child("errors")
 		static let ReportsArray = FIRDatabase.database().reference().child("reports")
 		static let MessageReports = ReportsArray.child("messageReports")

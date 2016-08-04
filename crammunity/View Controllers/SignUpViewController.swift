@@ -81,19 +81,26 @@ class SignUpViewController: UIViewController {
 	{
 		//TODO: get this and login to be same method
 		let username = self.UsernameTextField.text!
+		Constants.Firebase.UserSearchArray.child(user!.uid).setValue(["username": username])
 		Constants.Firebase.UserArray.child(user!.uid).setValue(["username": username])
 		print ("Created user with uid: \(user!.uid) and username: \(username)")
 		
 		//TODO: add profile changing, change pass and profile picture (first get ability to add one)
 		//TODO: and check for username/email duplicate
-//		let changeRequest = user!.profileChangeRequest()
-//		changeRequest.displayName = username
-//		changeRequest.commitChangesWithCompletion(){ (error) in
-//			if let error = error {
-//				print(error.localizedDescription)
-//				return
-//			}
-//		}
+		
+	
+		
+		let changeRequest = user!.profileChangeRequest()
+		changeRequest.displayName = username
+		changeRequest.photoURL =
+			NSURL(string: "gs://crammunity.appspot.com/defaults/profilePicture/profile-256.png")
+		changeRequest.commitChangesWithCompletion(){ (error) in
+			if let error = error {
+				ErrorHandling.defaultErrorHandler(error)
+				return
+			}
+		}
+		
 		MeasurementHelper.sendLoginEvent()//analytics
 		
 		AppState.sharedInstance.displayName = username ?? user?.email

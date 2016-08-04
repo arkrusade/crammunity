@@ -18,11 +18,22 @@ struct ErrorHandling {
 	static let ErrorOKButtonTitle   = "Ok"
 	static let ErrorDefaultMessage  = "Something unexpected happened, sorry for that!"
 	
+	static let DelayedFeatureTitle		= "Delayed Feature"
+	static let DelayedFeatureMessage	= "Sorry, this feature is not yet available"
+	
 	/**
 	This default error handler presents an Alert View on the topmost View Controller
 	*/
+	static func delayedFeatureAlert()
+	{
+		let alert = UIAlertController(title: DelayedFeatureTitle, message: DelayedFeatureMessage, preferredStyle: UIAlertControllerStyle.Alert)
+		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.Default, handler: nil))
+		
+		let window = UIApplication.sharedApplication().windows[0]
+		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
+	}
 	static func defaultErrorHandler(error: NSError) {
-		let alert = UIAlertController(title: ErrorTitle, message: ErrorDefaultMessage, preferredStyle: UIAlertControllerStyle.Alert)
+		let alert = UIAlertController(title: ErrorTitle, message: error.description, preferredStyle: UIAlertControllerStyle.Alert)
 		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.Default, handler: nil))
 		
 		let window = UIApplication.sharedApplication().windows[0]

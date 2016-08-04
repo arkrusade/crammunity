@@ -1,4 +1,7 @@
 PODS:
+  - Alamofire (3.4.1)
+  - AlamofireImage (2.4.1):
+    - Alamofire (~> 3.3)
   - Bond (4.0.0)
   - ConvenienceKit (0.4.0)
   - DateTools (1.7.0)
@@ -88,6 +91,8 @@ PODS:
     - GoogleSymbolUtilities (~> 1.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 3.4.1)
+  - AlamofireImage
   - Bond (= 4.0.0)
   - ConvenienceKit
   - DateTools
@@ -104,6 +109,8 @@ DEPENDENCIES:
   - Firebase/Storage
 
 SPEC CHECKSUMS:
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  AlamofireImage: 3ccf3347d9ea24580dc11fb892770a0be6a29826
   Bond: b729cdb22552def86efd4adfd8b8d93061eb4649
   ConvenienceKit: ba1ad8797897dc0d011676e961a2f3e9b270c841
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
@@ -126,6 +133,6 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
 
-PODFILE CHECKSUM: cf36de420305d74275ac1a7f6f3a31cb91469ed5
+PODFILE CHECKSUM: 154a9e4331aa3fb07d535042416a875e73b85e9e
 
 COCOAPODS: 1.0.1

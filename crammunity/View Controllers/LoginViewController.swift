@@ -113,10 +113,24 @@ class LoginViewController: UIViewController {
 	{
 		MeasurementHelper.sendLoginEvent()
 		
-		Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-			// Get username value
-				AppState.sharedInstance.displayName = snapshot.childSnapshotForPath("username").value! as? String
-			})
+//		Constants.Firebase.UserSearchArray.child((FIRAuth.auth()?.currentUser!.uid)!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+//			// Get username value
+//				AppState.sharedInstance.displayName = snapshot.childSnapshotForPath("username").value! as? String
+//			})
+		
+//		let changeRequest = user!.profileChangeRequest()
+//		changeRequest.photoURL =
+//			NSURL(string: "gs://crammunity.appspot.com/defaults/profilePicture/profile-256.png")
+//		changeRequest.commitChangesWithCompletion(){ (error) in
+//			if let error = error {
+//				ErrorHandling.defaultErrorHandler(error)
+//				return
+//			}
+//			
+//		}
+		
+		
+		AppState.sharedInstance.displayName = user?.displayName
 		AppState.sharedInstance.photoUrl = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)

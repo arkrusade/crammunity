@@ -10,19 +10,30 @@ import UIKit
 import Firebase
 
 class MessageViewCell: UITableViewCell {
-	var presentingViewController: UIViewController?
+	var presentingViewController: UIViewController!
 	//TODO: change to long press for menu
 	//like download image, copy, quote, chapter
-	var displayName: String? {
+	var displayName: String! {
 		didSet {
 			usernameLabel.text = displayName
 		}
 	}
-	var userUID: String? = nil
-	var messageRef: FIRDatabaseReference?
-	var message: String? = nil {
+	var reportingUserUID: String! = nil
+	var messageRef: FIRDatabaseReference!
+	var message: String! = nil {
 		didSet {
 			textMessageLabel.text = message
+		}
+	}
+	@IBOutlet weak var reportButton: UIButton!
+	var isReported = false {
+		didSet{
+			if isReported{
+				message = "has been reported"
+			}
+			reportButton.enabled = !isReported
+
+			
 		}
 	}
 //	var time: NSDate? {
@@ -33,28 +44,33 @@ class MessageViewCell: UITableViewCell {
 	@IBOutlet weak var usernameLabel: UILabel!
 	@IBOutlet weak var textMessageLabel: UILabel!
 //	@IBOutlet weak var timeLabel: UILabel!
-
+	
 	@IBOutlet weak var profileImageView: UIImageView!
 	@IBAction func onReportButtonTap(sender: UIButton)
 	{
 		print("reporting")
-		//1. Create the alert controller.
-		let alert = UIAlertController(title: "Report this", message: "Enter a description", preferredStyle: .Alert)
+		let alert = UIAlertController(title: "Report this message/user", message: "Describe the incident:\n (BEWARE: reports on messages are permanent)", preferredStyle: .Alert)
 		
-		//2. Add the text field. You can configure it however you need.
 		alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
-			textField.text = "Some default text."
+			textField.placeholder = "Don't abuse this"
 		})
 		
-		//3. Grab the value from the text field, and print it when the user clicks OK.
 		alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
 			let desc = alert.textFields![0].text
-			FirebaseHelper.postReport(.Message, title: "Message Report by \(FIRAuth.auth()!.currentUser!.uid)", userUID: self.userUID!, desc: desc!, ref: self.messageRef!)
+			if desc! != "" {
+				self.reportingUserUID = FIRAuth.auth()!.currentUser!.uid
+				FirebaseHelper.postReport(.Message, title: "Message Report by \(self.reportingUserUID)", reportingUserUID: self.reportingUserUID!, desc: desc!, ref: self.messageRef!)
+				let confirm = UIAlertController(title: "Reported User", message: "", preferredStyle: .Alert)
+				confirm.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+				self.presentingViewController.presentViewController(confirm, animated: true, completion: nil)
+			}
+			self.isReported = true
+			
 		}))
 		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-		// 4. Present the alert.
+		
+		
 		presentingViewController?.presentViewController(alert, animated: true, completion: nil)
-//		presentViewController(alert, animated: true, completion: nil)
 		
 	}
 	
