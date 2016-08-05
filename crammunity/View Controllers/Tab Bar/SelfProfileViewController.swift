@@ -88,27 +88,32 @@ passwordTextField
 //	}
 	@IBAction func onEditDisplayNameButtonTap(sender: UIButton)
 	{
-		displayNameTextField.userInteractionEnabled = !displayNameTextField.userInteractionEnabled
-		if displayNameTextField.canBecomeFirstResponder() {
-			displayNameTextField.becomeFirstResponder()
-			self.becameFirstResponder(displayNameTextField)
-		}
+		ErrorHandling.delayedFeatureAlert()
+
+//		displayNameTextField.userInteractionEnabled = !displayNameTextField.userInteractionEnabled
+//		if displayNameTextField.canBecomeFirstResponder() {
+//			displayNameTextField.becomeFirstResponder()
+//			self.becameFirstResponder(displayNameTextField)
+//		}
 	}
 	@IBAction func onEditEmailButtonTap(sender: UIButton)
 	{
-		emailTextField.userInteractionEnabled = !emailTextField.userInteractionEnabled
-		if emailTextField.canBecomeFirstResponder() {
-			emailTextField.becomeFirstResponder()
-			self.becameFirstResponder(emailTextField)
-		}
+		ErrorHandling.delayedFeatureAlert()
+
+//		emailTextField.userInteractionEnabled = !emailTextField.userInteractionEnabled
+//		if emailTextField.canBecomeFirstResponder() {
+//			emailTextField.becomeFirstResponder()
+//			self.becameFirstResponder(emailTextField)
+//		}
 	}
 	@IBAction func onEditGradeButtonTap(sender: UIButton)
 	{
-		gradeTextField.userInteractionEnabled = !gradeTextField.userInteractionEnabled
-		if gradeTextField.canBecomeFirstResponder() {
-			gradeTextField.becomeFirstResponder()
-			self.becameFirstResponder(gradeTextField)
-		}
+		ErrorHandling.delayedFeatureAlert()
+//		gradeTextField.userInteractionEnabled = !gradeTextField.userInteractionEnabled
+//		if gradeTextField.canBecomeFirstResponder() {
+//			gradeTextField.becomeFirstResponder()
+//			self.becameFirstResponder(gradeTextField)
+//		}
 	}
 	@IBAction func onEditProfilePictureButtonTap(sender: UIButton)
 	{
@@ -132,12 +137,13 @@ passwordTextField
 	}
 	@IBAction func onEditPasswordButtonTap(sender: UIButton)
 	{
-		passwordTextField.userInteractionEnabled = !passwordTextField.userInteractionEnabled
-		if passwordTextField.canBecomeFirstResponder() {
-			passwordTextField.secureTextEntry = false
-			passwordTextField.becomeFirstResponder()
-			self.becameFirstResponder(passwordTextField)
-		}
+		ErrorHandling.delayedFeatureAlert()
+//		passwordTextField.userInteractionEnabled = !passwordTextField.userInteractionEnabled
+//		if passwordTextField.canBecomeFirstResponder() {
+//			passwordTextField.secureTextEntry = false
+//			passwordTextField.becomeFirstResponder()
+//			self.becameFirstResponder(passwordTextField)
+//		}
 		
 	}
 	
@@ -175,6 +181,8 @@ passwordTextField
 //		}
 //		
 //	}
+	@IBOutlet weak var signOutButton: UIButton!
+	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -183,7 +191,7 @@ passwordTextField
 		emailTextField.userInteractionEnabled = false
 		gradeTextField.userInteractionEnabled = false
 		passwordTextField.userInteractionEnabled = false
-		
+		signOutButton.userInteractionEnabled = true
 		loadProfile()
         // Do any additional setup after loading the view.
     }
@@ -192,6 +200,9 @@ passwordTextField
 		AppState.sharedInstance.getProfileImage() {(image, error) -> Void in
 			self.profileImageView.image = image
 		}
+		displayNameTextField.text = AppState.sharedInstance.displayName
+		emailTextField.text = FIRAuth.auth()?.currentUser?.email
+		//TODO: finish these
 		
 	}
     override func didReceiveMemoryWarning() {

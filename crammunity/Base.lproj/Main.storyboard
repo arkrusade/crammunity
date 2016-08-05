@@ -20,7 +20,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Say hi!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zm2-bZ-xX2">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Say hi!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zm2-bZ-xX2">
                                 <rect key="frame" x="10" y="516" width="504" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
@@ -29,7 +29,7 @@
                                     <outlet property="delegate" destination="JEX-9P-axG" id="s4O-KA-GQ9"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrg-zb-Y1B">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrg-zb-Y1B">
                                 <rect key="frame" x="540" y="516" width="40" height="30"/>
                                 <state key="normal" image="camera"/>
                                 <connections>
@@ -272,13 +272,13 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EzC-ZB-EXR">
-                                <rect key="frame" x="215" y="20" width="170" height="169"/>
+                                <rect key="frame" x="221" y="20" width="158" height="158"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="EzC-ZB-EXR" secondAttribute="height" multiplier="1:1" id="Grw-2a-tOw"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KnY-fv-CPE">
-                                <rect key="frame" x="351" y="155" width="34" height="34"/>
+                                <rect key="frame" x="347" y="146" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KnY-fv-CPE" secondAttribute="height" multiplier="1:1" id="IaK-JY-cRP"/>
                                     <constraint firstAttribute="width" secondItem="KnY-fv-CPE" secondAttribute="height" multiplier="1:1" id="jgn-Ld-ATf"/>
@@ -293,8 +293,8 @@
                                     <action selector="onEditProfilePictureButtonTap:" destination="dXk-cQ-qN8" eventType="touchUpInside" id="qrD-lV-YgX"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dF7-iK-iLU">
-                                <rect key="frame" x="191" y="214" width="218" height="212"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dF7-iK-iLU">
+                                <rect key="frame" x="191" y="203" width="218" height="198"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eM0-7M-LSQ">
                                         <rect key="frame" x="0.0" y="0.0" width="218" height="20"/>
@@ -326,8 +326,8 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Mg-2k-S3H">
-                                        <rect key="frame" x="0.0" y="64" width="218" height="20"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Mg-2k-S3H">
+                                        <rect key="frame" x="0.0" y="59" width="218" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAJ-Cn-ahq">
                                                 <rect key="frame" x="0.0" y="0.0" width="98" height="20"/>
@@ -353,8 +353,8 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yud-Uf-wdd">
-                                        <rect key="frame" x="0.0" y="128" width="218" height="20"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yud-Uf-wdd">
+                                        <rect key="frame" x="0.0" y="119" width="218" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGI-jr-Vyt">
                                                 <rect key="frame" x="0.0" y="0.0" width="98" height="20"/>
@@ -380,8 +380,8 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rft-Ei-lBz">
-                                        <rect key="frame" x="0.0" y="192" width="218" height="20"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rft-Ei-lBz">
+                                        <rect key="frame" x="0.0" y="178" width="218" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdk-yB-msw">
                                                 <rect key="frame" x="0.0" y="0.0" width="98" height="20"/>
@@ -420,7 +420,7 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="dF7-iK-iLU" secondAttribute="trailing" constant="25" id="5Wl-is-tci"/>
                             <constraint firstItem="KnY-fv-CPE" firstAttribute="trailing" secondItem="EzC-ZB-EXR" secondAttribute="trailing" id="6ha-1y-XGw"/>
-                            <constraint firstItem="eFG-pR-ryj" firstAttribute="top" secondItem="dF7-iK-iLU" secondAttribute="bottom" constant="25" id="CK6-Ts-Ohh"/>
+                            <constraint firstItem="eFG-pR-ryj" firstAttribute="top" secondItem="dF7-iK-iLU" secondAttribute="bottom" constant="50" id="CK6-Ts-Ohh"/>
                             <constraint firstItem="dF7-iK-iLU" firstAttribute="centerX" secondItem="9K1-Nh-Yfh" secondAttribute="centerX" id="DDM-1x-5Fl"/>
                             <constraint firstItem="EzC-ZB-EXR" firstAttribute="top" secondItem="f0s-ZY-RFo" secondAttribute="bottom" id="DYm-3E-pWr"/>
                             <constraint firstItem="EzC-ZB-EXR" firstAttribute="bottom" secondItem="9K1-Nh-Yfh" secondAttribute="centerY" constant="-100" id="HrO-SR-66I"/>
@@ -462,6 +462,7 @@
                         <outlet property="passwordTextField" destination="S7V-kw-G5b" id="B35-BP-HuW"/>
                         <outlet property="profileButton" destination="KnY-fv-CPE" id="BCR-6f-faq"/>
                         <outlet property="profileImageView" destination="EzC-ZB-EXR" id="DPY-ww-QUs"/>
+                        <outlet property="signOutButton" destination="eFG-pR-ryj" id="a56-cM-D80"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BVP-mw-8hl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -804,22 +805,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7I-n6-OV3">
-                                <rect key="frame" x="273" y="389" width="55" height="30"/>
-                                <state key="normal" title="Sign Up"/>
-                                <connections>
-                                    <action selector="SignUpButtonTapped" destination="xeA-kQ-9s7" eventType="touchUpInside" id="ZVb-mW-DZY"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zVB-Wu-lmF">
-                                <rect key="frame" x="213" y="503" width="175" height="30"/>
-                                <state key="normal" title="Tap here for Login screen"/>
-                                <connections>
-                                    <segue destination="GxD-wA-7us" kind="unwind" unwindAction="unwindToLoginViewController:" id="tyG-SU-m2c"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="XMg-rD-TEP">
-                                <rect key="frame" x="165" y="182" width="271" height="156"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="bottom" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="XMg-rD-TEP">
+                                <rect key="frame" x="165" y="182" width="271" height="318"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="N2l-UL-tPh">
                                         <rect key="frame" x="65" y="0.0" width="206" height="30"/>
@@ -840,8 +827,8 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="quf-Dn-ZZQ">
-                                        <rect key="frame" x="27" y="42" width="244" height="30"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="quf-Dn-ZZQ">
+                                        <rect key="frame" x="27" y="58" width="244" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8N-EO-EG6">
                                                 <rect key="frame" x="0.0" y="0.0" width="84" height="30"/>
@@ -864,8 +851,8 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2m3-Zz-fWD">
-                                        <rect key="frame" x="32" y="84" width="239" height="30"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2m3-Zz-fWD">
+                                        <rect key="frame" x="32" y="115" width="239" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Cy-fw-ayh">
                                                 <rect key="frame" x="0.0" y="0.0" width="79" height="30"/>
@@ -880,8 +867,8 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vs9-fh-1Jb">
-                                        <rect key="frame" x="0.0" y="126" width="271" height="30"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vs9-fh-1Jb">
+                                        <rect key="frame" x="0.0" y="173" width="271" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pass. Confirm:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZn-Fa-dT3">
                                                 <rect key="frame" x="0.0" y="0.0" width="111" height="30"/>
@@ -896,31 +883,38 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OXq-cZ-jwT">
+                                        <rect key="frame" x="0.0" y="230" width="271" height="30"/>
+                                        <state key="normal" title="Sign Up"/>
+                                        <connections>
+                                            <action selector="SignUpButtonTapped" destination="xeA-kQ-9s7" eventType="touchUpInside" id="zpv-87-nnL"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zxg-de-A9J">
+                                        <rect key="frame" x="0.0" y="288" width="271" height="30"/>
+                                        <state key="normal" title="Tap here for Login screen"/>
+                                        <connections>
+                                            <segue destination="xeA-kQ-9s7" kind="custom" customClass="DismissSegue" id="bjL-lc-fCE"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="YgW-BI-f8u" firstAttribute="width" secondItem="4jT-ON-EKb" secondAttribute="width" id="3Sf-cv-wfc"/>
                                     <constraint firstItem="OLq-uF-OK7" firstAttribute="width" secondItem="4jT-ON-EKb" secondAttribute="width" id="MPG-Ip-4c6"/>
+                                    <constraint firstItem="OXq-cZ-jwT" firstAttribute="centerX" secondItem="XMg-rD-TEP" secondAttribute="centerX" id="ldo-jS-Fbg"/>
                                     <constraint firstItem="YgW-BI-f8u" firstAttribute="width" secondItem="5vY-oA-Eb5" secondAttribute="width" id="mCc-iE-Ge2"/>
+                                    <constraint firstItem="Zxg-de-A9J" firstAttribute="centerX" secondItem="XMg-rD-TEP" secondAttribute="centerX" id="wne-5C-8kL"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zVB-Wu-lmF" firstAttribute="centerX" secondItem="Qgk-tv-Z7E" secondAttribute="centerX" id="C15-rD-05k"/>
                             <constraint firstItem="XMg-rD-TEP" firstAttribute="top" secondItem="bYx-cV-wEw" secondAttribute="bottom" constant="80" id="Pzj-Pf-osc"/>
                             <constraint firstItem="bYx-cV-wEw" firstAttribute="centerX" secondItem="Qgk-tv-Z7E" secondAttribute="centerX" id="QD0-UZ-Q5x"/>
-                            <constraint firstItem="zVB-Wu-lmF" firstAttribute="top" secondItem="K7I-n6-OV3" secondAttribute="bottom" constant="84" id="So2-Yk-ktY"/>
-                            <constraint firstItem="Bq4-CF-j5T" firstAttribute="top" secondItem="zVB-Wu-lmF" secondAttribute="bottom" constant="67" id="VBC-DC-DxZ"/>
                             <constraint firstItem="XMg-rD-TEP" firstAttribute="centerX" secondItem="Qgk-tv-Z7E" secondAttribute="centerX" id="XOx-iI-j2q"/>
-                            <constraint firstItem="K7I-n6-OV3" firstAttribute="top" secondItem="XMg-rD-TEP" secondAttribute="bottom" constant="51" id="fz7-ES-iW5"/>
+                            <constraint firstItem="Bq4-CF-j5T" firstAttribute="top" secondItem="XMg-rD-TEP" secondAttribute="bottom" constant="100" id="m8X-af-d4l"/>
                             <constraint firstItem="bYx-cV-wEw" firstAttribute="top" secondItem="axG-yu-3hQ" secondAttribute="bottom" constant="61" id="oxl-Ey-lAF"/>
-                            <constraint firstItem="K7I-n6-OV3" firstAttribute="centerX" secondItem="Qgk-tv-Z7E" secondAttribute="centerX" id="sUq-WG-wgN"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="VBC-DC-DxZ"/>
-                            </mask>
-                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="082-aQ-v4g" appends="YES" id="9EN-qz-x8G"/>
                         </connections>
@@ -930,6 +924,7 @@
                         <outlet property="PasswordConfirmTextField" destination="OLq-uF-OK7" id="QsJ-6e-jEe"/>
                         <outlet property="PasswordTextField" destination="4jT-ON-EKb" id="hPT-qe-Ctf"/>
                         <outlet property="UsernameTextField" destination="YgW-BI-f8u" id="hqa-tf-1ma"/>
+                        <outlet property="signUpButton" destination="OXq-cZ-jwT" id="RR2-7x-pFN"/>
                         <segue destination="X6m-gL-Apk" kind="show" identifier="SignUpToMain" id="ijW-7J-VNv"/>
                     </connections>
                 </viewController>
@@ -939,7 +934,6 @@
                         <action selector="viewTapped:" destination="xeA-kQ-9s7" id="TKn-L3-3HN"/>
                     </connections>
                 </tapGestureRecognizer>
-                <exit id="GxD-wA-7us" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-797" y="156"/>
         </scene>
@@ -1375,5 +1369,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ijW-7J-VNv"/>
+        <segue reference="ADL-xj-PFU"/>
     </inferredMetricsTieBreakers>
 </document>

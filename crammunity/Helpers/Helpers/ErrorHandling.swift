@@ -39,6 +39,13 @@ struct ErrorHandling {
 		let window = UIApplication.sharedApplication().windows[0]
 		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
 	}
+	static func errorAlert(title: String, desc: String) {
+		let alert = UIAlertController(title: title, message: desc, preferredStyle: UIAlertControllerStyle.Alert)
+		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.Default, handler: nil))
+		
+		let window = UIApplication.sharedApplication().windows[0]
+		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
+	}
 	
 	/**
 	A PFBooleanResult callback block that only handles error cases. You can pass this to completion blocks of Parse Requests

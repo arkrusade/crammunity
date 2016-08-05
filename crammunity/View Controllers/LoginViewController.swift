@@ -11,7 +11,7 @@ import FirebaseAuth
 class LoginViewController: UIViewController {
 	@IBOutlet weak var EmailTextField: UITextField!
 	@IBOutlet weak var PasswordTextField: UITextField!
-	
+	let InvalidLoginTitle = "Invalid Login"
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
 	//TODO: remove testlogin
 	func testLogin()
 	{
-		FIRAuth.auth()!.signInWithEmail("test@test.com", password: "testtesttest") { (user, error) in
+		FIRAuth.auth()!.signInWithEmail("justinjlee99@gmail.com", password: "fpptbaqq") { (user, error) in
 			if let error = error {
 				print("Test Sign in failed:", error.localizedDescription)
 			} else {
@@ -42,19 +42,23 @@ class LoginViewController: UIViewController {
 		//TODO: add alertviewcontrollers
 		//also with sign in
 		viewTapped(self)
+		guard PasswordTextField.text != "" else {
+			ErrorHandling.errorAlert(InvalidLoginTitle, desc: "Missing Password")
+			return
+		}
 		FIRAuth.auth()!.signInWithEmail(EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in
 			if let error = error {
 				if(error.code == 17008)
 				{
-					print("Invalid email")
+					ErrorHandling.errorAlert(self.InvalidLoginTitle, desc: " Invalid email")
 				}
 				else if(error.code == 17009)
 				{
-					print("Invalid email/password combination")
+					ErrorHandling.errorAlert(self.InvalidLoginTitle, desc: " Invalid email/password combination")
 				}
 				else if(error.code == 17011)
 				{
-					print("User does not exist")
+					ErrorHandling.errorAlert(self.InvalidLoginTitle, desc: " User does not exist")
 				}
 				else if(error.code == 17999)
 				{
@@ -63,25 +67,9 @@ class LoginViewController: UIViewController {
 				}
 				//successful sign in
 				else {
-					print("Unknown error: \(error)")
+					ErrorHandling.errorAlert(self.InvalidLoginTitle, desc: "Unknown error: \(error)")
 				}
-					
-//				{NSUnderlyingError=0x7f8ec1f13030 {Error Domain=FIRAuthInternalErrorDomain Code=3 "(null)" UserInfo={FIRAuthErrorUserInfoDeserializedResponseKey=<CFBasicHash 0x7f8ec4023dd0 [0x10fe30a40]>{type = immutable dict, count = 3,
-//				entries =>
-//				0 : <CFString 0x7f8ec4025930 [0x10fe30a40]>{contents = "message"} = <CFString 0x7f8ec4027b20 [0x10fe30a40]>{contents = "MISSING_PASSWORD"}
-//				1 : errors = <CFArray 0x7f8ec4025580 [0x10fe30a40]>{type = immutable, count = 1, values = (
-//					0 : <CFBasicHash 0x7f8ec1eecd40 [0x10fe30a40]>{type = immutable dict, count = 3,
-//					entries =>
-//					0 : reason = invalid
-//					1 : message = <CFString 0x7f8ec1e8a860 [0x10fe30a40]>{contents = "MISSING_PASSWORD"}
-//					2 : domain = global
-//					}
-//					
-//					)}
-//				2 : code = <CFNumber 0xb000000000001903 [0x10fe30a40]>{value = +400, type = kCFNumberSInt64Type}
-//			}
-//		}}
-				
+									
 			} else {
 				print ("Signed in with uid:", user!.uid)
 				self.signedIn(user)
@@ -113,24 +101,10 @@ class LoginViewController: UIViewController {
 	{
 		MeasurementHelper.sendLoginEvent()
 		
-//		Constants.Firebase.UserSearchArray.child((FIRAuth.auth()?.currentUser!.uid)!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-//			// Get username value
-//				AppState.sharedInstance.displayName = snapshot.childSnapshotForPath("username").value! as? String
-//			})
-		
-//		let changeRequest = user!.profileChangeRequest()
-//		changeRequest.photoURL =
-//			NSURL(string: "gs://crammunity.appspot.com/defaults/profilePicture/profile-256.png")
-//		changeRequest.commitChangesWithCompletion(){ (error) in
-//			if let error = error {
-//				ErrorHandling.defaultErrorHandler(error)
-//				return
-//			}
-//			
-//		}
+
 		
 		
-		AppState.sharedInstance.displayName = user?.displayName
+		AppState.sharedInstance.displayName = user?.displayName ?? user?.email
 		AppState.sharedInstance.photoUrl = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)

@@ -1,3 +1,0 @@
-let classData = [Constants.Name: cramClass.valueForKey(Constants.Name)!]
-		cramClass.child(Constants.Members).child(user.uid).child(Constants.Username).setValue(AppState.sharedInstance.displayName!)
-		Constants.Firebase.UserArray.child(user.uid).child("classes").child(cramClass.key).setValue(classData)

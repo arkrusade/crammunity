@@ -11,60 +11,38 @@ import FirebaseAuth
 import FirebaseDatabase
 import Foundation
 
-//class Regex {
-//	let internalExpression: NSRegularExpression
-//	let pattern: String
-//	
-//	init(_ pattern: String) {
-//		self.pattern = pattern
-//		var error: NSError?
-//		self.internalExpression = NSRegularExpression(pattern: pattern, options: .CaseInsensitive, error: &error)
-//	}
-//	
-//	func test(input: String) -> Bool {
-//		let matches = self.internalExpression.matchesInString(input, options: nil, range:NSMakeRange(0, countElements(input)))
-//		return matches.count > 0
-//	}
-//}
+
 class SignUpViewController: UIViewController {
 
-//	@IBOutlet weak var SignUpButton: UIButton!
-	
+	let InvalidSignUpTitle = "Invalid Sign Up"
 	@IBOutlet weak var EmailTextField: UITextField!
 	@IBOutlet weak var UsernameTextField: UITextField!
 	@IBOutlet weak var PasswordTextField: UITextField!
 	@IBOutlet weak var PasswordConfirmTextField: UITextField!
+	@IBOutlet weak var signUpButton: UIButton!
 	
-	@IBAction func viewTapped(sender: AnyObject?)
-	{
-		EmailTextField.resignFirstResponder()
-		UsernameTextField.resignFirstResponder()
-		PasswordTextField.resignFirstResponder()
-		PasswordConfirmTextField.resignFirstResponder()
-	}
+	
 	
 	@IBAction func SignUpButtonTapped()
 	{
 		//TODO: change to alerts
-		if UsernameTextField.text?.characters.count < 6 {
-			print("Must have username longer than 6 characters")
+		if (EmailTextField.text!.rangeOfString(Constants.emailRegex, options: .RegularExpressionSearch)) == nil
+		{
+			ErrorHandling.errorAlert(InvalidSignUpTitle, desc: "Must be valid email")
+			return
+		}
+		else if UsernameTextField.text?.characters.count < 6 {
+			ErrorHandling.errorAlert(InvalidSignUpTitle, desc: "Must have username longer than 6 characters")
 			return
 		}
 		else if PasswordTextField.text?.characters.count < 8 || PasswordConfirmTextField.text?.characters.count < 8 {
-			print("Must have password longer than 8 characters")
+			ErrorHandling.errorAlert(InvalidSignUpTitle, desc: "Must have password longer than 8 characters")
 			return
 		}
-		else if (!(EmailTextField.text?.characters.contains("@") ?? false)) {
-			print("Email must have @ symbol")
-			return
-		}
-		else if (EmailTextField.text!.rangeOfString(Constants.emailRegex, options: .RegularExpressionSearch)) == nil
-		{
-			print("Must be valid email")
-			return
-		}
+		
+		
 		else if (PasswordTextField.text! != PasswordConfirmTextField.text!) {
-			print("Passwords must match")
+			ErrorHandling.errorAlert(InvalidSignUpTitle, desc: "Passwords must match")
 			return
 		}
 		else {
@@ -76,6 +54,13 @@ class SignUpViewController: UIViewController {
 				}
 			}
 		}
+	}
+	@IBAction func viewTapped(sender: AnyObject?)
+	{
+		EmailTextField.resignFirstResponder()
+		UsernameTextField.resignFirstResponder()
+		PasswordTextField.resignFirstResponder()
+		PasswordConfirmTextField.resignFirstResponder()
 	}
 	func signedUp(user: FIRUser?)
 	{
@@ -114,6 +99,7 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		
         // Do any additional setup after loading the view.
     }
 	
