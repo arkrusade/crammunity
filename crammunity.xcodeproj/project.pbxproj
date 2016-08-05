@@ -106,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				AD01E66B1D24768A00751657 /* crammunity */,
-				AD01E66A1D24768A00751657 /* Products */,
 				FF8AD4B71AAF6FBF46D3FDE5 /* Pods */,
 				59428670B5DBFC1B98F0F440 /* Frameworks */,
 			);
@@ -118,11 +117,13 @@
 				AD01E6691D24768A00751657 /* crammunity.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		AD01E66B1D24768A00751657 /* crammunity */ = {
 			isa = PBXGroup;
 			children = (
+				AD01E66A1D24768A00751657 /* Products */,
 				AD8F18361D46969B008B3642 /* Helpers */,
 				AD01E6851D258CD100751657 /* Models */,
 				AD01E6821D24784500751657 /* Views */,
@@ -500,13 +501,15 @@
 			baseConfigurationReference = 3B322EF38DBB3BDDADD3403C /* Pods-crammunity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: peter2424@hotmail.com (Z44KRN28GZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 0.1.0;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = crammunity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orctech.crammunity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orctech.crammunity.01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4fe4881b-2274-4dea-bd6d-1853fe56b318";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -516,13 +519,15 @@
 			baseConfigurationReference = E89F6B9773580FF5A27F14BB /* Pods-crammunity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: peter2424@hotmail.com (Z44KRN28GZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 0.1.0;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = crammunity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.orctech.crammunity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orctech.crammunity.01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4fe4881b-2274-4dea-bd6d-1853fe56b318";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
