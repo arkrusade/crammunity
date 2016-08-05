@@ -37,6 +37,7 @@ struct Constants {
 	
 	struct Segues {
 		static let LoginToMain = "LoginToMain"
+		static let LoginToSignUp = "LoginToSignUp"
 		static let SignUpToMain = "SignUpToMain"
 		static let MainToClassChat = "MainToClassChat"
 		static let ClassCreationToCrammatesAddition = "ClassCreationToCrammatesAddition"

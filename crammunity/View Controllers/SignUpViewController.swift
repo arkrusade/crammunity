@@ -21,7 +21,7 @@ class SignUpViewController: UIViewController {
 	@IBOutlet weak var PasswordConfirmTextField: UITextField!
 	@IBOutlet weak var signUpButton: UIButton!
 	
-	
+	var loginVC: LoginViewController!
 	
 	@IBAction func SignUpButtonTapped()
 	{
@@ -48,13 +48,14 @@ class SignUpViewController: UIViewController {
 		else {
 			FIRAuth.auth()?.createUserWithEmail(EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in
 				if let error = error {
-					print("Create user failed:", error.localizedDescription)
+					ErrorHandling.errorAlert(self.InvalidSignUpTitle, desc: error.localizedDescription)
 				} else {
 					self.signedUp(user)
 				}
 			}
 		}
 	}
+	
 	@IBAction func viewTapped(sender: AnyObject?)
 	{
 		EmailTextField.resignFirstResponder()
@@ -84,6 +85,7 @@ class SignUpViewController: UIViewController {
 				ErrorHandling.defaultErrorHandler(error)
 				return
 			}
+			
 		}
 		
 		MeasurementHelper.sendLoginEvent()//analytics
@@ -93,7 +95,10 @@ class SignUpViewController: UIViewController {
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
 		Constants.Firebase.currentUser = FIRAuth.auth()?.currentUser
-		self.performSegueWithIdentifier(Constants.Segues.SignUpToMain, sender: nil)
+		
+		loginVC.isSignedUp = true
+		self.dismissViewControllerAnimated(false, completion: nil)
+//		self.performSegueWithIdentifier(Constants.Segues.SignUpToMain, sender: nil)
 		
 	}
     override func viewDidLoad() {

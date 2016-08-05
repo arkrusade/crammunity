@@ -152,7 +152,7 @@ class FriendsViewController: UIViewController
 		super.viewDidLoad()
 		
 		
-		state = .DefaultMode
+		searchBarCancelButtonClicked(searchBar)
 	}
 	deinit {
 		friends = []

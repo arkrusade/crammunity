@@ -13,8 +13,19 @@ class LoginViewController: UIViewController {
 	@IBOutlet weak var PasswordTextField: UITextField!
 	let InvalidLoginTitle = "Invalid Login"
 	
+	var isSignedUp = false
+	
+	
+	override func viewDidAppear(animated: Bool) {
+		guard !isSignedUp else {
+			performSegueWithIdentifier(Constants.Segues.LoginToMain, sender: self)
+			return
+		}
+	}
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		
 		print("login view loaded")
 		testLogin()
 		
@@ -22,7 +33,7 @@ class LoginViewController: UIViewController {
 	//TODO: remove testlogin
 	func testLogin()
 	{
-		FIRAuth.auth()!.signInWithEmail("justinjlee99@gmail.com", password: "fpptbaqq") { (user, error) in
+		FIRAuth.auth()!.signInWithEmail("test@test.com", password: "testtesttest") { (user, error) in
 			if let error = error {
 				print("Test Sign in failed:", error.localizedDescription)
 			} else {
@@ -120,7 +131,14 @@ class LoginViewController: UIViewController {
 		if let id = segue.identifier
 		{
 			print("Seguing to \(id)")
-			
+			if id == Constants.Segues.LoginToSignUp{
+				let vc = segue.destinationViewController as! SignUpViewController
+				vc.loginVC = self
+			}
+			else if id == Constants.Segues.LoginToMain
+			{
+				self.isSignedUp = false
+			}
 			
 		}
 	}

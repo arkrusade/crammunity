@@ -198,6 +198,10 @@ passwordTextField
 
 	func loadProfile() {
 		AppState.sharedInstance.getProfileImage() {(image, error) -> Void in
+			guard image != nil else {
+				self.profileImageView.image = UIImage(named: "profile-256")
+				return
+			}
 			self.profileImageView.image = image
 		}
 		displayNameTextField.text = AppState.sharedInstance.displayName
