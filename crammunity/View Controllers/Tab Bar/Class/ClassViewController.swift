@@ -21,7 +21,7 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 	@IBOutlet weak var sendButton: UIButton!
 	var messagesRef: FIRDatabaseReference!
 	var messages: [FIRDataSnapshot]! = []
-	var msglength: NSNumber = 10
+	var msglength: NSNumber = 0
 	var _refHandle: FIRDatabaseHandle!
 	
 	var storageRef: FIRStorageReference!

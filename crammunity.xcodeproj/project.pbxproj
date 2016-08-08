@@ -198,6 +198,13 @@
 			path = "Class View Extensions";
 			sourceTree = "<group>";
 		};
+		AD7952391D59326600A548F7 /* Chapter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Chapter;
+			sourceTree = "<group>";
+		};
 		AD8F18361D46969B008B3642 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +246,7 @@
 		ADDF00D91D4C190800A3FC2E /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				AD7952391D59326600A548F7 /* Chapter */,
 				AD79522C1D58FAF600A548F7 /* Class View Extensions */,
 				ADDF00DA1D4C190800A3FC2E /* ClassCreationViewController.swift */,
 				ADDF00DB1D4C190800A3FC2E /* ClassViewController.swift */,

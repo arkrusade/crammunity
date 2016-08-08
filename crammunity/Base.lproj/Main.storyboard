@@ -48,9 +48,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ao1-hX-1Sx">
-                                                    <rect key="frame" x="525" y="8" width="47" height="30"/>
-                                                    <state key="normal" title="Report"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ao1-hX-1Sx">
+                                                    <rect key="frame" x="540" y="7" width="32" height="32"/>
+                                                    <state key="normal" image="flag_red"/>
                                                     <connections>
                                                         <action selector="onReportButtonTap:" destination="yB6-7a-5FU" eventType="touchUpInside" id="nFH-Wn-apN"/>
                                                     </connections>
@@ -200,7 +200,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ehg-S0-QgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qav-TB-Ay8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3619" y="-221"/>
+            <point key="canvasLocation" x="3787" y="-168"/>
         </scene>
         <!--Class List-->
         <scene sceneID="smW-Zh-WAh">
@@ -245,7 +245,7 @@
                         <attributedString key="attributedTitle">
                             <fragment content="Refreshing">
                                 <attributes>
-                                    <font key="NSFont" metaFont="toolTip"/>
+                                    <font key="NSFont" metaFont="smallSystem"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -271,13 +271,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EzC-ZB-EXR">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EzC-ZB-EXR">
                                 <rect key="frame" x="215" y="20" width="170" height="169"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="EzC-ZB-EXR" secondAttribute="height" multiplier="1:1" id="Grw-2a-tOw"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KnY-fv-CPE">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KnY-fv-CPE">
                                 <rect key="frame" x="351" y="155" width="34" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KnY-fv-CPE" secondAttribute="height" multiplier="1:1" id="IaK-JY-cRP"/>
@@ -294,7 +294,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dF7-iK-iLU">
-                                <rect key="frame" x="191" y="239" width="218" height="212"/>
+                                <rect key="frame" x="191" y="239" width="218" height="211"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eM0-7M-LSQ">
                                         <rect key="frame" x="0.0" y="0.0" width="218" height="20"/>
@@ -327,7 +327,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Mg-2k-S3H">
-                                        <rect key="frame" x="0.0" y="46" width="218" height="20"/>
+                                        <rect key="frame" x="0.0" y="45" width="218" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAJ-Cn-ahq">
                                                 <rect key="frame" x="0.0" y="0.0" width="98" height="20"/>
@@ -354,7 +354,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yud-Uf-wdd">
-                                        <rect key="frame" x="0.0" y="91" width="218" height="20"/>
+                                        <rect key="frame" x="0.0" y="90" width="218" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGI-jr-Vyt">
                                                 <rect key="frame" x="0.0" y="0.0" width="98" height="20"/>
@@ -381,7 +381,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rft-Ei-lBz">
-                                        <rect key="frame" x="0.0" y="137" width="218" height="20"/>
+                                        <rect key="frame" x="0.0" y="136" width="218" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdk-yB-msw">
                                                 <rect key="frame" x="0.0" y="0.0" width="98" height="20"/>
@@ -409,7 +409,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFG-pR-ryj">
-                                        <rect key="frame" x="0.0" y="182" width="218" height="30"/>
+                                        <rect key="frame" x="0.0" y="181" width="218" height="30"/>
                                         <state key="normal" title="Sign Out"/>
                                         <connections>
                                             <action selector="signOut:" destination="dXk-cQ-qN8" eventType="touchUpInside" id="9pT-oi-ytM"/>
@@ -1368,6 +1368,7 @@
         <image name="Edit-52" width="52" height="52"/>
         <image name="add" width="42" height="42"/>
         <image name="camera" width="40" height="30"/>
+        <image name="flag_red" width="32" height="32"/>
         <image name="message" width="30" height="30"/>
         <image name="message-7" width="30" height="30"/>
         <image name="people" width="42" height="42"/>
