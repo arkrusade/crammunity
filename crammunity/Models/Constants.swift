@@ -38,7 +38,7 @@ struct Constants {
 	struct Segues {
 		static let LoginToMain = "LoginToMain"
 		static let LoginToSignUp = "LoginToSignUp"
-		static let SignUpToMain = "SignUpToMain"
+//		static let SignUpToMain = "SignUpToMain"
 		static let MainToClassChat = "MainToClassChat"
 		static let ClassCreationToCrammatesAddition = "ClassCreationToCrammatesAddition"
 		static let CramChatToCrammateAddition = "CramChatToCrammateAddition"
@@ -62,7 +62,7 @@ struct Constants {
 		static let ErrorsArray = FIRDatabase.database().reference().child("errors")
 		static let ReportsArray = FIRDatabase.database().reference().child("reports")
 		static let MessageReports = ReportsArray.child("messageReports")
-		static let FriendsArray = UserArray.child((currentUser?.uid)!).child("friends")
+		static var FriendsArray = UserArray.child((currentUser?.uid)!).child("friends")
 	}
 	
 	struct Images {

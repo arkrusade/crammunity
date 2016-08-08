@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UIKit
 
 import Firebase
 import GoogleMobileAds
@@ -15,8 +14,7 @@ import GoogleMobileAds
 let kBannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
 
 @objc(ClassViewController)
-class ClassViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,
-UITextFieldDelegate, UINavigationControllerDelegate {
+class ClassViewController: UIViewController, UITableViewDelegate, UINavigationControllerDelegate {
 	
 	
 	// Instance variables
@@ -24,7 +22,7 @@ UITextFieldDelegate, UINavigationControllerDelegate {
 	var messagesRef: FIRDatabaseReference!
 	var messages: [FIRDataSnapshot]! = []
 	var msglength: NSNumber = 10
-	private var _refHandle: FIRDatabaseHandle!
+	var _refHandle: FIRDatabaseHandle!
 	
 	var storageRef: FIRStorageReference!
 	var remoteConfig: FIRRemoteConfig!
@@ -46,9 +44,9 @@ UITextFieldDelegate, UINavigationControllerDelegate {
 	func configureNavigationBar() {
 		
 		let addFriendsBarButton = UIBarButtonItem(image: Constants.Images.add, style: .Plain, target: self, action: #selector(goToCrammateAddition(_: )))
-		let settingsBarButton = UIBarButtonItem(image: Constants.Images.settings, style: .Plain, target: self, action: #selector(goToClassSettings(_: )))
-
-		self.navigationItem.rightBarButtonItems = [settingsBarButton, addFriendsBarButton]
+		//let settingsBarButton = UIBarButtonItem(image: Constants.Images.settings, style: .Plain, target: self, action: #selector(goToClassSettings(_: )))
+		//TODO: settings
+		self.navigationItem.rightBarButtonItems = [/*settingsBarButton, */addFriendsBarButton]
 		
 	}
 	
@@ -120,107 +118,10 @@ UITextFieldDelegate, UINavigationControllerDelegate {
 
 	}
 	
-	// MARK: Keyboard Dodging Logic
-	func keyboardWillShow(notification: NSNotification) {
-		let keyboardHeight = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.height
-		UIView.animateWithDuration(0.1, animations: { () -> Void in
-			self.bottomConstraint.constant = keyboardHeight! + self.lengthOfBottomConstraint - (self.tabBarController?.tabBar.frame.height)!
-			self.view.layoutIfNeeded()
-		})
-	}
-	
-	func keyboardDidShow(notification: NSNotification) {
-		self.scrollToBottomMessage()
-	}
-	
-	func keyboardWillHide(notification: NSNotification) {
-		UIView.animateWithDuration(0.1, animations: { () -> Void in
-			self.bottomConstraint.constant = self.lengthOfBottomConstraint
-			self.view.layoutIfNeeded()
-		})
-	}
-	
-	// MARK: UI Logic
-	
-	// Dismiss keyboard if container view is tapped
-	@IBAction func viewTapped(sender: AnyObject) {
-		self.textField.resignFirstResponder()
-	}
-	
-	// Scroll to bottom of table view for messages
-	func scrollToBottomMessage() {
-		if self.messages.count == 0 {
-			return
-		}
-		let bottomMessageIndex = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1,
-		                                     inSection: 0)
-		self.tableView.scrollToRowAtIndexPath(bottomMessageIndex, atScrollPosition: .Bottom,
-		                                      animated: true)
-	}
-	// MARK: Firebase stuff
-	deinit {
-		self.messagesRef.removeAllObservers()
-	}
-	
-	func configureDatabase() {
-		messagesRef = Constants.Firebase.CramClassArray.child(cramChat.key).child(CramClassFKs.MessagesArray)
 		
-		//find new messages
-		_refHandle = messagesRef.observeEventType(.ChildAdded, withBlock: { snapshot in
-				if snapshot.exists() {
-					self.messages.append(snapshot)
-					self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: .Automatic)
 
-				} else {
-					print("error in message loading")
-					
-				}
-			})
-	}
-	//TODO: add storage in specific class
-	func configureStorage() {
-		storageRef = FIRStorage.storage().referenceForURL("gs://crammunity.appspot.com/")
-	}
-	
-	func configureRemoteConfig() {
-		remoteConfig = FIRRemoteConfig.remoteConfig()
-		// Create Remote Config Setting to enable developer mode.
-		// Fetching configs from the server is normally limited to 5 requests per hour.
-		// Enabling developer mode allows many more requests to be made per hoøur, so developers
-		// can test different config values during development.
-		//TODO: change config
-		let remoteConfigSettings = FIRRemoteConfigSettings(developerModeEnabled: true)
-		remoteConfig.configSettings = remoteConfigSettings!
-	}
-	
-	func fetchConfig() {
-		var expirationDuration: Double = 3600
-		// If in developer mode cacheExpiration is set to 0 so each fetch will retrieve values from
-		// the server.
-		if (self.remoteConfig.configSettings.isDeveloperModeEnabled) {
-			expirationDuration = 0
-		}
+	// MARK: Firebase stuff
 		
-		// cacheExpirationSeconds is set to cacheExpiration here, indicating that any previously
-		// fetched and cached config would be considered expired because it would have been fetched
-		// more than cacheExpiration seconds ago. Thus the next fetch would go to the server unless
-		// throttling is in progress. The default expiration duration is 43200 (12 hours).
-		remoteConfig.fetchWithExpirationDuration(expirationDuration) { (status, error) in
-			if (status == .Success) {
-				print("Config fetched!")
-				self.remoteConfig.activateFetched()
-				let friendlyMsgLength = self.remoteConfig["friendly_msg_length"]
-				if (friendlyMsgLength.source != .Static) {
-					self.msglength = friendlyMsgLength.numberValue!
-					print("Friendly msg length config: \(self.msglength)")
-				}
-			} else {
-				print("Config not fetched")
-				print("Error \(error)")
-			}
-		}
-	}
-	
 	@IBAction func didPressFreshConfig(sender: AnyObject) {
 		fetchConfig()
 	}
@@ -243,14 +144,6 @@ UITextFieldDelegate, UINavigationControllerDelegate {
 //		self.banner.rootViewController = self
 //		self.banner.loadRequest(GADRequest())
 	}
-		// UITextViewDelegate protocol methods
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
-		let data = [Constants.MessageFields.text: textField.text! as String]
-		sendMessage(data)
-		textField.text! = ""
-		return true
-	}
-	
 	func sendMessage(data: [String: String]) {
 		var mdata = data
 		mdata[Constants.MessageFields.name] = AppState.sharedInstance.displayName
@@ -263,85 +156,11 @@ UITextFieldDelegate, UINavigationControllerDelegate {
 		MeasurementHelper.sendMessageEvent()
 	}
 	
-	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-		guard let text = textField.text else { return true }
-		
-		let newLength = text.utf16.count + string.utf16.count - range.length
-		return newLength <= self.msglength.integerValue // Bool
+	deinit {
+		self.messagesRef.removeAllObservers()
 	}
 	
 	// UITableViewDataSource protocol methods
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return messages.count
-	}
-	
-	
-
-	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		// Dequeue cell
-		let cell = tableView.dequeueReusableCellWithIdentifier("MessageCell") as! MessageViewCell
 		
-		
-		//TODO:-Cells as constants
-		// Unpack message from Firebase DataSnapshot
-		let messageSnapshot: FIRDataSnapshot! = self.messages[indexPath.row]
-		let message = messageSnapshot.value as! Dictionary<String, String>
-		let name = message[Constants.MessageFields.name] as String!
-		cell.displayName = name
-		if message["isReported"] == "true"
-		{
-			cell.isReported = true
-		}
-		else if let imageUrl = message[Constants.MessageFields.imageUrl] {
-			var image = Constants.Images.defaultProfile
-			if imageUrl.hasPrefix("gs://") {
-				FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX){ (data, error) in
-					if let error = error {
-						print("Error downloading: \(error)")
-						self.showAlert("Error downloading image", message: error.description)
-
-						return
-					}
-					image = UIImage(data: data!)
-					cell.profileImageView?.image = image
-					cell.displayName = "sent by: \(name)"
-					cell.message = ""
-				}
-			}
-			
-			else if let url = NSURL(string:imageUrl), data = NSData(contentsOfURL: url) {
-				cell.imageView?.image = UIImage.init(data: data)
-			}
-			cell.profileImageView?.image = image
-			cell.message = "loading..."
-			cell.displayName = "Image is"
-		}
-		
-		
-		
-		
-		else {
-			let text = message[Constants.MessageFields.text] as String!
-			if name != nil
-			{
-				cell.displayName = name + ": "
-				cell.message = text
-				cell.profileImageView?.image = Constants.Images.defaultProfile
-
-				if let photoUrl = message[Constants.MessageFields.photoUrl], url = NSURL(string:photoUrl), data = NSData(contentsOfURL: url) {
-					cell.imageView?.image = UIImage(data: data)
-				}
-			}
-			else{
-				print("missing name")
-			}
-		}
-		
-		cell.messageRef = messageSnapshot.ref
-		cell.presentingViewController = self
-		return cell
-	}
-	
 	
 }

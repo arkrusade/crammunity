@@ -21,7 +21,7 @@ class FirebaseHelper
 	static let errorRef = Constants.Firebase.ErrorsArray
 	static let reportsRef = Constants.Firebase.ReportsArray
 	static let messageReportsRef = Constants.Firebase.MessageReports
-	static let friendsRef = Constants.Firebase.FriendsArray
+	static var friendsRef = Constants.Firebase.FriendsArray
 	//TODO: reset this on signout
 
 	//TODO: add completion with error
@@ -96,7 +96,6 @@ class FirebaseHelper
 	
 	static func friendsQuery() -> FIRDatabaseQuery
 	{
-		print(friendsRef)
 		let q = friendsRef.queryOrderedByChild("username").queryLimitedToFirst(20)
 		return q
 	}
@@ -137,7 +136,7 @@ class FirebaseHelper
 		FIRAuth.auth()?.createUserWithEmail(email, password: pw, completion: { result, error in
 			
 			if error != nil {
-				print("error creating user")
+				ErrorHandling.defaultErrorHandler("error creating user")
 			} else {
 				let uid = result?.uid
 				NSUserDefaults.standardUserDefaults().setValue(uid, forKey: "uid")

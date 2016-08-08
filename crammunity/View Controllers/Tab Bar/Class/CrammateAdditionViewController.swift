@@ -63,7 +63,7 @@ class CrammateAdditionViewController: UIViewController
 						self.friendsUIDS = self.friendsUIDS.filter({$0 != snapshot.key})
 					}
 				} else {
-					print("error in crammate loading")
+					ErrorHandling.defaultErrorHandler("error in crammate loading")
 				}
 			})
 			_removeCrammatesHandle = crammatesQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
@@ -75,7 +75,7 @@ class CrammateAdditionViewController: UIViewController
 					self.friends.append(snapshot)
 					self.friendsUIDS.append(snapshot.key)
 				} else {
-					print("error in crammate removing")
+					ErrorHandling.defaultErrorHandler("error in crammate removing")
 				}
 			})
 			friendsTableView.reloadData()
@@ -100,7 +100,7 @@ class CrammateAdditionViewController: UIViewController
 						self.friendsUIDS.append(snapshot.key)
 					}
 				} else {
-					print("error in user loading")
+					ErrorHandling.defaultErrorHandler("error in user loading")
 				}
 			})
 			_removeFriendsHandle = friendsQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
@@ -109,7 +109,7 @@ class CrammateAdditionViewController: UIViewController
 					self.friends = self.friends.filter({$0.key != snapshot.key})
 					self.friendsUIDS = self.friendsUIDS.filter({$0 != snapshot.key})
 				} else {
-					print("error in friend removing")
+					ErrorHandling.defaultErrorHandler("error in friend removing")
 				}
 			})
 			friendsTableView.reloadData()

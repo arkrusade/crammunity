@@ -39,8 +39,7 @@ extension ClassViewController: UIImagePickerControllerDelegate
 				self.storageRef.child(filePath)
 					.putFile(imageFile!, metadata: nil) { (metadata, error) in
 						if let error = error {
-							print("Error uploading: \(error.description)")
-							self.showAlert("Error uploading image", message: error.description)
+							ErrorHandling.defaultErrorHandler("Error uploading image", desc: error.description)
 							return
 						}
 						self.sendMessage([Constants.MessageFields.imageUrl: self.storageRef.child((metadata?.path)!).description])
@@ -56,8 +55,7 @@ extension ClassViewController: UIImagePickerControllerDelegate
 			self.storageRef.child(imagePath)
 				.putData(imageData!, metadata: metadata) { (metadata, error) in
 					if let error = error {
-						print("Error uploading: \(error)")
-						self.showAlert("Error uploading image", message: error.description)
+						ErrorHandling.defaultErrorHandler("Error uploading image", desc: error.description)
 						return
 					}
 					self.sendMessage([Constants.MessageFields.imageUrl: self.storageRef.child((metadata?.path)!).description])
@@ -66,14 +64,5 @@ extension ClassViewController: UIImagePickerControllerDelegate
 	}
 	func imagePickerControllerDidCancel(picker: UIImagePickerController) {
 		picker.dismissViewControllerAnimated(true, completion:nil)
-	}
-	func showAlert(title:String, message:String) {
-		dispatch_async(dispatch_get_main_queue()) {
-			let alert = UIAlertController(title: title,
-			                              message: message, preferredStyle: .Alert)
-			let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
-			alert.addAction(dismissAction)
-			self.presentViewController(alert, animated: true, completion: nil)
-		}
 	}
 }

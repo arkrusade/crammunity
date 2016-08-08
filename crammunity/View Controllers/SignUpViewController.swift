@@ -28,27 +28,27 @@ class SignUpViewController: UIViewController {
 		//TODO: change to alerts
 		if (EmailTextField.text!.rangeOfString(Constants.emailRegex, options: .RegularExpressionSearch)) == nil
 		{
-			ErrorHandling.errorAlert(InvalidSignUpTitle, desc: "Must be valid email")
+			ErrorHandling.defaultErrorHandler(InvalidSignUpTitle, desc: "Must be valid email")
 			return
 		}
 		else if UsernameTextField.text?.characters.count < 6 {
-			ErrorHandling.errorAlert(InvalidSignUpTitle, desc: "Must have username longer than 6 characters")
+			ErrorHandling.defaultErrorHandler(InvalidSignUpTitle, desc: "Must have username longer than 6 characters")
 			return
 		}
 		else if PasswordTextField.text?.characters.count < 8 || PasswordConfirmTextField.text?.characters.count < 8 {
-			ErrorHandling.errorAlert(InvalidSignUpTitle, desc: "Must have password longer than 8 characters")
+			ErrorHandling.defaultErrorHandler(InvalidSignUpTitle, desc: "Must have password longer than 8 characters")
 			return
 		}
 		
 		
 		else if (PasswordTextField.text! != PasswordConfirmTextField.text!) {
-			ErrorHandling.errorAlert(InvalidSignUpTitle, desc: "Passwords must match")
+			ErrorHandling.defaultErrorHandler(InvalidSignUpTitle, desc: "Passwords must match")
 			return
 		}
 		else {
 			FIRAuth.auth()?.createUserWithEmail(EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in
 				if let error = error {
-					ErrorHandling.errorAlert(self.InvalidSignUpTitle, desc: error.localizedDescription)
+					ErrorHandling.defaultErrorHandler(self.InvalidSignUpTitle, desc: error.localizedDescription)
 				} else {
 					self.signedUp(user)
 				}

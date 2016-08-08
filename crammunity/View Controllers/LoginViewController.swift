@@ -35,7 +35,7 @@ class LoginViewController: UIViewController {
 	{
 		FIRAuth.auth()!.signInWithEmail("test@test.com", password: "testtesttest") { (user, error) in
 			if let error = error {
-				print("Test Sign in failed:", error.localizedDescription)
+				ErrorHandling.defaultErrorHandler("Test Sign in failed:", desc: error.localizedDescription)
 			} else {
 				print ("Test Signed in with uid:", user!.uid)
 				self.signedIn(user)
@@ -54,31 +54,30 @@ class LoginViewController: UIViewController {
 		//also with sign in
 		viewTapped(self)
 		guard PasswordTextField.text != "" else {
-			ErrorHandling.errorAlert(InvalidLoginTitle, desc: "Missing Password")
+			ErrorHandling.defaultErrorHandler(InvalidLoginTitle, desc: "Missing Password")
 			return
 		}
 		FIRAuth.auth()!.signInWithEmail(EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in
 			if let error = error {
 				if(error.code == 17008)
 				{
-					ErrorHandling.errorAlert(self.InvalidLoginTitle, desc: " Invalid email")
+					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: " Invalid email")
 				}
 				else if(error.code == 17009)
 				{
-					ErrorHandling.errorAlert(self.InvalidLoginTitle, desc: " Invalid email/password combination")
+					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: " Invalid email/password combination")
 				}
 				else if(error.code == 17011)
 				{
-					ErrorHandling.errorAlert(self.InvalidLoginTitle, desc: " User does not exist")
+					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: " User does not exist")
 				}
 				else if(error.code == 17999)
 				{
-					print("Domain error")
-					print((error.userInfo[NSUnderlyingErrorKey]?.userInfo["FIRAuthErrorUserInfoDeserializedResponseKey"] as! NSDictionary).valueForKey("message") as! String)
+					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: (error.userInfo[NSUnderlyingErrorKey]?.userInfo["FIRAuthErrorUserInfoDeserializedResponseKey"] as! NSDictionary).valueForKey("message") as! String)
 				}
 				//successful sign in
 				else {
-					ErrorHandling.errorAlert(self.InvalidLoginTitle, desc: "Unknown error: \(error)")
+					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: "Unknown error: \(error)")
 				}
 									
 			} else {
@@ -97,7 +96,7 @@ class LoginViewController: UIViewController {
 			}
 			FIRAuth.auth()?.sendPasswordResetWithEmail(userInput!) { (error) in
 				if let error = error {
-					print(error.localizedDescription)
+					ErrorHandling.defaultErrorHandler("Password Reset Error", desc: error.localizedDescription)
 					return
 				}
 			}
@@ -119,7 +118,10 @@ class LoginViewController: UIViewController {
 		AppState.sharedInstance.photoUrl = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
+		//TODO: make this cleaner
 		Constants.Firebase.currentUser = FIRAuth.auth()?.currentUser
+		Constants.Firebase.FriendsArray = Constants.Firebase.UserArray.child((Constants.Firebase.currentUser?.uid)!).child("friends")
+		FirebaseHelper.friendsRef = Constants.Firebase.FriendsArray
 		performSegueWithIdentifier(Constants.Segues.LoginToMain, sender: self)
 	}
 	

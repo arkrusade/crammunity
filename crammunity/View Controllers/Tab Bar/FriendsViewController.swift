@@ -56,7 +56,7 @@ class FriendsViewController: UIViewController
 					self.notFriends = self.notFriends.filter({$0.key != snapshot.key})
 					self.notFriendsUIDS = self.notFriendsUIDS.filter({$0 != snapshot.key})
 				} else {
-					print("error in friend loading")
+					ErrorHandling.defaultErrorHandler("error in friend loading")
 				}
 			})
 			_removeFriendsHandle = friendsQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
@@ -69,7 +69,7 @@ class FriendsViewController: UIViewController
 					self.notFriendsUIDS.append(snapshot.key)
 
 				} else {
-					print("error in friend removing")
+					ErrorHandling.defaultErrorHandler("error in friend removing")
 				}
 			})
 		}
@@ -94,7 +94,7 @@ class FriendsViewController: UIViewController
 
 					}
 				} else {
-					print("error in user loading")
+					ErrorHandling.defaultErrorHandler("error in user loading")
 				}
 			})
 			_removeUsersHandle = usersQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
@@ -103,7 +103,7 @@ class FriendsViewController: UIViewController
 					self.notFriends = self.notFriends.filter({$0.key != snapshot.key})
 					self.notFriendsUIDS = self.notFriendsUIDS.filter({$0 != snapshot.key})
 				} else {
-					print("error in friend removing")
+					ErrorHandling.defaultErrorHandler("error in friend removing")
 				}
 			})
 		}
@@ -157,6 +157,7 @@ class FriendsViewController: UIViewController
 	deinit {
 		friends = []
 		notFriends = []
+		friendsQuery = nil
 	}
 }
 

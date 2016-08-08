@@ -44,7 +44,6 @@ class AppState: NSObject {
 						return
 					}
 					callback(UIImage(data: data!), nil)
-
 				}
 			}
 			else{

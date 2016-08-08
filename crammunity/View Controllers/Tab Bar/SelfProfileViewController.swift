@@ -157,7 +157,7 @@ passwordTextField
 			dismissViewControllerAnimated(true, completion: nil)
 
 		} catch let signOutError as NSError {
-			print ("Error signing out: \(signOutError)")
+			ErrorHandling.defaultErrorHandler("Error signing out", desc: "\(signOutError.description)")
 		}
 	}
 	

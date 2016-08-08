@@ -39,7 +39,14 @@ struct ErrorHandling {
 		let window = UIApplication.sharedApplication().windows[0]
 		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
 	}
-	static func errorAlert(title: String, desc: String) {
+	static func defaultErrorHandler(desc: String) {
+		let alert = UIAlertController(title: ErrorTitle, message: desc, preferredStyle: UIAlertControllerStyle.Alert)
+		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.Default, handler: nil))
+		
+		let window = UIApplication.sharedApplication().windows[0]
+		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
+	}
+	static func defaultErrorHandler(title: String, desc: String) {
 		let alert = UIAlertController(title: title, message: desc, preferredStyle: UIAlertControllerStyle.Alert)
 		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.Default, handler: nil))
 		
