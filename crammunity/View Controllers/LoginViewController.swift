@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
 		
 		
 		print("login view loaded")
-//		testLogin()
+		testLogin()
 		
 	}
 	//TODO: remove testlogin
