@@ -22,11 +22,14 @@
 		AD7952351D58FB1B00A548F7 /* CVCTableViewDataSourceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7952301D58FB1B00A548F7 /* CVCTableViewDataSourceExtension.swift */; };
 		AD7952361D58FB1B00A548F7 /* CVCTextFieldDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7952311D58FB1B00A548F7 /* CVCTextFieldDelegateExtension.swift */; };
 		AD7952381D59088300A548F7 /* ClassSettingsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7952371D59088300A548F7 /* ClassSettingsViewCell.swift */; };
+		AD79523B1D59360F00A548F7 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79523A1D59360F00A548F7 /* ChatMessage.swift */; };
+		AD79523D1D59363900A548F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79523C1D59363900A548F7 /* User.swift */; };
 		AD885ACD1D4812660072329B /* CustomHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD885ACC1D4812660072329B /* CustomHeaderCell.swift */; };
 		AD8F183C1D46969B008B3642 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8F18381D46969B008B3642 /* ErrorHandling.swift */; };
 		AD8F183D1D46969B008B3642 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8F18391D46969B008B3642 /* FirebaseHelper.swift */; };
 		AD8F183E1D46969B008B3642 /* PhotoTakingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8F183B1D46969B008B3642 /* PhotoTakingHelper.swift */; };
 		AD96F5461D36DCED00038FD7 /* MeasurementHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */; };
+		ADA2D6AD1D5A7EB200F6B34D /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA2D6AC1D5A7EB200F6B34D /* Chapter.swift */; };
 		ADAA3BAD1D36BB330038EEC4 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA3BAC1D36BB330038EEC4 /* AppState.swift */; };
 		ADAA3BAF1D36BB480038EEC4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA3BAE1D36BB480038EEC4 /* Constants.swift */; };
 		ADAA629A1D35672B0037BCC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA62991D35672B0037BCC9 /* LoginViewController.swift */; };
@@ -67,11 +70,14 @@
 		AD7952301D58FB1B00A548F7 /* CVCTableViewDataSourceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVCTableViewDataSourceExtension.swift; sourceTree = "<group>"; };
 		AD7952311D58FB1B00A548F7 /* CVCTextFieldDelegateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVCTextFieldDelegateExtension.swift; sourceTree = "<group>"; };
 		AD7952371D59088300A548F7 /* ClassSettingsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassSettingsViewCell.swift; sourceTree = "<group>"; };
+		AD79523A1D59360F00A548F7 /* ChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		AD79523C1D59363900A548F7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AD885ACC1D4812660072329B /* CustomHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeaderCell.swift; sourceTree = "<group>"; };
 		AD8F18381D46969B008B3642 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		AD8F18391D46969B008B3642 /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		AD8F183B1D46969B008B3642 /* PhotoTakingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTakingHelper.swift; sourceTree = "<group>"; };
 		AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementHelper.swift; sourceTree = "<group>"; };
+		ADA2D6AC1D5A7EB200F6B34D /* Chapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		ADAA3BAC1D36BB330038EEC4 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		ADAA3BAE1D36BB480038EEC4 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Models/Constants.swift; sourceTree = "<group>"; };
 		ADAA62991D35672B0037BCC9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -172,6 +178,9 @@
 				AD01E6861D258CFE00751657 /* Class.swift */,
 				ADAA3BAC1D36BB330038EEC4 /* AppState.swift */,
 				ADDF00D21D49608400A3FC2E /* SplitSearchTableView.swift */,
+				AD79523A1D59360F00A548F7 /* ChatMessage.swift */,
+				AD79523C1D59363900A548F7 /* User.swift */,
+				ADA2D6AC1D5A7EB200F6B34D /* Chapter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -246,10 +255,10 @@
 		ADDF00D91D4C190800A3FC2E /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				ADDF00DB1D4C190800A3FC2E /* ClassViewController.swift */,
 				AD7952391D59326600A548F7 /* Chapter */,
 				AD79522C1D58FAF600A548F7 /* Class View Extensions */,
 				ADDF00DA1D4C190800A3FC2E /* ClassCreationViewController.swift */,
-				ADDF00DB1D4C190800A3FC2E /* ClassViewController.swift */,
 				ADDF00DC1D4C190800A3FC2E /* CrammateAdditionViewController.swift */,
 				ADDF00EA1D4C193600A3FC2E /* ClassSettingsViewController.swift */,
 			);
@@ -392,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD7952361D58FB1B00A548F7 /* CVCTextFieldDelegateExtension.swift in Sources */,
+				ADA2D6AD1D5A7EB200F6B34D /* Chapter.swift in Sources */,
 				AD885ACD1D4812660072329B /* CustomHeaderCell.swift in Sources */,
 				AD7952381D59088300A548F7 /* ClassSettingsViewCell.swift in Sources */,
 				ADAA3BAF1D36BB480038EEC4 /* Constants.swift in Sources */,
@@ -408,6 +418,7 @@
 				ADDF00E71D4C190800A3FC2E /* MasterViewController.swift in Sources */,
 				ADDF00E91D4C190800A3FC2E /* SelfProfileViewController.swift in Sources */,
 				ADDF00E31D4C190800A3FC2E /* ClassViewController.swift in Sources */,
+				AD79523B1D59360F00A548F7 /* ChatMessage.swift in Sources */,
 				AD01E68B1D258F4E00751657 /* ClassViewCell.swift in Sources */,
 				AD7952331D58FB1B00A548F7 /* CVCImagePickerExtension.swift in Sources */,
 				AD01E6871D258CFE00751657 /* Class.swift in Sources */,
@@ -422,6 +433,7 @@
 				ADDF00E21D4C190800A3FC2E /* ClassCreationViewController.swift in Sources */,
 				ADAA629A1D35672B0037BCC9 /* LoginViewController.swift in Sources */,
 				AD7952321D58FB1B00A548F7 /* CVCFirebaseConfigurationExtension.swift in Sources */,
+				AD79523D1D59363900A548F7 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

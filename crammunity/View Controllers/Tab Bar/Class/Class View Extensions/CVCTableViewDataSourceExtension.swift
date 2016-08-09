@@ -13,7 +13,37 @@ extension ClassViewController: UITableViewDataSource {
 		return messages.count
 	}
 	
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		// 1
+		// Return the number of sections.
+		return 1
+	}
 	
+	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//		if tableView == self.notFriendTableView
+//		{
+//			return "Users"
+//		}
+//		else
+//		{
+//			return "Friends"
+//		}
+		return self.currentChapter
+	}
+//	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+////		let count: Int?
+////		if tableView == self.notFriendTableView
+////		{
+////			count = self.notFriends.count
+////		}
+////		else
+////		{
+////			count = self.friends.count
+////		}
+////		return count!
+//		return self.chapters[section].characters.count
+//		//TODO: really
+//	}
 	
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

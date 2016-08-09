@@ -21,6 +21,9 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 	@IBOutlet weak var sendButton: UIButton!
 	var messagesRef: FIRDatabaseReference!
 	var messages: [FIRDataSnapshot]! = []
+	var chapters: [String] = []
+	
+	var currentChapter: String?
 	var msglength: NSNumber = 0
 	var _refHandle: FIRDatabaseHandle!
 	
@@ -62,6 +65,50 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 		performSegueWithIdentifier(Constants.Segues.CramChatToCrammateAddition, sender: self)
 	}
 	// MARK: UI controls
+	
+	@IBAction func onMoreButtonTap(sender: UIButton){
+
+		let alertController = UIAlertController(title: nil, message: "", preferredStyle: .ActionSheet)
+		let addFileAction = UIAlertAction(title: "Add a File", style: .Default, handler: {(action) -> Void in
+			self.didTapAddPhoto(self)
+		})
+		let addChapterAction = UIAlertAction(title: "Add a Chapter", style: .Default, handler: {(action) -> Void in
+			self.onAddChapterButtonTap(self)
+		})
+//		let addFileAction = UIAlertAction(title: "Add a File", style: .Default, handler: {(action) -> Void in
+//			self.didTapAddPhoto(self)
+//		})
+		alertController.addAction(addFileAction)
+		alertController.addAction(addChapterAction)
+		self.presentViewController(alertController, animated: true, completion: nil)
+	}
+	
+	@IBAction func onAddChapterButtonTap(sender: AnyObject)
+	{
+		let alert = UIAlertController(title: "Change chapter", message: "Enter the new chapter name", preferredStyle: .Alert)
+		
+		alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+			textField.placeholder = "(Chapter 1, Poetry, Organelles, etc.)"
+		})
+		
+		alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+			let name = alert.textFields![0].text
+			if name != nil && name != "" {
+				let n = name!
+				self.currentChapter = n
+				self.chapters.append(n)
+				let confirm = UIAlertController(title: "Changed Chapter to \(self.currentChapter!)", message: "", preferredStyle: .Alert)
+				confirm.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+				self.presentViewController(confirm, animated: true, completion: nil)
+			}
+			
+		}))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+		
+		
+		self.presentViewController(alert, animated: true, completion: nil)
+		
+	}
 	
 	@IBAction func unwindToClassViewController(segue: UIStoryboardSegue) {
 		print("unwinding to class view")
@@ -150,6 +197,11 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 		if let photoUrl = AppState.sharedInstance.photoUrl {
 			mdata[Constants.MessageFields.photoUrl] = photoUrl.absoluteString
 		}
+		
+		if currentChapter != "" {
+			mdata["chapter"] = currentChapter
+		}
+		
 		// Push data to Firebase Database
 		self.messagesRef.childByAutoId().setValue(mdata)
 		//Send to Analytics

@@ -32,10 +32,10 @@ class FirebaseHelper
 		return name.description
 	}
 	
-	static func runCompletionOnDatabaseReference(ref: FIRDatabaseReference, completion: FIRObserverCallback) -> Void
-	{
-		ref.observeSingleEventOfType(.Value, withBlock: completion)
-	}
+//	static func runCompletionOnDatabaseReference(ref: FIRDatabaseReference, completion: FIRObserverCallback) -> Void
+//	{
+//		ref.observeSingleEventOfType(.Value, withBlock: completion)
+//	}
 	
 	static func postErrorReference(title: String, desc: String, ref: FIRDatabaseReference, time: NSDate)
 	{

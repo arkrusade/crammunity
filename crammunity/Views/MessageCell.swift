@@ -18,6 +18,7 @@ class MessageViewCell: UITableViewCell {
 			usernameLabel.text = displayName
 		}
 	}
+	var chapter: String = ""
 	var reportingUserUID: String! = nil
 	var messageRef: FIRDatabaseReference!
 	var message: String! = nil {
@@ -25,7 +26,6 @@ class MessageViewCell: UITableViewCell {
 			textMessageLabel.text = message
 		}
 	}
-	@IBOutlet weak var reportButton: UIButton!
 	var isReported = false {
 		didSet{
 			if isReported{
@@ -41,9 +41,11 @@ class MessageViewCell: UITableViewCell {
 //			timeLabel.text = time?.description
 //		}
 //	}
+	@IBOutlet weak var reportButton: UIButton!
 	@IBOutlet weak var usernameLabel: UILabel!
 	@IBOutlet weak var textMessageLabel: UILabel!
 //	@IBOutlet weak var timeLabel: UILabel!
+	//TODO: figure out time
 	
 	@IBOutlet weak var profileImageView: UIImageView!
 	@IBAction func onReportButtonTap(sender: UIButton)

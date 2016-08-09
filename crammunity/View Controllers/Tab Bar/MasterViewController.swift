@@ -60,7 +60,7 @@ class MasterViewController: UITableViewController {
 	}
 
 	func insertNewObject(sender: AnyObject) {
-		self.tableView.editing = false
+//		self.tableView.editing = false
 		performSegueWithIdentifier("MainToClassCreation", sender: sender)
 
 	}
@@ -69,6 +69,8 @@ class MasterViewController: UITableViewController {
 	// MARK: - Segues
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		self.tableView.editing = false
+		
 		if segue.identifier == Constants.Segues.MainToClassChat
 		{
 			if let indexPath = self.tableView.indexPathForSelectedRow {
@@ -77,7 +79,9 @@ class MasterViewController: UITableViewController {
 				
 				let controller = (segue.destinationViewController) as! ClassViewController
 				
-				controller.titleBar.title = personalCramClass.value?.valueForKey("className") as? String
+				controller.titleBar.title = (personalCramClass.value?.valueForKey("className") as? String)!// + ": " + (controller.currentChapter ?? "")
+				//TODO: change to update chapter somehow
+				
 				//TODO: consider making Class, classname, calculated values off of snapshot
 				controller.cramChat = cramclass
 				controller.navigationItem.leftItemsSupplementBackButton = true
@@ -114,6 +118,7 @@ class MasterViewController: UITableViewController {
 	//change to in menu
 	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 		if editingStyle == .Delete {
+			//TODO: why doesnt this exit
 			FirebaseHelper.removeCurrentUserFromClass(classes[indexPath.row])
 //		    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 		} else if editingStyle == .Insert {

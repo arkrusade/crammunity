@@ -28,6 +28,10 @@ struct CramClassFKs {
 	static let name = "className"
 	static let MessagesArray = "messages"
 }
+struct ChapterFKs {
+	static let name = "chapterName"
+	static let MessagesArray = "chapterMessages"
+}
 
 struct Constants {
 	static let emailRegex:String = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"

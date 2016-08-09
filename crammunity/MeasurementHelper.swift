@@ -22,3 +22,4 @@ class MeasurementHelper: NSObject {
 		FIRAnalytics.logEventWithName("message", parameters: nil)
 	}
 }
+//TODO: add with class creation, images sent, 

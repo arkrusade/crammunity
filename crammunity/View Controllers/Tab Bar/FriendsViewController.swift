@@ -75,7 +75,7 @@ class FriendsViewController: UIViewController
 		}
 	}
 	
-	// the current parse query
+	//TODO: change to display requests instead of all users
 	var usersQuery: FIRDatabaseQuery? {
 		didSet {
 			// whenever we assign a new query, cancel any previous requests
