@@ -276,13 +276,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EzC-ZB-EXR">
-                                <rect key="frame" x="215" y="20" width="170" height="169"/>
+                                <rect key="frame" x="215" y="20" width="170" height="170"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="EzC-ZB-EXR" secondAttribute="height" multiplier="1:1" id="Grw-2a-tOw"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KnY-fv-CPE">
-                                <rect key="frame" x="351" y="155" width="34" height="34"/>
+                                <rect key="frame" x="351" y="156" width="34" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KnY-fv-CPE" secondAttribute="height" multiplier="1:1" id="IaK-JY-cRP"/>
                                     <constraint firstAttribute="width" secondItem="KnY-fv-CPE" secondAttribute="height" multiplier="1:1" id="jgn-Ld-ATf"/>
@@ -297,8 +297,8 @@
                                     <action selector="onEditProfilePictureButtonTap:" destination="dXk-cQ-qN8" eventType="touchUpInside" id="qrD-lV-YgX"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dF7-iK-iLU">
-                                <rect key="frame" x="191" y="239" width="218" height="212"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dF7-iK-iLU">
+                                <rect key="frame" x="191" y="240" width="218" height="212"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eM0-7M-LSQ">
                                         <rect key="frame" x="0.0" y="0.0" width="218" height="20"/>
@@ -330,7 +330,7 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Mg-2k-S3H">
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Mg-2k-S3H">
                                         <rect key="frame" x="0.0" y="46" width="218" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAJ-Cn-ahq">
@@ -357,7 +357,7 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yud-Uf-wdd">
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yud-Uf-wdd">
                                         <rect key="frame" x="0.0" y="91" width="218" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGI-jr-Vyt">
@@ -384,7 +384,7 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rft-Ei-lBz">
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rft-Ei-lBz">
                                         <rect key="frame" x="0.0" y="137" width="218" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdk-yB-msw">
@@ -412,7 +412,7 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFG-pR-ryj">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFG-pR-ryj">
                                         <rect key="frame" x="0.0" y="182" width="218" height="30"/>
                                         <state key="normal" title="Sign Out"/>
                                         <connections>
@@ -439,7 +439,7 @@
                             <constraint firstItem="dF7-iK-iLU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="EzC-ZB-EXR" secondAttribute="bottom" constant="50" id="Wnl-gr-bRJ"/>
                             <constraint firstItem="dF7-iK-iLU" firstAttribute="bottom" secondItem="EzC-ZB-EXR" secondAttribute="bottom" id="cJ9-cb-LrH"/>
                             <constraint firstItem="KnY-fv-CPE" firstAttribute="bottom" secondItem="EzC-ZB-EXR" secondAttribute="bottom" id="hZf-jv-WIz"/>
-                            <constraint firstItem="oDC-Wk-1vb" firstAttribute="top" secondItem="dF7-iK-iLU" secondAttribute="bottom" constant="100" id="j7M-0c-5PA"/>
+                            <constraint firstItem="oDC-Wk-1vb" firstAttribute="top" secondItem="dF7-iK-iLU" secondAttribute="bottom" constant="99" id="j7M-0c-5PA"/>
                             <constraint firstItem="EzC-ZB-EXR" firstAttribute="centerX" secondItem="9K1-Nh-Yfh" secondAttribute="centerX" id="oGO-xj-Aj3"/>
                             <constraint firstAttribute="leadingMargin" secondItem="EzC-ZB-EXR" secondAttribute="leading" id="seY-ZZ-Mqb"/>
                             <constraint firstItem="EzC-ZB-EXR" firstAttribute="width" secondItem="dF7-iK-iLU" secondAttribute="height" multiplier="4:5" id="tbN-6d-FZI"/>

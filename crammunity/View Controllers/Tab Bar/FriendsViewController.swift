@@ -87,7 +87,7 @@ class FriendsViewController: UIViewController
 			notFriendsUIDS = []
 			_usersHandle = usersQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
 				if snapshot.exists() {
-					if !(snapshot.key == FIRAuth.auth()?.currentUser!.uid || self.friendsUIDS.contains(snapshot.key))
+					if !(snapshot.key == Constants.Firebase.currentUser.uid || self.friendsUIDS.contains(snapshot.key))
 					{
 						self.notFriends.append(snapshot)
 						self.notFriendsUIDS.append(snapshot.key)

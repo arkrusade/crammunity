@@ -11,8 +11,29 @@ extension ClassViewController{
 	
 	
 	func configureDatabase() {
-		messagesRef = Constants.Firebase.CramClassArray.child(cramChat.key).child(CramClassFKs.MessagesArray)
+		messagesRef = Constants.Firebase.CramClassArray.child(classRef.key).child(CramClassFKs.MessagesArray)
+		chapterRef = Constants.Firebase.CramClassArray.child(classRef.key).child(CramClassFKs.ChapterArray)
 		
+		_chapterHandle = chapterRef.observeEventType(.ChildAdded, withBlock: { snapshot in
+			if snapshot.exists() {
+				self.chapters.append(Chapter(snapshot: snapshot))
+//				snapshot.value?.valueForKey(ChapterFKs.name))! as! String
+				
+			} else {
+				ErrorHandling.defaultErrorHandler("error in chapter loading")
+				
+			}
+		})
+		//TODO: edit classFKS
+		_currChapterHandle = classRef.child("currentChapter").observeEventType(.Value, withBlock: { snapshot in
+			if snapshot.exists() {
+				self.currentChapter = snapshot.value as? String
+			}
+//			else {
+//				ErrorHandling.defaultErrorHandler("error in chapter loading")
+//				
+//			}
+		})
 		//find new messages
 		_refHandle = messagesRef.observeEventType(.ChildAdded, withBlock: { snapshot in
 			if snapshot.exists() {

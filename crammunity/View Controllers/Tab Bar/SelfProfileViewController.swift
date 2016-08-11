@@ -123,13 +123,13 @@ passwordTextField
 //			let changeRequest = user.profileChangeRequest()
 //			
 //			//			changeRequest.displayName = "Jane Q. User"
-//			changeRequest.photoURL =
+//			changeRequest.profileUrl =
 //				NSURL(string: "http://2.bp.blogspot.com/-tJ2_NJor6_I/Ti9NIhFswUI/AAAAAAAAAdE/yiETNvP1c1g/s1600/Business+Card1.jpg")
 //			changeRequest.commitChangesWithCompletion { error in
 //				if let error = error {
 //					ErrorHandling.defaultErrorHandler(error)
 //				} else {
-//					//					AppState.sharedInstance.photoUrl = usera.photoURL
+//					//					AppState.sharedInstance.profileUrl = usera.profileUrl
 //					// Profile updated.
 //				}
 //			}

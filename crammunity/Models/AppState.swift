@@ -18,7 +18,7 @@ class AppState: NSObject {
 	
 	var displayName: String?
 	var uid: String?
-	var photoUrl: NSURL?
+	var profileUrl: NSURL?
 	
 		
 				
@@ -35,7 +35,7 @@ class AppState: NSObject {
 	
 	
 	func getProfileImage(callback: (UIImage?, NSError?) -> Void) {
-		if let imageUrl = photoUrl
+		if let imageUrl = profileUrl
 		{
 			if imageUrl.absoluteString.hasPrefix("gs://") {
 				FIRStorage.storage().referenceForURL(imageUrl.absoluteString).dataWithMaxSize(INT64_MAX){ (data, error) in

@@ -9,31 +9,43 @@
 import UIKit
 
 import Firebase
-class Chapter {
-	var name: String!
-	var messages: [ChatMessage]! = []
-	var ref: FIRDatabaseReference
-	init()
-	{
-		name = "Cool Chapter Name"
-		ref = Constants.Firebase.rootRef
-	}
-//	init(cramClass: FIRDataSnapshot)
+struct Chapter {
+	var UID: String!
+	var name: String?
+	var messages: [ChatTextMessage]? = []
+	var ref: FIRDatabaseReference!
+	var cramClass: Class!
+//	init()
 //	{
-//		name = FirebaseHelper.getStringFromDataSnapshot(CramClassFKs.name, snapshot: cramClass)
-//		
+//		name = "Cool Chapter Name"
+//		ref = Constants.Firebase.rootRef
 //	}
-	convenience init(chapterRef: FIRDatabaseReference)
+	init(uid: String, name: String, messages: [ChatTextMessage], ref: FIRDatabaseReference, cramClass: Class) {
+		self.UID = uid
+		self.name = name
+		self.messages = messages
+		self.ref = ref
+		self.cramClass = cramClass
+		
+	}
+	init(snapshot: FIRDataSnapshot)
 	{
-		self.init()
-		self.ref = chapterRef
+		UID = snapshot.key
+		ref = snapshot.ref
+		name = snapshot.value?.valueForKey(CramClassFKs.name) as? String
+		let ms = snapshot.value?.valueForKey(ChapterFKs.MessagesArray) as? [String: [String: String]]
+		
+	}
+	mutating func setFromSnapshot(snapshot: FIRDataSnapshot) {
+		self = Chapter.init(snapshot: snapshot)
+	}
+	//TODO: beware of async
+	init(chapterRef: FIRDatabaseReference)
+	{
 		chapterRef.observeSingleEventOfType(.Value, withBlock:  {(snapshot) -> Void in
-			self.name = snapshot.value?.valueForKey(ChapterFKs.name) as! String
-			let ms = snapshot.value?.valueForKey(ChapterFKs.MessagesArray) as! [String: String]
-			
+			self.setFromSnapshot(snapshot)
 			
 		})
 		
 	}
 }
-//TODO:

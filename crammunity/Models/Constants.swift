@@ -24,9 +24,11 @@ struct ReportFirebaseKeys {
 	static let time = "time"
 }
 struct CramClassFKs {
+	static let currentChapter = "currentChapter"
 	static let MembersArray = "members"
 	static let name = "className"
 	static let MessagesArray = "messages"
+	static let ChapterArray = "chapters"
 }
 struct ChapterFKs {
 	static let name = "chapterName"
@@ -53,12 +55,13 @@ struct Constants {
 		static let name = "name"
 		static let text = "text"
 		static let photoUrl = "photoUrl"
+		static let profileUrl = "profileUrl"
 		static let imageUrl = "imageUrl"
 	}
 
 	
 	struct Firebase {
-		static var currentUser = FIRAuth.auth()?.currentUser!
+		static var currentUser = (FIRAuth.auth()?.currentUser)!
 		static let rootRef = FIRDatabase.database().reference()
 		static let CramClassArray = FIRDatabase.database().reference().child("classes")
 		static let UserArray = FIRDatabase.database().reference().child("users")
@@ -66,7 +69,7 @@ struct Constants {
 		static let ErrorsArray = FIRDatabase.database().reference().child("errors")
 		static let ReportsArray = FIRDatabase.database().reference().child("reports")
 		static let MessageReports = ReportsArray.child("messageReports")
-		static var FriendsArray = UserArray.child((currentUser?.uid)!).child("friends")
+		static var FriendsArray = UserArray.child((currentUser.uid)).child("friends")
 	}
 	
 	struct Images {

@@ -25,13 +25,13 @@ class MasterViewController: UITableViewController {
 
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_: )))
 		self.navigationItem.rightBarButtonItem = addButton
-		_addHandle = Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
+		_addHandle = Constants.Firebase.UserArray.child((Constants.Firebase.currentUser.uid)).child("classes").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
 			self.classes.insert(snapshot, atIndex: 0)
 			let indexPath = NSIndexPath(forRow: 0, inSection: 0)
 			self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 			
 		})
-		_removeHandle = Constants.Firebase.UserArray.child((FIRAuth.auth()?.currentUser!.uid)!).child("classes").observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
+		_removeHandle = Constants.Firebase.UserArray.child((Constants.Firebase.currentUser.uid)).child("classes").observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
 			var i = 0
 			for snap in self.classes{
 				if FirebaseHelper.getStringFromDataSnapshot(CramClassFKs.name, snapshot: snap) == FirebaseHelper.getStringFromDataSnapshot(CramClassFKs.name, snapshot: snapshot)
@@ -83,7 +83,8 @@ class MasterViewController: UITableViewController {
 				//TODO: change to update chapter somehow
 				
 				//TODO: consider making Class, classname, calculated values off of snapshot
-				controller.cramChat = cramclass
+				controller.classRef = cramclass
+				controller.classUID = personalCramClass.key
 				controller.navigationItem.leftItemsSupplementBackButton = true
 			}
 		}

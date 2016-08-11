@@ -18,28 +18,46 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 	
 	
 	// Instance variables
-	@IBOutlet weak var sendButton: UIButton!
-	var messagesRef: FIRDatabaseReference!
-	var messages: [FIRDataSnapshot]! = []
-	var chapters: [String] = []
-	
-	var currentChapter: String?
-	var msglength: NSNumber = 0
 	var _refHandle: FIRDatabaseHandle!
-	
+	var _chapterHandle: FIRDatabaseHandle!
+	var _currChapterHandle: FIRDatabaseHandle!
 	var storageRef: FIRStorageReference!
+	var chapterRef: FIRDatabaseReference!
+	var messagesRef: FIRDatabaseReference!
+	
 	var remoteConfig: FIRRemoteConfig!
+
+	var classRef: FIRDatabaseReference!
+	var classUID: String!
+	var messages: [FIRDataSnapshot]! = []
+//TODO: change to chattextmessage
+	
+	
+	
+//	var chapters: [String] = [] {
+//		didSet {
+//			tableView.reloadData()
+//		}
+//	}
+	var chapters: [Chapter] = [] {
+		didSet {
+			tableView.reloadData()
+		}
+	}
+	
+	var currentChapter: Chapter?
+	var msglength: NSNumber = 0
+	
 	
 	@IBOutlet weak var banner: GADBannerView!
 
 	@IBOutlet weak var tableView: UITableView!
-	
+	@IBOutlet weak var sendButton: UIButton!
 	@IBOutlet weak var titleBar: UINavigationItem!
 	@IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 	let lengthOfBottomConstraint: CGFloat = 10
 	@IBOutlet weak var textField: UITextField!
 	
-	var cramChat: FIRDatabaseReference!
 	//TODO: Change to loading inside of class view instead of sending to view
 	
 	// MARK: Class naming
@@ -67,17 +85,20 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 	// MARK: UI controls
 	
 	@IBAction func onMoreButtonTap(sender: UIButton){
+		var alertController: UIAlertController
+		if let chap = currentChapter {
+			alertController = UIAlertController(title: "Current Chapter: \(chap.name)", message: "What do you want to do?", preferredStyle: .ActionSheet)
+		}
+		else{
+			alertController = UIAlertController(title: "No Current Chapter", message: "What do you want to do?", preferredStyle: .ActionSheet)
 
-		let alertController = UIAlertController(title: nil, message: "", preferredStyle: .ActionSheet)
-		let addFileAction = UIAlertAction(title: "Add a File", style: .Default, handler: {(action) -> Void in
+		}
+		let addFileAction = UIAlertAction(title: "Add a Photo", style: .Default, handler: {(action) -> Void in
 			self.didTapAddPhoto(self)
 		})
 		let addChapterAction = UIAlertAction(title: "Add a Chapter", style: .Default, handler: {(action) -> Void in
 			self.onAddChapterButtonTap(self)
 		})
-//		let addFileAction = UIAlertAction(title: "Add a File", style: .Default, handler: {(action) -> Void in
-//			self.didTapAddPhoto(self)
-//		})
 		alertController.addAction(addFileAction)
 		alertController.addAction(addChapterAction)
 		self.presentViewController(alertController, animated: true, completion: nil)
@@ -95,9 +116,9 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 			let name = alert.textFields![0].text
 			if name != nil && name != "" {
 				let n = name!
-				self.currentChapter = n
-				self.chapters.append(n)
-				let confirm = UIAlertController(title: "Changed Chapter to \(self.currentChapter!)", message: "", preferredStyle: .Alert)
+				let chapter = FirebaseHelper.createChapter(n, cramClassUID: self.classUID)
+				//TODO: add database interaction
+				let confirm = UIAlertController(title: "Changed Chapter to \(chapter.name!)", message: "", preferredStyle: .Alert)
 				confirm.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
 				self.presentViewController(confirm, animated: true, completion: nil)
 			}
@@ -158,7 +179,7 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 		else if segue.identifier! == Constants.Segues.CramChatToCrammateAddition
 		{
 			let vc = segue.destinationViewController as! CrammateAdditionViewController
-			vc.cramClass = self.cramChat
+			vc.cramClass = self.classRef
 			vc.navigationItem.leftItemsSupplementBackButton = true
 			vc.title = "Add Crammates"
 		}
@@ -194,14 +215,14 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 	func sendMessage(data: [String: String]) {
 		var mdata = data
 		mdata[Constants.MessageFields.name] = AppState.sharedInstance.displayName
-		if let photoUrl = AppState.sharedInstance.photoUrl {
-			mdata[Constants.MessageFields.photoUrl] = photoUrl.absoluteString
+		if let profileUrl = AppState.sharedInstance.profileUrl {
+			mdata[Constants.MessageFields.profileUrl] = profileUrl.absoluteString
 		}
 		
-		if currentChapter != "" {
-			mdata["chapter"] = currentChapter
+		if let chap = currentChapter {
+			mdata["chapter"] = chap.UID
 		}
-		
+		//TODO: fix chapter constants
 		// Push data to Firebase Database
 		self.messagesRef.childByAutoId().setValue(mdata)
 		//Send to Analytics
@@ -210,6 +231,8 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 	
 	deinit {
 		self.messagesRef.removeAllObservers()
+		self.chapterRef.removeAllObservers()
+		
 	}
 	
 	// UITableViewDataSource protocol methods

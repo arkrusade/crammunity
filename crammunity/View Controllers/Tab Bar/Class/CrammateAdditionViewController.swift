@@ -56,7 +56,7 @@ class CrammateAdditionViewController: UIViewController
 			
 			_crammatesHandle = crammatesQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
 				if snapshot.exists() {
-					if !(snapshot.key == FIRAuth.auth()?.currentUser!.uid) {
+					if !(snapshot.key == Constants.Firebase.currentUser.uid) {
 						self.crammates.append(snapshot)
 						self.crammatesUIDS.append(snapshot.key)
 						self.friends = self.friends.filter({$0.key != snapshot.key})
@@ -94,7 +94,7 @@ class CrammateAdditionViewController: UIViewController
 			friendsUIDS = []
 			_friendsHandle = friendsQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
 				if snapshot.exists() {
-					if !(self.crammatesUIDS.contains(snapshot.key) || snapshot.key == FIRAuth.auth()?.currentUser!.uid)
+					if !(self.crammatesUIDS.contains(snapshot.key) || snapshot.key == Constants.Firebase.currentUser.uid)
 					{
 						self.friends.append(snapshot)
 						self.friendsUIDS.append(snapshot.key)

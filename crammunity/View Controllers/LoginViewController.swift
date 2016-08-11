@@ -115,12 +115,12 @@ class LoginViewController: UIViewController {
 		
 		
 		AppState.sharedInstance.displayName = user?.displayName ?? user?.email
-		AppState.sharedInstance.photoUrl = user?.photoURL
+		AppState.sharedInstance.profileUrl = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
 		//TODO: make this cleaner
-		Constants.Firebase.currentUser = FIRAuth.auth()?.currentUser
-		Constants.Firebase.FriendsArray = Constants.Firebase.UserArray.child((Constants.Firebase.currentUser?.uid)!).child("friends")
+		Constants.Firebase.currentUser = (FIRAuth.auth()?.currentUser)!
+		Constants.Firebase.FriendsArray = Constants.Firebase.UserArray.child((Constants.Firebase.currentUser.uid)).child("friends")
 		FirebaseHelper.friendsRef = Constants.Firebase.FriendsArray
 		performSegueWithIdentifier(Constants.Segues.LoginToMain, sender: self)
 	}

@@ -73,9 +73,6 @@ class SignUpViewController: UIViewController {
 		
 		//TODO: add profile changing, change pass and profile picture (first get ability to add one)
 		//TODO: and check for username/email duplicate
-		
-	
-		
 		let changeRequest = user!.profileChangeRequest()
 		changeRequest.displayName = username
 		changeRequest.photoURL =
@@ -91,10 +88,10 @@ class SignUpViewController: UIViewController {
 		MeasurementHelper.sendLoginEvent()//analytics
 		
 		AppState.sharedInstance.displayName = username ?? user?.email
-		AppState.sharedInstance.photoUrl = user?.photoURL
+		AppState.sharedInstance.profileUrl = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
-		Constants.Firebase.currentUser = FIRAuth.auth()?.currentUser
+		Constants.Firebase.currentUser = (FIRAuth.auth()?.currentUser)!
 		
 		loginVC.isSignedUp = true
 		self.dismissViewControllerAnimated(false, completion: nil)

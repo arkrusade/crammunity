@@ -21,13 +21,13 @@ class CrammateSearchViewCell: UITableViewCell {
 	@IBAction func onAddCrammateButtonTapped(sender: UIButton) {
 		if !isClassmate
 		{
-			print("adding classmates between cur: \(FIRAuth.auth()?.currentUser!.uid)) and other: \(user.key)")
+			print("adding classmates between cur: \(Constants.Firebase.currentUser.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectAddCrammateUser: user)
 			addToClassButton.setImage(Constants.Images.add, forState: .Normal)
 		}
 		else
 		{
-			print("removing friends between cur: \(FIRAuth.auth()?.currentUser!.uid)) and other: \(user.key)")
+			print("removing friends between cur: \(Constants.Firebase.currentUser.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectRemoveCrammateUser: user)
 			addToClassButton.setImage(Constants.Images.remove, forState: .Normal)
 		}

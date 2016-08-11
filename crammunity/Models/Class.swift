@@ -9,23 +9,32 @@
 import Firebase
 //TODO: simpler user should refer to user
 class Class {
-	var className: String!
-	var messages: [ChatMessage]! = []
-	var users: [User]! = [] //TODO: change to simpler user
+	var className: String?
+	var classUID: String!
+	var ref: FIRDatabaseReference!
+	var messages: [ChatTextMessage]? = []
+	var users: [User]? = [] //TODO: change to simpler user
 	var chapters: [String]? = []
 	init()
 	{
 		className = "Cool Class Name"
 	}
-	init(cramClass: FIRDataSnapshot)
+	init(snap: FIRDataSnapshot)
 	{
-		className = FirebaseHelper.getStringFromDataSnapshot(CramClassFKs.name, snapshot: cramClass)
+		className = snap.value?.valueForKey(CramClassFKs.name) as? String
+
+		
+		classUID = snap.key
+		ref = snap.ref
+		
 		
 	}
-	init(cramClass: FIRDatabaseReference)
+	init(ref: FIRDatabaseReference)
 	{
-		cramClass.observeSingleEventOfType(.Value, withBlock:  {(snapshot) -> Void in
-			self.className = snapshot.value?.valueForKey(CramClassFKs.name) as! String
+		self.ref = ref
+		ref.observeSingleEventOfType(.Value, withBlock:  {(snapshot) -> Void in
+			self.className = snapshot.value?.valueForKey(CramClassFKs.name) as? String
+			self.classUID = snapshot.key
 			
 		})
 

@@ -10,13 +10,18 @@ import UIKit
 import Firebase
 extension ClassViewController: UITableViewDataSource {
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return messages.count
+		let ms = chapters[section].messages ?? []
+		return ms.count
 	}
 	
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		// 1
 		// Return the number of sections.
-		return 1
+		guard self.chapters.count != 0 else
+		{
+			return 1
+		}
+		return self.chapters.count
 	}
 	
 	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -29,21 +34,9 @@ extension ClassViewController: UITableViewDataSource {
 //			return "Friends"
 //		}
 		return self.currentChapter
+		//TODO: change to array of chapters
 	}
-//	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-////		let count: Int?
-////		if tableView == self.notFriendTableView
-////		{
-////			count = self.notFriends.count
-////		}
-////		else
-////		{
-////			count = self.friends.count
-////		}
-////		return count!
-//		return self.chapters[section].characters.count
-//		//TODO: really
-//	}
+
 	
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -81,6 +74,8 @@ extension ClassViewController: UITableViewDataSource {
 				cell.imageView?.image = UIImage.init(data: data)
 			}
 			cell.profileImageView?.image = image
+			//TODO: change to different cell
+			//diff ways to download message
 			cell.message = "loading..."
 			cell.displayName = "Image"
 		}
@@ -96,7 +91,9 @@ extension ClassViewController: UITableViewDataSource {
 				cell.message = text
 				cell.profileImageView?.image = Constants.Images.defaultProfile
 				
-				if let photoUrl = message[Constants.MessageFields.photoUrl], url = NSURL(string:photoUrl), data = NSData(contentsOfURL: url) {
+				//TODO: change to loading prof pic from each message to loading from user
+				//means putting photoUrl in user object
+				if let profileUrl = message[Constants.MessageFields.profileUrl], url = NSURL(string:profileUrl), data = NSData(contentsOfURL: url) {
 					cell.imageView?.image = UIImage(data: data)
 				}
 			}
