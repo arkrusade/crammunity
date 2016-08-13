@@ -33,6 +33,19 @@ struct CramClassFKs {
 struct ChapterFKs {
 	static let name = "chapterName"
 	static let MessagesArray = "chapterMessages"
+	static let TextMessage = "text"
+	static let ImageMessage = "image"
+}
+struct MessageFKs {
+	static let UID = "UID"
+	static let username = "name"
+	static let userUID = "senderUID"
+	static let text = "text"
+	static let photoUrl = "photoUrl"
+	static let photoURL = "photoURL"
+	static let imageURL = "imageURL"
+	static let chapter = "chapter"
+	static let isReported = "isReported"
 }
 
 struct Constants {
@@ -51,13 +64,7 @@ struct Constants {
 		static let CramChatToSettings = "CramChatToSettings"
 	}
 	
-	struct MessageFields {
-		static let name = "name"
-		static let text = "text"
-		static let photoUrl = "photoUrl"
-		static let profileUrl = "profileUrl"
-		static let imageUrl = "imageUrl"
-	}
+	
 
 	
 	struct Firebase {
@@ -77,6 +84,7 @@ struct Constants {
 		static let camera = UIImage(named: "camera")
 		static let check = UIImage(named: "check")
 		static let defaultProfile = UIImage(named: "ic_account_circle")
+		static let defaultProfile256 = UIImage(named: "profile-256")
 		static let remove = UIImage(named: "remove")
 		static let settings = UIImage(named: "settings")
 

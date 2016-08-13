@@ -12,12 +12,18 @@ class Class {
 	var className: String?
 	var classUID: String!
 	var ref: FIRDatabaseReference!
-	var messages: [ChatTextMessage]? = []
+//	var messages: [ChatTextMessage]? = []
 	var users: [User]? = [] //TODO: change to simpler user
 	var chapters: [String]? = []
 	init()
 	{
 		className = "Cool Class Name"
+	}
+	init(name: String, UID: String, ref: FIRDatabaseReference)
+	{
+		className = name
+		classUID = UID
+		self.ref = ref
 	}
 	init(snap: FIRDataSnapshot)
 	{

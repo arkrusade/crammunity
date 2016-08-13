@@ -140,21 +140,6 @@ class CrammateAdditionViewController: UIViewController
 		}
 	}
 	
-	// MARK: Update userlist
-	
-	/**
-	Is called as the completion block of all queries.
-	As soon as a query completes, this method updates the Table View.
-	*/
-	//	func updateList(results: [PFObject]?, error: NSError?) {
-	//		if let error = error {
-	//			ErrorHandling.defaultErrorHandler(error)
-	//		}
-	//		self.users = results as? [PFUser] ?? []
-	//		self.tableView.reloadData()
-	//
-	//	}
-	
 	// MARK: View Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()

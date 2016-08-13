@@ -34,7 +34,7 @@ class MasterViewController: UITableViewController {
 		_removeHandle = Constants.Firebase.UserArray.child((Constants.Firebase.currentUser.uid)).child("classes").observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
 			var i = 0
 			for snap in self.classes{
-				if FirebaseHelper.getStringFromDataSnapshot(CramClassFKs.name, snapshot: snap) == FirebaseHelper.getStringFromDataSnapshot(CramClassFKs.name, snapshot: snapshot)
+				if (snap.value?.valueForKey(CramClassFKs.name)) as! String == (snapshot.value?.valueForKey(CramClassFKs.name)) as! String
 				{
 					self.classes.removeAtIndex(i)
 					break

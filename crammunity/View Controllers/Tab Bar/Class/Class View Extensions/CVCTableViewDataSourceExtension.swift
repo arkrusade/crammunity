@@ -10,8 +10,17 @@ import UIKit
 import Firebase
 extension ClassViewController: UITableViewDataSource {
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let ms = chapters[section].messages ?? []
-		return ms.count
+		guard !chapters.isEmpty else {
+			return 0
+		}
+		if let ms = chapters[section].messages
+		{
+			return ms.count
+		}
+		else
+		{
+			return 0
+		}
 	}
 	
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -25,39 +34,39 @@ extension ClassViewController: UITableViewDataSource {
 	}
 	
 	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//		if tableView == self.notFriendTableView
-//		{
-//			return "Users"
-//		}
-//		else
-//		{
-//			return "Friends"
-//		}
-		return self.currentChapter
+		guard !chapters.isEmpty else {
+			return ""
+		}
+		
+		return chapters[section].name
 		//TODO: change to array of chapters
 	}
 
 	
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		//TODO: deal with non chapter messages
 		// Dequeue cell
 		let cell = tableView.dequeueReusableCellWithIdentifier("MessageCell") as! MessageViewCell
 		
 		
 		//TODO:-Cells as constants
 		// Unpack message from Firebase DataSnapshot
-		let messageSnapshot: FIRDataSnapshot! = self.messages[indexPath.row]
-		let message = messageSnapshot.value as! Dictionary<String, String>
-		let name = message[Constants.MessageFields.name] as String!
+		//TODO: edit chapter here
+//		let messageSnapshot: FIRDataSnapshot! =
+		
+		let message = self.chapters[indexPath.section].messages![indexPath.row]
+//		let message = messageSnapshot.value as! Dictionary<String, String>
+		let name = message.username
 		cell.displayName = name
-		if message["isReported"] == "true"
+		if message.isReported
 		{
 			cell.isReported = true
 		}
-		else if let imageUrl = message[Constants.MessageFields.imageUrl] {
+		else if let imageURL = message.imageURL {
 			var image = Constants.Images.defaultProfile
-			if imageUrl.hasPrefix("gs://") {
-				FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX){ (data, error) in
+			if imageURL.hasPrefix("gs://") {
+				FIRStorage.storage().referenceForURL(imageURL).dataWithMaxSize(INT64_MAX){ (data, error) in
 					if let error = error {
 						ErrorHandling.defaultErrorHandler("Error downloading image", desc: error.description)
 						
@@ -70,7 +79,7 @@ extension ClassViewController: UITableViewDataSource {
 				}
 			}
 				
-			else if let url = NSURL(string:imageUrl), data = NSData(contentsOfURL: url) {
+			else if let url = NSURL(string:imageURL), data = NSData(contentsOfURL: url) {
 				cell.imageView?.image = UIImage.init(data: data)
 			}
 			cell.profileImageView?.image = image
@@ -84,25 +93,26 @@ extension ClassViewController: UITableViewDataSource {
 			
 			
 		else {
-			let text = message[Constants.MessageFields.text] as String!
+			let text = message.text as String!
 			if name != nil
 			{
-				cell.displayName = name + ": "
+				cell.displayName = name! + ": "
 				cell.message = text
 				cell.profileImageView?.image = Constants.Images.defaultProfile
 				
 				//TODO: change to loading prof pic from each message to loading from user
 				//means putting photoUrl in user object
-				if let profileUrl = message[Constants.MessageFields.profileUrl], url = NSURL(string:profileUrl), data = NSData(contentsOfURL: url) {
-					cell.imageView?.image = UIImage(data: data)
-				}
+//				if let photoURL = message[MessageFKs.photoURL], url = NSURL(string:photoURL), data = NSData(contentsOfURL: url) {
+//					cell.imageView?.image = UIImage(data: data)
+//				}
+				
 			}
 			else{
 				ErrorHandling.defaultErrorHandler("missing name")
 			}
 		}
 		
-		cell.messageRef = messageSnapshot.ref
+		cell.messageRef = message.messageRef
 		cell.presentingViewController = self
 		return cell
 	}

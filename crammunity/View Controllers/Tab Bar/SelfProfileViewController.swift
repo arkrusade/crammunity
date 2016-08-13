@@ -123,13 +123,13 @@ passwordTextField
 //			let changeRequest = user.profileChangeRequest()
 //			
 //			//			changeRequest.displayName = "Jane Q. User"
-//			changeRequest.profileUrl =
+//			changeRequest.photoURL =
 //				NSURL(string: "http://2.bp.blogspot.com/-tJ2_NJor6_I/Ti9NIhFswUI/AAAAAAAAAdE/yiETNvP1c1g/s1600/Business+Card1.jpg")
 //			changeRequest.commitChangesWithCompletion { error in
 //				if let error = error {
 //					ErrorHandling.defaultErrorHandler(error)
 //				} else {
-//					//					AppState.sharedInstance.profileUrl = usera.profileUrl
+//					//					AppState.sharedInstance.photoURL = usera.photoURL
 //					// Profile updated.
 //				}
 //			}
@@ -154,7 +154,7 @@ passwordTextField
 			try firebaseAuth?.signOut()
 			AppState.sharedInstance.signedIn = false
 			MeasurementHelper.sendLogoutEvent()//send to analytics
-			dismissViewControllerAnimated(true, completion: nil)
+			dismissViewControllerAnimated(false, completion: nil)
 
 		} catch let signOutError as NSError {
 			ErrorHandling.defaultErrorHandler("Error signing out", desc: "\(signOutError.description)")
@@ -191,7 +191,6 @@ passwordTextField
 		emailTextField.userInteractionEnabled = false
 		gradeTextField.userInteractionEnabled = false
 		passwordTextField.userInteractionEnabled = false
-		signOutButton.userInteractionEnabled = true
 		loadProfile()
         // Do any additional setup after loading the view.
     }
@@ -199,7 +198,7 @@ passwordTextField
 	func loadProfile() {
 		AppState.sharedInstance.getProfileImage() {(image, error) -> Void in
 			guard image != nil else {
-				self.profileImageView.image = UIImage(named: "profile-256")
+				self.profileImageView.image = Constants.Images.defaultProfile256
 				return
 			}
 			self.profileImageView.image = image
@@ -207,6 +206,7 @@ passwordTextField
 		displayNameTextField.text = AppState.sharedInstance.displayName
 		emailTextField.text = FIRAuth.auth()?.currentUser?.email
 		//TODO: finish these
+		//make password segue to diff page
 		
 	}
     override func didReceiveMemoryWarning() {

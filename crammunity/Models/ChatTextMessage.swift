@@ -8,39 +8,77 @@
 
 import Firebase
 struct ChatTextMessage {
-	var UID: String!
-	var message: String?
-//	var user: User? {
-//		didSet{
-//			username = user?.username
-//		}
-//	}
+//	var UID: String!
+	var messageRef: FIRDatabaseReference!
+	var text: String?
 	var username: String?
-	var chapter: String?
-	//	var chatViewCell: MessageViewCell
+	var chapterUID: String? //TODO: is this necessary?
+	var userUID: String?
+	var isReported: Bool = false
+	var imageURL: String?
 	
+//	func getAsDict() -> [String: String]
+//	{
+//		var mdata = [MessageFKs.username: username!]
+//		mdata[MessageFKs.text] = text!
+//		mdata[MessageFKs.chapter] = chapterUID!
+//
+//		return mdata
+//	}
+	
+	mutating func setFromDict(dict: [String: String])
+	{
+		for key in dict.keys {
+			switch key {
+			case MessageFKs.username:
+				self.username = dict[key]
+			
+			//TODO: is this necessary?
+//			case MessageFKs.UID:
+//				self.UID = dict[key]
+				
+			case MessageFKs.text:
+				self.text = dict[key]
+			case MessageFKs.isReported:
+				self.isReported = true
+			case MessageFKs.chapter:
+				self.chapterUID = dict[key]
+			case MessageFKs.userUID:
+				self.userUID = dict[key]
+			case MessageFKs.imageURL:
+				self.imageURL = dict[key]
+				//TODO: fix to match
+			default:
+				print("non matching key \(key)")
+			}
+		}
+		
+		
+	}//TODO: clean up
 	mutating func setFromSnapshot(snapshot: FIRDataSnapshot)
 	{
-		let message: [String: String] = snapshot.value as! NSDictionary as! [String : String]
+		let message = ChatTextMessage(dict: snapshot.value as! [String : String])
+		self = ChatTextMessage(ref: snapshot.ref, username: message.username, message: message.text, chapterUID: message.chapterUID)
+		self.imageURL = message.imageURL
+		self.isReported = message.isReported
 
-		self.UID = snapshot.key
-		//		self.user = user
-		self.username = message["name"]
-		self.message = message["text"]
-		self.chapter = message["chapter"]
 	}
-	
-	init(uid: String, username: String?, message: String?, chapter: String?) {
-		self.UID = uid
+	init(dict: [String: String])
+	{
+		self.setFromDict(dict)
+	}
+	init(ref: FIRDatabaseReference, username: String?, message: String?, chapterUID: String?) {
+		messageRef = ref
+//		self.UID = uid
 //		self.user = user
 		self.username = username
-		self.message = message
-		self.chapter = chapter
+		self.text = message
+		self.chapterUID = chapterUID
 	}
 	init(snapshot: FIRDataSnapshot)
 	{
 		let message: [String: String] = snapshot.value as! NSDictionary as! [String : String]
-		self.init(uid: snapshot.key, username: message["name"], message: message["text"], chapter: message["chapter"])
+		self.init(ref: snapshot.ref, username: message["name"], message: message["text"], chapterUID: message["chapter"])
 		
 	}
 	init(ref: FIRDatabaseReference)

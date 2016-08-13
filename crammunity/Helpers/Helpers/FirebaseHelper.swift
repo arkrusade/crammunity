@@ -23,18 +23,10 @@ class FirebaseHelper
 	static let messageReportsRef = Constants.Firebase.MessageReports
 	static var friendsRef = Constants.Firebase.FriendsArray
 	static let classesRef = Constants.Firebase.CramClassArray
-	//TODO: add completion with error
-	static func getStringFromDataSnapshot(key: String, snapshot: FIRDataSnapshot) -> String
-	{
-		let snap = snapshot.value!
-		let name = snap[key]
-		return name.description
-	}
+
 	
-//	static func runCompletionOnDatabaseReference(ref: FIRDatabaseReference, completion: FIRObserverCallback) -> Void
-//	{
-//		ref.observeSingleEventOfType(.Value, withBlock: completion)
-//	}
+	
+	//MARK: Errors
 	
 	static func postErrorReference(title: String, desc: String, ref: FIRDatabaseReference, time: NSDate)
 	{
@@ -57,21 +49,7 @@ class FirebaseHelper
 		ref.child("isReported").setValue("true")
 
 	}
-//	static func getErrorReferenceInTableViewCell(ref: FIRDatabaseReference) -> UITableViewCell
-//	{
-//		var text: String = ""
-//		let completion: FIRObserverCallback = {(snapshot) -> Void in
-//			var err: ErrorRef
-//			let dict = snapshot.value
-//			err.title = dict?.valueForKey("title") as! String
-//			err.desc = dict?.valueForKey("desc") as! String
-//			err.ref = snapshot.ref
-//			text = err.title + ": " + err.desc
-//		}
-//		runCompletionOnDatabaseReference(ref, completion: completion)
-//		let cell =
-//		return err
-//	}
+
 	
 	//MARK: Queries
 
@@ -130,22 +108,94 @@ class FirebaseHelper
 	}
 
 	//MARK: Structure organizers
-	static func createUser(email: String, pw: String)
+	
+	static func setCurrentUserPhotoURL(url: String)
 	{
-		FIRAuth.auth()?.createUserWithEmail(email, password: pw, completion: { result, error in
+		let changeRequest = Constants.Firebase.currentUser.profileChangeRequest()
+		changeRequest.photoURL = NSURL(string: url)
+		//TODO: add background thread to download image for profile view
+		changeRequest.commitChangesWithCompletion(){ (error) in
+			if let error = error {
+				ErrorHandling.defaultErrorHandler(error)
+				return
+			}
+			else {
+				//TODO: add userFKS
+				AppState.sharedInstance.userRef?.child("photoURL").setValue(url)
+			}
+			
+		}
+	}
+	
+	static func createUser(email: String, pw: String, username: String, callback: (FIRUser?) -> Void) //-> FIRUser?
+	{
+		FIRAuth.auth()?.createUserWithEmail(email, password: pw, completion: { user, error in
 			
 			if error != nil {
-				ErrorHandling.defaultErrorHandler("error creating user")
+				ErrorHandling.defaultErrorHandler("Database Error: User Creation", desc: error!.localizedDescription)
+				callback(nil)
 			} else {
-				let uid = result?.uid
+				let uid = user?.uid
 				NSUserDefaults.standardUserDefaults().setValue(uid, forKey: "uid")
+				AppState.sharedInstance.userRef = Constants.Firebase.UserArray.child(uid!)
+				Constants.Firebase.UserSearchArray.child(uid!).setValue(["username": username])
+				Constants.Firebase.UserArray.child(uid!).setValue(["username": username])
+				AppState.sharedInstance.userRef = Constants.Firebase.UserArray.child(uid!)
+
+				print ("Created user with uid: \(user!.uid) and username: \(username)")
+				
+				//set default profile pic and username
+				let changeRequest = user!.profileChangeRequest()
+				changeRequest.displayName = username
+				changeRequest.photoURL =
+					NSURL(string: "gs://crammunity.appspot.com/defaults/profilePicture/profile-256.png")
+				changeRequest.commitChangesWithCompletion(){ (error) in
+					if let error = error {
+						ErrorHandling.defaultErrorHandler(error)
+						callback(nil)
+						return
+					}
+					else {
+						//TODO: add userFKS
+						AppState.sharedInstance.userRef?.child("photoURL").setValue("gs://crammunity.appspot.com/defaults/profilePicture/profile-256.png")
+						callback(user)
+					}
+					
+				}
+				
 			}
 			
 		})
 	}
+	
+	static func addTextMessageToChapter(chapter: Chapter, message: ChatTextMessage)
+	{
+		var mdata = [MessageFKs.username: message.username!]
+		mdata[MessageFKs.chapter] = message.chapterUID ?? ""
+		if let imageURL = message.imageURL
+		{
+			mdata[MessageFKs.imageURL] = imageURL
+		}
+		if let text = message.text
+		{
+			mdata[MessageFKs.text] = text
+		}
+		if message.isReported
+		{
+			mdata[MessageFKs.isReported] = "true"
+		}
+		chapter.ref.child(ChapterFKs.MessagesArray).child(message.messageRef.key).setValue(mdata)
+//			.child("messageType").setValue(ChapterFKs.TextMessage)
+		//TODO: change to time
+		//TODO: fix this
+		//add user uid
+	}
+	
 	static func setCurrentChapterFor(cramClass: FIRDatabaseReference, withChapter: Chapter)
 	{
-		cramClass.child("currentChapter").setValue(withChapter.name)
+		cramClass.child("currentChapter").removeValue()
+		let mdata = [ChapterFKs.name : withChapter.name!]
+		cramClass.child("currentChapter").child(withChapter.UID).setValue(mdata)
 	}
 	
 	static func createChapter(name: String, cramClassUID: String) -> Chapter{

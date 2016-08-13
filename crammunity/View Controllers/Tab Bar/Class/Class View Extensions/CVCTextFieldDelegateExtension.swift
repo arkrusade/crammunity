@@ -10,7 +10,7 @@ import UIKit
 
 extension ClassViewController: UITextFieldDelegate {
 	func textFieldShouldReturn(textField: UITextField) -> Bool {
-		let data = [Constants.MessageFields.text: textField.text! as String]
+		let data = [MessageFKs.text: textField.text! as String]
 		sendMessage(data)
 		textField.text! = ""
 		return true

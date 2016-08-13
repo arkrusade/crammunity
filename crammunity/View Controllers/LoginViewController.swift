@@ -61,15 +61,15 @@ class LoginViewController: UIViewController {
 			if let error = error {
 				if(error.code == 17008)
 				{
-					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: " Invalid email")
+					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: "Invalid email")
 				}
 				else if(error.code == 17009)
 				{
-					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: " Invalid email/password combination")
+					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: "Invalid email/password combination")
 				}
 				else if(error.code == 17011)
 				{
-					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: " User does not exist")
+					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: "User does not exist")
 				}
 				else if(error.code == 17999)
 				{
@@ -109,19 +109,26 @@ class LoginViewController: UIViewController {
 	
 	func signedIn(user: FIRUser?)
 	{
-		MeasurementHelper.sendLoginEvent()
 		
 
 		
 		
 		AppState.sharedInstance.displayName = user?.displayName ?? user?.email
-		AppState.sharedInstance.profileUrl = user?.photoURL
+		AppState.sharedInstance.photoURL = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
+		
+		
 		//TODO: make this cleaner
 		Constants.Firebase.currentUser = (FIRAuth.auth()?.currentUser)!
 		Constants.Firebase.FriendsArray = Constants.Firebase.UserArray.child((Constants.Firebase.currentUser.uid)).child("friends")
 		FirebaseHelper.friendsRef = Constants.Firebase.FriendsArray
+		AppState.sharedInstance.userRef = Constants.Firebase.UserArray.child(Constants.Firebase.currentUser.uid)
+		
+		if user?.displayName != "test@test.com"  {
+			MeasurementHelper.sendLoginEvent()
+		}
+
 		performSegueWithIdentifier(Constants.Segues.LoginToMain, sender: self)
 	}
 	

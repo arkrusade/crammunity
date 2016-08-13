@@ -14,7 +14,7 @@ struct Chapter {
 	var name: String?
 	var messages: [ChatTextMessage]? = []
 	var ref: FIRDatabaseReference!
-	var cramClass: Class!
+	var cramClass: Class?
 //	init()
 //	{
 //		name = "Cool Chapter Name"
@@ -32,9 +32,25 @@ struct Chapter {
 	{
 		UID = snapshot.key
 		ref = snapshot.ref
-		name = snapshot.value?.valueForKey(CramClassFKs.name) as? String
-		let ms = snapshot.value?.valueForKey(ChapterFKs.MessagesArray) as? [String: [String: String]]
+		name = snapshot.value?.valueForKey(ChapterFKs.name) as? String
+		if snapshot.hasChild(ChapterFKs.MessagesArray) {
+			let ms = snapshot.childSnapshotForPath(ChapterFKs.MessagesArray)
+			for childSnap in ms.children
+			{
+				self.messages?.append(ChatTextMessage(snapshot: childSnap as! FIRDataSnapshot))
+			}
+		}
 		
+		
+	}
+	mutating func addTextMessage(message: ChatTextMessage)
+	{
+		if messages != nil {
+			self.messages!.append(message)
+		}
+		else {
+			self.messages = [message]
+		}
 	}
 	mutating func setFromSnapshot(snapshot: FIRDataSnapshot) {
 		self = Chapter.init(snapshot: snapshot)

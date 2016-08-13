@@ -9,36 +9,33 @@
 import AlamofireImage
 import Alamofire
 import UIKit
-import FirebaseStorage
+import Firebase
 class AppState: NSObject {
 	
 	static let sharedInstance = AppState()
 	
-	var signedIn = false
+	var signedIn = false {
+		didSet {
+			if !signedIn {
+				displayName = nil
+				uid = nil
+				photoURL = nil
+				userRef = nil
+			}
+		}
+	}
 	
 	var displayName: String?
 	var uid: String?
-	var profileUrl: NSURL?
-	
-		
-				
-//				imageGet(request, callback: {(image, errorString) -> Void in
-//					guard errorString == nil else {
-//						ErrorHandling.defaultErrorHandler(NSError.init(domain: "Image downloading", code: 0, userInfo: ["desc":"invalid profile image URL"]))
-//						return
-//					}
-//					self.profileImage = image
-//				})
-		
-		
-	
-	
+	var photoURL: NSURL?
+	var userRef: FIRDatabaseReference?
+
 	
 	func getProfileImage(callback: (UIImage?, NSError?) -> Void) {
-		if let imageUrl = profileUrl
+		if let imageURL = photoURL
 		{
-			if imageUrl.absoluteString.hasPrefix("gs://") {
-				FIRStorage.storage().referenceForURL(imageUrl.absoluteString).dataWithMaxSize(INT64_MAX){ (data, error) in
+			if imageURL.absoluteString.hasPrefix("gs://") {
+				FIRStorage.storage().referenceForURL(imageURL.absoluteString).dataWithMaxSize(INT64_MAX){ (data, error) in
 					if let error = error {
 						ErrorHandling.defaultErrorHandler(error)
 						return
@@ -47,7 +44,7 @@ class AppState: NSObject {
 				}
 			}
 			else{
-			Alamofire.request(.GET,imageUrl).response(){
+			Alamofire.request(.GET,imageURL).response(){
 				(_, _, data, error) in
 				guard error == nil else {
 					callback(nil, error)

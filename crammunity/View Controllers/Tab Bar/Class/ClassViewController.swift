@@ -17,35 +17,37 @@ let kBannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
 class ClassViewController: UIViewController, UITableViewDelegate, UINavigationControllerDelegate {
 	
 	
+	
 	// Instance variables
-	var _refHandle: FIRDatabaseHandle!
+	var _messageHandle: FIRDatabaseHandle!
 	var _chapterHandle: FIRDatabaseHandle!
 	var _currChapterHandle: FIRDatabaseHandle!
+	var _currChapterRemoveHandle: FIRDatabaseHandle!
 	var storageRef: FIRStorageReference!
 	var chapterRef: FIRDatabaseReference!
-	var messagesRef: FIRDatabaseReference!
+//	var messagesRef: FIRDatabaseReference!
 	
 	var remoteConfig: FIRRemoteConfig!
 
 	var classRef: FIRDatabaseReference!
 	var classUID: String!
-	var messages: [FIRDataSnapshot]! = []
+//	var messages: [FIRDataSnapshot]! = []
 //TODO: change to chattextmessage
 	
-	
-	
-//	var chapters: [String] = [] {
-//		didSet {
-//			tableView.reloadData()
-//		}
-//	}
+	var chapterUIDS: [String] = []
 	var chapters: [Chapter] = [] {
 		didSet {
 			tableView.reloadData()
+			
 		}
 	}
 	
-	var currentChapter: Chapter?
+	var currentChapter: Chapter!
+	var defaultChapter: Chapter {
+		get {
+			return Chapter(uid: "defaultUID", name: "defaultChapter", messages: [], ref: self.classRef.child("default"), cramClass: Class(name: "default", UID: "defaultUID", ref: classRef))
+		}
+	}
 	var msglength: NSNumber = 0
 	
 	
@@ -86,8 +88,9 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 	
 	@IBAction func onMoreButtonTap(sender: UIButton){
 		var alertController: UIAlertController
-		if let chap = currentChapter {
-			alertController = UIAlertController(title: "Current Chapter: \(chap.name)", message: "What do you want to do?", preferredStyle: .ActionSheet)
+		//TODO: improve this
+		if let chap = currentChapter where chap.name != "defaultChapter" {
+			alertController = UIAlertController(title: "Current Chapter: \(chap.name ?? "")", message: "What do you want to do?", preferredStyle: .ActionSheet)
 		}
 		else{
 			alertController = UIAlertController(title: "No Current Chapter", message: "What do you want to do?", preferredStyle: .ActionSheet)
@@ -101,6 +104,10 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 		})
 		alertController.addAction(addFileAction)
 		alertController.addAction(addChapterAction)
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: {(action: UIAlertAction) -> Void in
+			print("User clicked button called \(action.title) or tapped elsewhere")
+		}))
+
 		self.presentViewController(alertController, animated: true, completion: nil)
 	}
 	
@@ -137,14 +144,13 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		configureNavigationBar()
 		
 		configureDatabase()
 		configureStorage()
 		configureRemoteConfig()
 		fetchConfig()
-//		self.tableView.registerClass(MessageViewCell.self, forCellReuseIdentifier: "MessageCell")
-		//TODO:-Cells and figure this out
 		loadAd()
 		logViewLoaded()
 
@@ -213,26 +219,38 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 //		self.banner.loadRequest(GADRequest())
 	}
 	func sendMessage(data: [String: String]) {
-		var mdata = data
-		mdata[Constants.MessageFields.name] = AppState.sharedInstance.displayName
-		if let profileUrl = AppState.sharedInstance.profileUrl {
-			mdata[Constants.MessageFields.profileUrl] = profileUrl.absoluteString
-		}
 		
-		if let chap = currentChapter {
-			mdata["chapter"] = chap.UID
+		var mdata = data
+		mdata[MessageFKs.username] = AppState.sharedInstance.displayName
+		if let photoURL = AppState.sharedInstance.photoURL {
+			mdata[MessageFKs.photoURL] = photoURL.absoluteString
 		}
+		var message = ChatTextMessage(dict: mdata)
+		//TODO: make profile load with user
+		//add user to message
+		
+//		if let chap = currentChapter {
+//			mdata["chapter"] = chap.UID
+//			FirebaseHelper.addTextMessageToChapter(chap, messageUID: messageRef.key)
+//		}
+		
 		//TODO: fix chapter constants
 		// Push data to Firebase Database
-		self.messagesRef.childByAutoId().setValue(mdata)
+//		if let currentChapter = currentChapter {
+			message.messageRef = currentChapter.ref.childByAutoId()
+			message.chapterUID = currentChapter.ref.key
+			FirebaseHelper.addTextMessageToChapter(currentChapter, message: message)
+//		}
+		
+
 		//Send to Analytics
 		MeasurementHelper.sendMessageEvent()
 	}
 	
 	deinit {
-		self.messagesRef.removeAllObservers()
+//		self.messagesRef.removeAllObservers()
 		self.chapterRef.removeAllObservers()
-		
+		self.classRef.removeAllObservers()
 	}
 	
 	// UITableViewDataSource protocol methods

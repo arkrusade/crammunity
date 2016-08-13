@@ -31,7 +31,7 @@ extension ClassViewController {
 		self.textField.resignFirstResponder()
 	}
 	func scrollToBottomMessage() {
-		if self.messages.count == 0 {
+		if self.chapters.count == 0 {
 			return
 		}
 		let bottomMessageIndex = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1,

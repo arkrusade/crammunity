@@ -10,17 +10,17 @@
 
 import Firebase
 class User {
-	let email: String
-	let username: String
+	let email: String?
+	let username: String?
 	let UID: String!
 	let userRef: FIRDatabaseReference!
-	let searchRef: FIRDatabaseReference!
-	var userClasses: [Class]!
+	let searchRef: FIRDatabaseReference?
+	var userClasses: [Class]?
 //	var friends: [User]!
 	//TODO: change to simple user
 	
 	
-	init(email: String, username: String, UID: String, ref: FIRDatabaseReference, searchRef: FIRDatabaseReference, classes: [Class]) {
+	init(email: String?, username: String?, UID: String, ref: FIRDatabaseReference, searchRef: FIRDatabaseReference?, classes: [Class]?) {
 		self.email = email
 		self.username = username
 		self.UID = UID

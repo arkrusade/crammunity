@@ -42,7 +42,7 @@ extension ClassViewController: UIImagePickerControllerDelegate
 							ErrorHandling.defaultErrorHandler("Error uploading image", desc: error.description)
 							return
 						}
-						self.sendMessage([Constants.MessageFields.imageUrl: self.storageRef.child((metadata?.path)!).description])
+						self.sendMessage([MessageFKs.imageURL: self.storageRef.child((metadata?.path)!).description])
 				}
 			})
 		}
@@ -59,7 +59,7 @@ extension ClassViewController: UIImagePickerControllerDelegate
 						ErrorHandling.defaultErrorHandler("Error uploading image", desc: error.description)
 						return
 					}
-					self.sendMessage([Constants.MessageFields.imageUrl: self.storageRef.child((metadata?.path)!).description])
+					self.sendMessage([MessageFKs.imageURL: self.storageRef.child((metadata?.path)!).description])
 			}
 		}
 	}

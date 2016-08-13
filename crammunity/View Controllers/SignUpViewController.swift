@@ -46,13 +46,11 @@ class SignUpViewController: UIViewController {
 			return
 		}
 		else {
-			FIRAuth.auth()?.createUserWithEmail(EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in
-				if let error = error {
-					ErrorHandling.defaultErrorHandler(self.InvalidSignUpTitle, desc: error.localizedDescription)
-				} else {
-					self.signedUp(user)
-				}
-			}
+			FirebaseHelper.createUser(EmailTextField.text!, pw: PasswordTextField.text!, username: UsernameTextField.text!, callback: { user in
+				self.signedUp(user)
+			})
+			//TODO: add grade/age
+			
 		}
 	}
 	
@@ -66,37 +64,23 @@ class SignUpViewController: UIViewController {
 	func signedUp(user: FIRUser?)
 	{
 		//TODO: get this and login to be same method
-		let username = self.UsernameTextField.text!
-		Constants.Firebase.UserSearchArray.child(user!.uid).setValue(["username": username])
-		Constants.Firebase.UserArray.child(user!.uid).setValue(["username": username])
-		print ("Created user with uid: \(user!.uid) and username: \(username)")
+		
 		
 		//TODO: add profile changing, change pass and profile picture (first get ability to add one)
 		//TODO: and check for username/email duplicate
-		let changeRequest = user!.profileChangeRequest()
-		changeRequest.displayName = username
-		changeRequest.photoURL =
-			NSURL(string: "gs://crammunity.appspot.com/defaults/profilePicture/profile-256.png")
-		changeRequest.commitChangesWithCompletion(){ (error) in
-			if let error = error {
-				ErrorHandling.defaultErrorHandler(error)
-				return
-			}
-			
-		}
+		
 		
 		MeasurementHelper.sendLoginEvent()//analytics
 		
-		AppState.sharedInstance.displayName = username ?? user?.email
-		AppState.sharedInstance.profileUrl = user?.photoURL
+		AppState.sharedInstance.displayName = user?.displayName ?? user?.email
+		AppState.sharedInstance.photoURL = user?.photoURL
 		AppState.sharedInstance.signedIn = true
+		
 		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
 		Constants.Firebase.currentUser = (FIRAuth.auth()?.currentUser)!
 		
 		loginVC.isSignedUp = true
 		self.dismissViewControllerAnimated(false, completion: nil)
-//		self.performSegueWithIdentifier(Constants.Segues.SignUpToMain, sender: nil)
-		
 	}
     override func viewDidLoad() {
         super.viewDidLoad()

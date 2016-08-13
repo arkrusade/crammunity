@@ -36,7 +36,6 @@
 		ADAA629C1D356C950037BCC9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA629B1D356C950037BCC9 /* SignUpViewController.swift */; };
 		ADACA1921D398E7500C22DB8 /* File in Resources */ = {isa = PBXBuildFile; fileRef = ADACA1911D398E7500C22DB8 /* File */; };
 		ADB3DA561D435175007A56E9 /* FriendSearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB3DA551D435175007A56E9 /* FriendSearchViewCell.swift */; };
-		ADDF00D31D49608400A3FC2E /* SplitSearchTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF00D21D49608400A3FC2E /* SplitSearchTableView.swift */; };
 		ADDF00D51D4976D400A3FC2E /* CrammateSearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF00D41D4976D400A3FC2E /* CrammateSearchViewCell.swift */; };
 		ADDF00E21D4C190800A3FC2E /* ClassCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF00DA1D4C190800A3FC2E /* ClassCreationViewController.swift */; };
 		ADDF00E31D4C190800A3FC2E /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDF00DB1D4C190800A3FC2E /* ClassViewController.swift */; };
@@ -84,7 +83,6 @@
 		ADAA629B1D356C950037BCC9 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		ADACA1911D398E7500C22DB8 /* File */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = File; sourceTree = "<group>"; };
 		ADB3DA551D435175007A56E9 /* FriendSearchViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendSearchViewCell.swift; sourceTree = "<group>"; };
-		ADDF00D21D49608400A3FC2E /* SplitSearchTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitSearchTableView.swift; sourceTree = "<group>"; };
 		ADDF00D41D4976D400A3FC2E /* CrammateSearchViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrammateSearchViewCell.swift; sourceTree = "<group>"; };
 		ADDF00DA1D4C190800A3FC2E /* ClassCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCreationViewController.swift; sourceTree = "<group>"; };
 		ADDF00DB1D4C190800A3FC2E /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewController.swift; sourceTree = "<group>"; };
@@ -177,7 +175,6 @@
 			children = (
 				AD01E6861D258CFE00751657 /* Class.swift */,
 				ADAA3BAC1D36BB330038EEC4 /* AppState.swift */,
-				ADDF00D21D49608400A3FC2E /* SplitSearchTableView.swift */,
 				AD79523C1D59363900A548F7 /* User.swift */,
 				ADA2D6AC1D5A7EB200F6B34D /* Chapter.swift */,
 				ADA2D6AE1D5A9C2E00F6B34D /* ChatTextMessage.swift */,
@@ -205,13 +202,6 @@
 				AD7952311D58FB1B00A548F7 /* CVCTextFieldDelegateExtension.swift */,
 			);
 			path = "Class View Extensions";
-			sourceTree = "<group>";
-		};
-		AD7952391D59326600A548F7 /* Chapter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Chapter;
 			sourceTree = "<group>";
 		};
 		AD8F18361D46969B008B3642 /* Helpers */ = {
@@ -256,7 +246,6 @@
 			isa = PBXGroup;
 			children = (
 				ADDF00DB1D4C190800A3FC2E /* ClassViewController.swift */,
-				AD7952391D59326600A548F7 /* Chapter */,
 				AD79522C1D58FAF600A548F7 /* Class View Extensions */,
 				ADDF00DA1D4C190800A3FC2E /* ClassCreationViewController.swift */,
 				ADDF00DC1D4C190800A3FC2E /* CrammateAdditionViewController.swift */,
@@ -412,7 +401,6 @@
 				ADDF00E61D4C190800A3FC2E /* FVCTableDataSource.swift in Sources */,
 				ADDF00D51D4976D400A3FC2E /* CrammateSearchViewCell.swift in Sources */,
 				ADDF00E41D4C190800A3FC2E /* CrammateAdditionViewController.swift in Sources */,
-				ADDF00D31D49608400A3FC2E /* SplitSearchTableView.swift in Sources */,
 				AD31CFE81D525CF400FA7B43 /* ProfileViewController.swift in Sources */,
 				ADA2D6AF1D5A9C2E00F6B34D /* ChatTextMessage.swift in Sources */,
 				ADDF00EB1D4C193600A3FC2E /* ClassSettingsViewController.swift in Sources */,

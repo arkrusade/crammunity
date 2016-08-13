@@ -11,34 +11,43 @@ extension ClassViewController{
 	
 	
 	func configureDatabase() {
-		messagesRef = Constants.Firebase.CramClassArray.child(classRef.key).child(CramClassFKs.MessagesArray)
+//		messagesRef = Constants.Firebase.CramClassArray.child(classRef.key).child(CramClassFKs.MessagesArray)
 		chapterRef = Constants.Firebase.CramClassArray.child(classRef.key).child(CramClassFKs.ChapterArray)
-		
+		self.currentChapter = defaultChapter
 		_chapterHandle = chapterRef.observeEventType(.ChildAdded, withBlock: { snapshot in
 			if snapshot.exists() {
 				self.chapters.append(Chapter(snapshot: snapshot))
-//				snapshot.value?.valueForKey(ChapterFKs.name))! as! String
-				
+				self.chapterUIDS.append(snapshot.key)
 			} else {
 				ErrorHandling.defaultErrorHandler("error in chapter loading")
 				
 			}
 		})
 		//TODO: edit classFKS
-		_currChapterHandle = classRef.child("currentChapter").observeEventType(.Value, withBlock: { snapshot in
+		CramClassFKs.currentChapter
+		_currChapterHandle = classRef.child(CramClassFKs.currentChapter).observeEventType(.ChildAdded, withBlock: { snapshot in
 			if snapshot.exists() {
-				self.currentChapter = snapshot.value as? String
+				var chap = Chapter.init(snapshot: snapshot)
+				chap.ref = self.classRef.child(CramClassFKs.ChapterArray).child(snapshot.key)
+				self.currentChapter = chap
 			}
-//			else {
-//				ErrorHandling.defaultErrorHandler("error in chapter loading")
-//				
-//			}
+			else {
+				self.currentChapter = self.defaultChapter
+			}
 		})
+		_currChapterRemoveHandle = classRef.child(CramClassFKs.currentChapter).observeEventType(.ChildRemoved, withBlock: { snapshot in
+			self.currentChapter = self.defaultChapter
+		})
+		
 		//find new messages
-		_refHandle = messagesRef.observeEventType(.ChildAdded, withBlock: { snapshot in
+		_messageHandle = chapterRef.observeEventType(.ChildChanged, withBlock: { snapshot in
 			if snapshot.exists() {
-				self.messages.append(snapshot)
-				self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: .Automatic)
+				if self.chapterUIDS.contains(snapshot.key)
+				{
+					self.chapters[self.chapterUIDS.indexOf(snapshot.key)!] = Chapter(snapshot: snapshot)
+					//TODO: make more efficient by only changing messages
+					
+				}
 				
 			} else {
 				ErrorHandling.defaultErrorHandler("error in message loading")
