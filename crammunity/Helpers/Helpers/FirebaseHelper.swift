@@ -12,7 +12,7 @@ import FirebaseDatabase
 import CoreLocation
 import FirebaseAuth
 
-typealias FIRObserverCallback = FIRDataSnapshot -> Void
+typealias FIRObserverCallback = (FIRDataSnapshot) -> Void
 class FirebaseHelper
 {
 	static let lastU = UnicodeScalar(1114111)
@@ -28,22 +28,22 @@ class FirebaseHelper
 	
 	//MARK: Errors
 	
-	static func postErrorReference(title: String, desc: String, ref: FIRDatabaseReference, time: NSDate)
+	static func postErrorReference(_ title: String, desc: String, ref: FIRDatabaseReference, time: Date)
 	{
 		let error = errorRef.childByAutoId()
 		error.child(ErrorFirebaseKeys.title
 			).setValue(title)
 		error.child(ErrorFirebaseKeys.desc).setValue(desc)
-		error.child(ErrorFirebaseKeys.ref).setValue(ref.URL)
+		error.child(ErrorFirebaseKeys.ref).setValue(ref.url)
 		error.child(ErrorFirebaseKeys.time).setValue(time.description)
 	}
 	enum ReportError: String{
 		case Message = "messageReports"
 	}
-	static func postReport(type: ReportError, title: String, reportingUserUID: String, desc: String, ref: FIRDatabaseReference)
+	static func postReport(_ type: ReportError, title: String, reportingUserUID: String, desc: String, ref: FIRDatabaseReference)
 	{
 		let report = reportsRef.child(type.rawValue).childByAutoId()
-		let reportData = [ ReportFirebaseKeys.title : title, ReportFirebaseKeys.userUID : reportingUserUID, ReportFirebaseKeys.desc : desc, ReportFirebaseKeys.ref : ref.URL]
+		let reportData = [ ReportFirebaseKeys.title : title, ReportFirebaseKeys.userUID : reportingUserUID, ReportFirebaseKeys.desc : desc, ReportFirebaseKeys.ref : ref.url]
 		report.setValue(reportData)
 //		ReportFirebaseKeys.title).setValue(time.description)
 		ref.child("isReported").setValue("true")
@@ -55,66 +55,66 @@ class FirebaseHelper
 
 	static func usersQuery() -> FIRDatabaseQuery
 	{
-		return usersRef.queryOrderedByChild("username").queryLimitedToFirst(0)
+		return usersRef.queryOrdered(byChild: "username").queryLimited(toFirst: 0)
 	}
-	static func usersQuery(limitedTo: UInt) -> FIRDatabaseQuery
+	static func usersQuery(_ limitedTo: UInt) -> FIRDatabaseQuery
 	{
-		return usersRef.queryOrderedByChild("username").queryLimitedToFirst(limitedTo)
+		return usersRef.queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo)
 	}
-	static func usersQuery(byUsername: String) -> FIRDatabaseQuery
+	static func usersQuery(_ byUsername: String) -> FIRDatabaseQuery
 	{
-		return usersRef.queryOrderedByChild("username").queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)").queryLimitedToFirst(20)
+		return usersRef.queryOrdered(byChild: "username").queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)").queryLimited(toFirst: 20)
 	}
-	static func usersQuery(limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
+	static func usersQuery(_ limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
 	{
-		return usersRef.queryOrderedByChild("username").queryLimitedToFirst(limitedTo).queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
+		return usersRef.queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo).queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
 	}
 	
 	
 	static func friendsQuery() -> FIRDatabaseQuery
 	{
-		let q = friendsRef.queryOrderedByChild("username").queryLimitedToFirst(20)
+		let q = friendsRef.queryOrdered(byChild: "username").queryLimited(toFirst: 20)
 		return q
 	}
-	static func friendsQuery(limitedTo: UInt) -> FIRDatabaseQuery
+	static func friendsQuery(_ limitedTo: UInt) -> FIRDatabaseQuery
 	{
-		return friendsRef.queryOrderedByChild("username").queryLimitedToFirst(limitedTo)
+		return friendsRef.queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo)
 	}
-	static func friendsQuery(byUsername: String) -> FIRDatabaseQuery
+	static func friendsQuery(_ byUsername: String) -> FIRDatabaseQuery
 	{
-		return friendsRef.queryOrderedByChild("username").queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
+		return friendsRef.queryOrdered(byChild: "username").queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
 	}
-	static func friendsQuery(limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
+	static func friendsQuery(_ limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
 	{
-		return friendsRef.queryOrderedByChild("username").queryLimitedToFirst(limitedTo).queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
+		return friendsRef.queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo).queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
 	}
 	
 	
-	static func crammatesQuery(classRef: FIRDatabaseReference) -> FIRDatabaseQuery
+	static func crammatesQuery(_ classRef: FIRDatabaseReference) -> FIRDatabaseQuery
 	{
-		return classRef.child("members").queryOrderedByChild("username").queryLimitedToFirst(20)
+		return classRef.child("members").queryOrdered(byChild: "username").queryLimited(toFirst: 20)
 	}
-	static func crammatesQuery(classRef: FIRDatabaseReference, limitedTo: UInt) -> FIRDatabaseQuery
+	static func crammatesQuery(_ classRef: FIRDatabaseReference, limitedTo: UInt) -> FIRDatabaseQuery
 	{
-		return classRef.child("members").queryOrderedByChild("username").queryLimitedToFirst(limitedTo)
+		return classRef.child("members").queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo)
 	}
-	static func crammatesQuery(classRef: FIRDatabaseReference, byUsername: String) -> FIRDatabaseQuery
+	static func crammatesQuery(_ classRef: FIRDatabaseReference, byUsername: String) -> FIRDatabaseQuery
 	{
-		return classRef.child("members").queryOrderedByChild("username").queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
+		return classRef.child("members").queryOrdered(byChild: "username").queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
 	}
-	static func crammatesQuery(classRef: FIRDatabaseReference, limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
+	static func crammatesQuery(_ classRef: FIRDatabaseReference, limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
 	{
-		return classRef.child("members").queryOrderedByChild("username").queryLimitedToFirst(limitedTo).queryStartingAtValue(byUsername).queryEndingAtValue("\(byUsername)\(lastU)")
+		return classRef.child("members").queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo).queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
 	}
 
 	//MARK: Structure organizers
 	
-	static func setCurrentUserPhotoURL(url: String)
+	static func setCurrentUserPhotoURL(_ url: String)
 	{
 		let changeRequest = Constants.Firebase.currentUser.profileChangeRequest()
-		changeRequest.photoURL = NSURL(string: url)
+		changeRequest.photoURL = URL(string: url)
 		//TODO: add background thread to download image for profile view
-		changeRequest.commitChangesWithCompletion(){ (error) in
+		changeRequest.commitChanges(){ (error) in
 			if let error = error {
 				ErrorHandling.defaultErrorHandler(error)
 				return
@@ -127,16 +127,16 @@ class FirebaseHelper
 		}
 	}
 	
-	static func createUser(email: String, pw: String, username: String, callback: (FIRUser?) -> Void) //-> FIRUser?
+	static func createUser(_ email: String, pw: String, username: String, callback: (FIRUser?) -> Void) //-> FIRUser?
 	{
-		FIRAuth.auth()?.createUserWithEmail(email, password: pw, completion: { user, error in
+		FIRAuth.auth()?.createUser(withEmail: email, password: pw, completion: { user, error in
 			
 			if error != nil {
 				ErrorHandling.defaultErrorHandler("Database Error: User Creation", desc: error!.localizedDescription)
 				callback(nil)
 			} else {
 				let uid = user?.uid
-				NSUserDefaults.standardUserDefaults().setValue(uid, forKey: "uid")
+				UserDefaults.standard.setValue(uid, forKey: "uid")
 				AppState.sharedInstance.userRef = Constants.Firebase.UserArray.child(uid!)
 				Constants.Firebase.UserSearchArray.child(uid!).setValue(["username": username])
 				Constants.Firebase.UserArray.child(uid!).setValue(["username": username])
@@ -148,8 +148,8 @@ class FirebaseHelper
 				let changeRequest = user!.profileChangeRequest()
 				changeRequest.displayName = username
 				changeRequest.photoURL =
-					NSURL(string: "gs://crammunity.appspot.com/defaults/profilePicture/profile-256.png")
-				changeRequest.commitChangesWithCompletion(){ (error) in
+					URL(string: "gs://crammunity.appspot.com/defaults/profilePicture/profile-256.png")
+				changeRequest.commitChanges(){ (error) in
 					if let error = error {
 						ErrorHandling.defaultErrorHandler(error)
 						callback(nil)
@@ -168,7 +168,7 @@ class FirebaseHelper
 		})
 	}
 	
-	static func addTextMessageToChapter(chapter: Chapter, message: ChatTextMessage)
+	static func addTextMessageToChapter(_ chapter: Chapter, message: ChatTextMessage)
 	{
 		var mdata = [MessageFKs.username: message.username!]
 		mdata[MessageFKs.chapter] = message.chapterUID ?? ""
@@ -191,14 +191,14 @@ class FirebaseHelper
 		//add user uid
 	}
 	
-	static func setCurrentChapterFor(cramClass: FIRDatabaseReference, withChapter: Chapter)
+	static func setCurrentChapterFor(_ cramClass: FIRDatabaseReference, withChapter: Chapter)
 	{
 		cramClass.child("currentChapter").removeValue()
 		let mdata = [ChapterFKs.name : withChapter.name!]
 		cramClass.child("currentChapter").child(withChapter.UID).setValue(mdata)
 	}
 	
-	static func createChapter(name: String, cramClassUID: String) -> Chapter{
+	static func createChapter(_ name: String, cramClassUID: String) -> Chapter{
 		//TODO: account for chronological order
 		//could remove currchapt and instead keep track of last chapter
 		let classRef = classesRef.child(cramClassUID)
@@ -209,50 +209,50 @@ class FirebaseHelper
 		setCurrentChapterFor(classRef, withChapter: chap)
 		return chap
 	}
-	static func addFriend(friendSnap: FIRDataSnapshot)
+	static func addFriend(_ friendSnap: FIRDataSnapshot)
 	{
-		let friendUsername = friendSnap.value!.valueForKey("username") as! String
+		let friendUsername = (friendSnap.value! as AnyObject).value(forKey: "username") as! String
 		let friendData = ["username": friendUsername]
 		let userData = ["username": AppState.sharedInstance.displayName!]
 		usersRef.child((Constants.Firebase.currentUser.uid)).child("friends").child(friendSnap.key).setValue(friendData)
 		usersRef.child(friendSnap.key).child("friends").child((Constants.Firebase.currentUser.uid)).setValue(userData)
 	}
 	
-	static func removeFriend(friendSnap: FIRDataSnapshot)
+	static func removeFriend(_ friendSnap: FIRDataSnapshot)
 	{
 		usersRef.child((Constants.Firebase.currentUser.uid)).child("friends").child(friendSnap.key).removeValue()
 		usersRef.child(friendSnap.key).child("friends").child(Constants.Firebase.currentUser.uid).removeValue()
 	}
 	
 	
-	static func addUserToClass(user: FIRDataSnapshot, cramClass: FIRDatabaseReference)
+	static func addUserToClass(_ user: FIRDataSnapshot, cramClass: FIRDatabaseReference)
 	{
 		var username = ""
-		username = user.value!.valueForKey("username") as! String
+		username = (user.value! as AnyObject).value(forKey: "username") as! String
 		cramClass.child("members").child(user.key).child("username").setValue(username)
 		var className: String = ""
 		
-		cramClass.observeSingleEventOfType(.Value, withBlock: {(snapshot) -> Void in
-			className = snapshot.value!.valueForKey("className") as! String
+		cramClass.observeSingleEvent(of: .value, with: {(snapshot) -> Void in
+			className = (snapshot.value! as AnyObject).value(forKey: "className") as! String
 			usersRef.child(user.key).child("classes").child(cramClass.key).child("className").setValue(className)
 		})
 
 	}
 	
-	static func addUserToClass(user: FIRDataSnapshot, cramClassUID: String)
+	static func addUserToClass(_ user: FIRDataSnapshot, cramClassUID: String)
 	{
 		let classRef = Constants.Firebase.CramClassArray.child(cramClassUID)
 		addUserToClass(user, cramClass: classRef)
 	}
 	
 	
-	static func removeUserFromClass(user: FIRDataSnapshot, cramClass: FIRDatabaseReference)
+	static func removeUserFromClass(_ user: FIRDataSnapshot, cramClass: FIRDatabaseReference)
 	{
 		cramClass.child("members").child(user.key).child("username").removeValue()
 		
 		usersRef.child(user.key).child("classes").child(cramClass.key).removeValue()
 	}
-	static func removeUserFromClass(userUID: String, cramClass: FIRDatabaseReference)
+	static func removeUserFromClass(_ userUID: String, cramClass: FIRDatabaseReference)
 	{
 		cramClass.child("members").child(userUID).child("username").removeValue()
 		
@@ -260,11 +260,11 @@ class FirebaseHelper
 	}
 	
 	
-	static func removeCurrentUserFromClass(cramClass: FIRDataSnapshot) {
+	static func removeCurrentUserFromClass(_ cramClass: FIRDataSnapshot) {
 		removeUserFromClass((FIRAuth.auth()?.currentUser?.uid)!, cramClass: cramClass.ref)
 	}
 	
-	static func createClass(name: String) -> FIRDatabaseReference
+	static func createClass(_ name: String) -> FIRDatabaseReference
 	{
 		let classData = [CramClassFKs.name: name]
 		

@@ -10,13 +10,13 @@
 // MARK: TableView Data Source
 import UIKit
 extension FriendsViewController: UITableViewDataSource {
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		// 1
 		// Return the number of sections.
 		return 1
 	}
 	
-	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if tableView == self.notFriendTableView
 		{
 			return "Users"
@@ -26,7 +26,7 @@ extension FriendsViewController: UITableViewDataSource {
 			return "Friends"
 		}
 	}
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		let count: Int?
 		if tableView == self.notFriendTableView
 		{
@@ -39,14 +39,14 @@ extension FriendsViewController: UITableViewDataSource {
 		return count!
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell: FriendSearchViewCell
 		
 		if tableView == self.notFriendTableView {
-			cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! FriendSearchViewCell
+			cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! FriendSearchViewCell
 			let user = notFriends[indexPath.row]
 			cell.user = user
-			cell.usernameLabel.text = user.value!.valueForKey("username") as? String
+			cell.usernameLabel.text = (user.value! as AnyObject).value(forKey: "username") as? String
 			cell.imageView?.image = Constants.Images.defaultProfile
 			cell.delegate = self
 			
@@ -55,10 +55,10 @@ extension FriendsViewController: UITableViewDataSource {
 		}
 		else
 		{
-			cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendSearchViewCell
+			cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendSearchViewCell
 			let friend = friends[indexPath.row]
 			cell.user = friend
-			cell.usernameLabel.text = friend.value!.valueForKey("username") as? String
+			cell.usernameLabel.text = (friend.value! as AnyObject).value(forKey: "username") as? String
 			cell.imageView?.image = Constants.Images.defaultProfile
 			cell.delegate = self
 			

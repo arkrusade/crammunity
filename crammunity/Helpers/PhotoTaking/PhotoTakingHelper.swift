@@ -1,6 +1,6 @@
 import UIKit
 
-typealias PhotoTakingHelperCallback = UIImage? -> Void
+typealias PhotoTakingHelperCallback = (UIImage?) -> Void
 
 class PhotoTakingHelper : NSObject {
     
@@ -9,7 +9,7 @@ class PhotoTakingHelper : NSObject {
     var callback: PhotoTakingHelperCallback
     var imagePickerController: UIImagePickerController?
     
-    init(viewController: UIViewController, callback: PhotoTakingHelperCallback) {
+    init(viewController: UIViewController, callback: @escaping PhotoTakingHelperCallback) {
         self.viewController = viewController
         self.callback = callback
         
@@ -18,49 +18,49 @@ class PhotoTakingHelper : NSObject {
         showPhotoSourceSelection()
     }
     
-    func showImagePickerController(sourceType: UIImagePickerControllerSourceType) {
+    func showImagePickerController(_ sourceType: UIImagePickerControllerSourceType) {
         imagePickerController = UIImagePickerController()
         imagePickerController!.sourceType = sourceType
         imagePickerController!.delegate = self
-        self.viewController.presentViewController(imagePickerController!, animated: true, completion: nil)
+        self.viewController.present(imagePickerController!, animated: true, completion: nil)
         
         
     }
 	
     
     func showPhotoSourceSelection() {
-        let alertController = UIAlertController(title: nil, message: "Where do you want to get your picture from?", preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: "Where do you want to get your picture from?", preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
-        let photoLibraryAction = UIAlertAction(title: "Photo from Library", style: .Default) { (action) in
-            self.showImagePickerController(.PhotoLibrary)
+        let photoLibraryAction = UIAlertAction(title: "Photo from Library", style: .default) { (action) in
+            self.showImagePickerController(.photoLibrary)
         }
         alertController.addAction(photoLibraryAction)
         
         // Only show camera option if rear camera is available
-        if (UIImagePickerController.isCameraDeviceAvailable(.Rear)) {
-            let cameraAction = UIAlertAction(title: "Photo from Camera", style: .Default) { (action) in
-                self.showImagePickerController(.Camera)
+        if (UIImagePickerController.isCameraDeviceAvailable(.rear)) {
+            let cameraAction = UIAlertAction(title: "Photo from Camera", style: .default) { (action) in
+                self.showImagePickerController(.camera)
             }
             
             alertController.addAction(cameraAction)
         }
         
-        viewController.presentViewController(alertController, animated: true, completion: nil)
+        viewController.present(alertController, animated: true, completion: nil)
     }
 }
 extension PhotoTakingHelper: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        viewController.dismissViewControllerAnimated(false, completion: nil)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [AnyHashable: Any]!) {
+        viewController.dismiss(animated: false, completion: nil)
         
         callback(image)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        viewController.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        viewController.dismiss(animated: true, completion: nil)
     }
     
 }

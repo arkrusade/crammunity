@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ConvenienceKit
+//import ConvenienceKit
 
 /**
 This struct provides basic Error handling functionality.
@@ -26,38 +26,38 @@ struct ErrorHandling {
 	*/
 	static func delayedFeatureAlert()
 	{
-		let alert = UIAlertController(title: DelayedFeatureTitle, message: DelayedFeatureMessage, preferredStyle: UIAlertControllerStyle.Alert)
-		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.Default, handler: nil))
+		let alert = UIAlertController(title: DelayedFeatureTitle, message: DelayedFeatureMessage, preferredStyle: UIAlertControllerStyle.alert)
+		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.default, handler: nil))
 		
-		let window = UIApplication.sharedApplication().windows[0]
+		let window = UIApplication.shared.windows[0]
 		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
 	}
-	static func defaultErrorHandler(error: NSError) {
-		let alert = UIAlertController(title: ErrorTitle, message: error.description, preferredStyle: UIAlertControllerStyle.Alert)
-		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.Default, handler: nil))
+	static func defaultErrorHandler(_ error: NSError) {
+		let alert = UIAlertController(title: ErrorTitle, message: error.description, preferredStyle: UIAlertControllerStyle.alert)
+		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.default, handler: nil))
 		
-		let window = UIApplication.sharedApplication().windows[0]
+		let window = UIApplication.shared.windows[0]
 		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
 	}
-	static func defaultErrorHandler(desc: String) {
-		let alert = UIAlertController(title: ErrorTitle, message: desc, preferredStyle: UIAlertControllerStyle.Alert)
-		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.Default, handler: nil))
+	static func defaultErrorHandler(_ desc: String) {
+		let alert = UIAlertController(title: ErrorTitle, message: desc, preferredStyle: UIAlertControllerStyle.alert)
+		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.default, handler: nil))
 		
-		let window = UIApplication.sharedApplication().windows[0]
+		let window = UIApplication.shared.windows[0]
 		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
 	}
-	static func defaultErrorHandler(title: String, desc: String) {
-		let alert = UIAlertController(title: title, message: desc, preferredStyle: UIAlertControllerStyle.Alert)
-		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.Default, handler: nil))
+	static func defaultErrorHandler(_ title: String, desc: String) {
+		let alert = UIAlertController(title: title, message: desc, preferredStyle: UIAlertControllerStyle.alert)
+		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.default, handler: nil))
 		
-		let window = UIApplication.sharedApplication().windows[0]
+		let window = UIApplication.shared.windows[0]
 		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
 	}
 	
 	/**
 	A PFBooleanResult callback block that only handles error cases. You can pass this to completion blocks of Parse Requests
 	*/
-	static func errorHandlingCallback(success: Bool, error: NSError?) -> Void {
+	static func errorHandlingCallback(_ success: Bool, error: NSError?) -> Void {
 		if let error = error {
 			ErrorHandling.defaultErrorHandler(error)
 		}

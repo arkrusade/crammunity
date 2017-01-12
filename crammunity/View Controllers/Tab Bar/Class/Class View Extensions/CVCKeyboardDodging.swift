@@ -9,34 +9,34 @@
 import UIKit
 extension ClassViewController {
 	// MARK: Keyboard Dodging Logic
-	func keyboardWillShow(notification: NSNotification) {
-		let keyboardHeight = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.height
-		UIView.animateWithDuration(0.1, animations: { () -> Void in
-			self.bottomConstraint.constant = keyboardHeight! + self.lengthOfBottomConstraint - (self.tabBarController?.tabBar.frame.height)!
+	func keyboardWillShow(_ notification: Notification) {
+		let keyboardHeight = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.height
+		UIView.animate(withDuration: 0.1, animations: { () -> Void in
+			self.bottomConstraint.constant = keyboardHeight + self.lengthOfBottomConstraint - (self.tabBarController?.tabBar.frame.height)!
 			self.view.layoutIfNeeded()
 		})
 	}
 	
-	func keyboardDidShow(notification: NSNotification) {
+	func keyboardDidShow(_ notification: Notification) {
 		self.scrollToBottomMessage()
 	}
 	
-	func keyboardWillHide(notification: NSNotification) {
-		UIView.animateWithDuration(0.1, animations: { () -> Void in
+	func keyboardWillHide(_ notification: Notification) {
+		UIView.animate(withDuration: 0.1, animations: { () -> Void in
 			self.bottomConstraint.constant = self.lengthOfBottomConstraint
 			self.view.layoutIfNeeded()
 		})
 	}
-	@IBAction func viewTapped(sender: AnyObject) {
+	@IBAction func viewTapped(_ sender: AnyObject) {
 		self.textField.resignFirstResponder()
 	}
 	func scrollToBottomMessage() {
 		if self.chapters.count == 0 {
 			return
 		}
-		let bottomMessageIndex = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1,
-		                                     inSection: 0)
-		self.tableView.scrollToRowAtIndexPath(bottomMessageIndex, atScrollPosition: .Bottom,
+		let bottomMessageIndex = IndexPath(row: self.tableView.numberOfRows(inSection: 0) - 1,
+		                                     section: 0)
+		self.tableView.scrollToRow(at: bottomMessageIndex, at: .bottom,
 		                                      animated: true)
 	}
 

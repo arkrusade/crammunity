@@ -9,7 +9,6 @@
 import UIKit
 
 import Firebase
-import GoogleMobileAds
 
 let kBannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
 
@@ -66,79 +65,79 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 
 	func configureNavigationBar() {
 		
-		let addFriendsBarButton = UIBarButtonItem(image: Constants.Images.add, style: .Plain, target: self, action: #selector(goToCrammateAddition(_: )))
+		let addFriendsBarButton = UIBarButtonItem(image: Constants.Images.add, style: .plain, target: self, action: #selector(goToCrammateAddition(_: )))
 		//let settingsBarButton = UIBarButtonItem(image: Constants.Images.settings, style: .Plain, target: self, action: #selector(goToClassSettings(_: )))
 		//TODO: settings
 		self.navigationItem.rightBarButtonItems = [/*settingsBarButton, */addFriendsBarButton]
 		
 	}
 	
-	func goToClassSettings(sender: AnyObject?)
+	func goToClassSettings(_ sender: AnyObject?)
 	{
 		print("go to class settings")
-		performSegueWithIdentifier(Constants.Segues.CramChatToSettings, sender: self)
+		performSegue(withIdentifier: Constants.Segues.CramChatToSettings, sender: self)
 	}
 	
-	func goToCrammateAddition(sender: AnyObject?)
+	func goToCrammateAddition(_ sender: AnyObject?)
 	{
 		print("go to add crammates")
-		performSegueWithIdentifier(Constants.Segues.CramChatToCrammateAddition, sender: self)
+		performSegue(withIdentifier: Constants.Segues.CramChatToCrammateAddition, sender: self)
 	}
 	// MARK: UI controls
 	
-	@IBAction func onMoreButtonTap(sender: UIButton){
+	@IBAction func onMoreButtonTap(_ sender: UIButton){
 		var alertController: UIAlertController
 		//TODO: improve this
-		if let chap = currentChapter where chap.name != "defaultChapter" {
-			alertController = UIAlertController(title: "Current Chapter: \(chap.name ?? "")", message: "What do you want to do?", preferredStyle: .ActionSheet)
+		if let chap = currentChapter, chap.name != "defaultChapter" {
+			alertController = UIAlertController(title: "Current Chapter: \(chap.name ?? "")", message: "What do you want to do?", preferredStyle: .actionSheet)
 		}
 		else{
-			alertController = UIAlertController(title: "No Current Chapter", message: "What do you want to do?", preferredStyle: .ActionSheet)
+			alertController = UIAlertController(title: "No Current Chapter", message: "What do you want to do?", preferredStyle: .actionSheet)
 
 		}
-		let addFileAction = UIAlertAction(title: "Add a Photo", style: .Default, handler: {(action) -> Void in
+		let addFileAction = UIAlertAction(title: "Add a Photo", style: .default, handler: {(action) -> Void in
 			self.didTapAddPhoto(self)
 		})
-		let addChapterAction = UIAlertAction(title: "Add a Chapter", style: .Default, handler: {(action) -> Void in
+		let addChapterAction = UIAlertAction(title: "Add a Chapter", style: .default, handler: {(action) -> Void in
 			self.onAddChapterButtonTap(self)
 		})
 		alertController.addAction(addFileAction)
 		alertController.addAction(addChapterAction)
-		alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: {(action: UIAlertAction) -> Void in
+		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) -> Void in
 			print("User clicked button called \(action.title) or tapped elsewhere")
 		}))
 
-		self.presentViewController(alertController, animated: true, completion: nil)
+		self.present(alertController, animated: true, completion: nil)
 	}
 	
-	@IBAction func onAddChapterButtonTap(sender: AnyObject)
+	@IBAction func onAddChapterButtonTap(_ sender: AnyObject)
 	{
-		let alert = UIAlertController(title: "Change chapter", message: "Enter the new chapter name", preferredStyle: .Alert)
+		let alert = UIAlertController(title: "Change chapter", message: "Enter the new chapter name", preferredStyle: .alert)
 		
-		alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+		alert.addTextField(configurationHandler: { (textField) -> Void in
 			textField.placeholder = "(Chapter 1, Poetry, Organelles, etc.)"
 		})
 		
-		alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+		alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
 			let name = alert.textFields![0].text
 			if name != nil && name != "" {
 				let n = name!
 				let chapter = FirebaseHelper.createChapter(n, cramClassUID: self.classUID)
 				//TODO: add database interaction
-				let confirm = UIAlertController(title: "Changed Chapter to \(chapter.name!)", message: "", preferredStyle: .Alert)
-				confirm.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-				self.presentViewController(confirm, animated: true, completion: nil)
+				let confirm = UIAlertController(title: "Changed Chapter to \(chapter.name!)", message: "", preferredStyle: .alert)
+				confirm.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+				self.present(confirm, animated: true, completion: nil)
 			}
 			
 		}))
-		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		
 		
-		self.presentViewController(alert, animated: true, completion: nil)
+		self.present(alert, animated: true, completion: nil)
 		
 	}
 	
-	@IBAction func unwindToClassViewController(segue: UIStoryboardSegue) {
+	@IBAction func unwindToClassViewController(_ segue: UIStoryboardSegue) {
 		print("unwinding to class view")
 	}
 
@@ -155,36 +154,36 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 		logViewLoaded()
 
 		// Listen for keyboard events and animate text field as necessary
-		NSNotificationCenter.defaultCenter().addObserver(self,
+		NotificationCenter.default.addObserver(self,
 		                                                 selector: #selector(ClassViewController.keyboardWillShow(_:)),
-		                                                 name:UIKeyboardWillShowNotification,
+		                                                 name:NSNotification.Name.UIKeyboardWillShow,
 		                                                 object: nil);
 		
-		NSNotificationCenter.defaultCenter().addObserver(self,
+		NotificationCenter.default.addObserver(self,
 		                                                 selector: #selector(ClassViewController.keyboardDidShow(_:)),
-		                                                 name:UIKeyboardDidShowNotification,
+		                                                 name:NSNotification.Name.UIKeyboardDidShow,
 		                                                 object: nil);
 		
-		NSNotificationCenter.defaultCenter().addObserver(self,
+		NotificationCenter.default.addObserver(self,
 		                                                 selector: #selector(ClassViewController.keyboardWillHide(_:)),
-		                                                 name:UIKeyboardWillHideNotification,
+		                                                 name:NSNotification.Name.UIKeyboardWillHide,
 		                                                 object: nil);
 		
 		// Set up UI controls
 		self.tableView.rowHeight = UITableViewAutomaticDimension
 		self.tableView.estimatedRowHeight = 66.0
-		self.tableView.separatorStyle = .None
+		self.tableView.separatorStyle = .none
 	}
 	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == Constants.Segues.CramChatToSettings
 		{
-			let vc = segue.destinationViewController as! ClassSettingsViewController
+			let vc = segue.destination as! ClassSettingsViewController
 			vc.navigationItem.leftItemsSupplementBackButton = true
 		}
 		else if segue.identifier! == Constants.Segues.CramChatToCrammateAddition
 		{
-			let vc = segue.destinationViewController as! CrammateAdditionViewController
+			let vc = segue.destination as! CrammateAdditionViewController
 			vc.cramClass = self.classRef
 			vc.navigationItem.leftItemsSupplementBackButton = true
 			vc.title = "Add Crammates"
@@ -196,15 +195,15 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 
 	// MARK: Firebase stuff
 		
-	@IBAction func didPressFreshConfig(sender: AnyObject) {
+	@IBAction func didPressFreshConfig(_ sender: AnyObject) {
 		fetchConfig()
 	}
 	
-	@IBAction func didSendMessage(sender: UIButton) {
+	@IBAction func didSendMessage(_ sender: UIButton) {
 		textFieldShouldReturn(textField)
 	}
 	
-	@IBAction func didPressCrash(sender: AnyObject) {
+	@IBAction func didPressCrash(_ sender: AnyObject) {
 		FIRCrashMessage("Cause Crash button clicked")
 		fatalError("asdf")
 	}
@@ -218,7 +217,7 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 //		self.banner.rootViewController = self
 //		self.banner.loadRequest(GADRequest())
 	}
-	func sendMessage(data: [String: String]) {
+	func sendMessage(_ data: [String: String]) {
 		
 		var mdata = data
 		mdata[MessageFKs.username] = AppState.sharedInstance.displayName

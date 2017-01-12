@@ -27,15 +27,16 @@ class AppState: NSObject {
 	
 	var displayName: String?
 	var uid: String?
-	var photoURL: NSURL?
+	var photoURL: URL?
 	var userRef: FIRDatabaseReference?
 
 	
-	func getProfileImage(callback: (UIImage?, NSError?) -> Void) {
+	func getProfileImage(_ callback: @escaping (UIImage?, NSError?) -> Void) {
 		if let imageURL = photoURL
 		{
+            //TODO: optional
 			if imageURL.absoluteString.hasPrefix("gs://") {
-				FIRStorage.storage().referenceForURL(imageURL.absoluteString).dataWithMaxSize(INT64_MAX){ (data, error) in
+				FIRStorage.storage().reference(forURL: imageURL.absoluteString).data(withMaxSize: INT64_MAX){ (data, error) in
 					if let error = error {
 						ErrorHandling.defaultErrorHandler(error)
 						return
@@ -50,7 +51,7 @@ class AppState: NSObject {
 					callback(nil, error)
 					return
 				}
-				let image = UIImage(data: data! as NSData)
+				let image = UIImage(data: data! as Data)
 				callback(image, nil)
 			}
 			}

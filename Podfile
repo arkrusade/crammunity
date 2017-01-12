@@ -8,13 +8,13 @@ target 'crammunity' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 #
-  pod 'Bond', '4.0.0'
-  pod 'ConvenienceKit'
+#pod 'Bond', '4.0.0'
+#pod 'ConvenienceKit'
   pod 'DateTools'
   pod 'Firebase'
   pod 'Firebase/Database'
   pod 'Firebase/Core'
-  pod 'Firebase/AdMob'
+  # pod 'Firebase/AdMob'
   pod 'Firebase/Messaging'
   pod 'Firebase/Database'
   #pod 'Firebase/Invites'
@@ -24,8 +24,8 @@ target 'crammunity' do
   pod 'Firebase/Auth'
   pod 'Firebase/AppIndexing'
   pod 'Firebase/Storage'
-  pod 'Alamofire', '~> 3.4.1'
-  pod 'AlamofireImage'
+  #pod 'Alamofire', '~> 3.4.1'
+  #pod 'AlamofireImage'
   
 end
 

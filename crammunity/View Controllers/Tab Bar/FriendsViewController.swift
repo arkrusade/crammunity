@@ -48,7 +48,7 @@ class FriendsViewController: UIViewController
 			friendTableView.reloadData()
 			friends = []
 			friendsUIDS = []
-			_friendsHandle = friendsQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
+			_friendsHandle = friendsQuery!.observe(.childAdded, with: { snapshot in
 				if snapshot.exists() {
 					self.friends.append(snapshot)
 					self.friendsUIDS.append(snapshot.key)
@@ -59,7 +59,7 @@ class FriendsViewController: UIViewController
 					ErrorHandling.defaultErrorHandler("error in friend loading")
 				}
 			})
-			_removeFriendsHandle = friendsQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
+			_removeFriendsHandle = friendsQuery!.observe(.childRemoved, with: { snapshot in
 				if snapshot.exists() {
 					//TODO: change to didset?
 					self.friends = self.friends.filter({$0.key != snapshot.key})
@@ -85,7 +85,7 @@ class FriendsViewController: UIViewController
 			friendTableView.reloadData()
 			notFriends = []
 			notFriendsUIDS = []
-			_usersHandle = usersQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
+			_usersHandle = usersQuery!.observe(.childAdded, with: { snapshot in
 				if snapshot.exists() {
 					if !(snapshot.key == Constants.Firebase.currentUser.uid || self.friendsUIDS.contains(snapshot.key))
 					{
@@ -97,7 +97,7 @@ class FriendsViewController: UIViewController
 					ErrorHandling.defaultErrorHandler("error in user loading")
 				}
 			})
-			_removeUsersHandle = usersQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
+			_removeUsersHandle = usersQuery!.observe(.childRemoved, with: { snapshot in
 				if snapshot.exists() {
 					//TODO: change to didset?
 					self.notFriends = self.notFriends.filter({$0.key != snapshot.key})
@@ -111,19 +111,19 @@ class FriendsViewController: UIViewController
 	
 //	// this view can be in two different states
 	enum State {
-		case DefaultMode
-		case SearchMode
+		case defaultMode
+		case searchMode
 	}
 //
 //	// whenever the state changes, perform one of the two queries
-	var state: State = .DefaultMode {
+	var state: State = .defaultMode {
 		didSet {
 			switch (state) {
-			case .DefaultMode:
+			case .defaultMode:
 				usersQuery = FirebaseHelper.usersQuery()
 				friendsQuery = FirebaseHelper.friendsQuery()
 				
-			case .SearchMode:
+			case .searchMode:
 				let searchText = searchBar?.text ?? ""
 				usersQuery = FirebaseHelper.usersQuery(searchText)
 				friendsQuery = FirebaseHelper.friendsQuery(searchText)
@@ -165,20 +165,20 @@ class FriendsViewController: UIViewController
 
 extension FriendsViewController: UISearchBarDelegate {
 	
-	func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
 		searchBar.setShowsCancelButton(true, animated: true)
-		state = .SearchMode
+		state = .searchMode
 	}
 	
 	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
 		searchBar.text = ""
 		searchBar.setShowsCancelButton(false, animated: true)
-		state = .DefaultMode
+		state = .defaultMode
 	}
 	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		usersQuery = FirebaseHelper.usersQuery(searchText)
 		friendsQuery = FirebaseHelper.friendsQuery(searchText)
 
@@ -186,22 +186,22 @@ extension FriendsViewController: UISearchBarDelegate {
 }
 
 protocol FriendSearchViewCellDelegate: class {
-	func cell(cell: FriendSearchViewCell, didSelectFriendUser user: FIRDataSnapshot)
-	func cell(cell: FriendSearchViewCell, didSelectUnFriendUser user: FIRDataSnapshot)
+	func cell(_ cell: FriendSearchViewCell, didSelectFriendUser user: FIRDataSnapshot)
+	func cell(_ cell: FriendSearchViewCell, didSelectUnFriendUser user: FIRDataSnapshot)
 }
 // MARK: FriendTableViewCell Delegate
 
 extension FriendsViewController: FriendSearchViewCellDelegate {
 	
-	func cell(cell: FriendSearchViewCell, didSelectFriendUser user: FIRDataSnapshot) {
+	func cell(_ cell: FriendSearchViewCell, didSelectFriendUser user: FIRDataSnapshot) {
 		//set friends in database
-		Constants.Firebase.UserArray.child(user.key).observeSingleEventOfType(.Value) { (snapshot) -> Void in
+		Constants.Firebase.UserArray.child(user.key).observeSingleEvent(of: .value) { (snapshot) -> Void in
 			FirebaseHelper.addFriend(snapshot)
 		}
 	}
 	
-	func cell(cell: FriendSearchViewCell, didSelectUnFriendUser user: FIRDataSnapshot) {
-		Constants.Firebase.UserArray.child(user.key).child("friends").child(user.key).observeSingleEventOfType(.Value) { (snapshot) -> Void in
+	func cell(_ cell: FriendSearchViewCell, didSelectUnFriendUser user: FIRDataSnapshot) {
+		Constants.Firebase.UserArray.child(user.key).child("friends").child(user.key).observeSingleEvent(of: .value) { (snapshot) -> Void in
 			FirebaseHelper.removeFriend(snapshot)
 		}
 	}

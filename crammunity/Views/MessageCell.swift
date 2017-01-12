@@ -31,7 +31,7 @@ class MessageViewCell: UITableViewCell {
 			if isReported{
 				message = "has been reported"
 			}
-			reportButton.enabled = !isReported
+			reportButton.isEnabled = !isReported
 
 			
 		}
@@ -48,31 +48,31 @@ class MessageViewCell: UITableViewCell {
 	//TODO: figure out time
 	
 	@IBOutlet weak var profileImageView: UIImageView!
-	@IBAction func onReportButtonTap(sender: UIButton)
+	@IBAction func onReportButtonTap(_ sender: UIButton)
 	{
 		print("reporting")
-		let alert = UIAlertController(title: "Report this message/user", message: "Describe the incident:\n (BEWARE: reports on messages are permanent)", preferredStyle: .Alert)
+		let alert = UIAlertController(title: "Report this message/user", message: "Describe the incident:\n (BEWARE: reports on messages are permanent)", preferredStyle: .alert)
 		
-		alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+		alert.addTextField(configurationHandler: { (textField) -> Void in
 			textField.placeholder = "Don't abuse this"
 		})
 		
-		alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+		alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
 			let desc = alert.textFields![0].text
 			if desc! != "" {
 				self.reportingUserUID = FIRAuth.auth()!.currentUser!.uid
 				FirebaseHelper.postReport(.Message, title: "Message Report by \(self.reportingUserUID)", reportingUserUID: self.reportingUserUID!, desc: desc!, ref: self.messageRef!)
-				let confirm = UIAlertController(title: "Reported User", message: "", preferredStyle: .Alert)
-				confirm.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-				self.presentingViewController.presentViewController(confirm, animated: true, completion: nil)
+				let confirm = UIAlertController(title: "Reported User", message: "", preferredStyle: .alert)
+				confirm.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+				self.presentingViewController.present(confirm, animated: true, completion: nil)
 			}
 			self.isReported = true
 			
 		}))
-		alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		
 		
-		presentingViewController?.presentViewController(alert, animated: true, completion: nil)
+		presentingViewController?.present(alert, animated: true, completion: nil)
 		
 	}
 	

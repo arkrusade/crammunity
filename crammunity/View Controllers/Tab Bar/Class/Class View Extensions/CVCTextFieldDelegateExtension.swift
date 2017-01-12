@@ -9,7 +9,7 @@
 import UIKit
 
 extension ClassViewController: UITextFieldDelegate {
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		let data = [MessageFKs.text: textField.text! as String]
 		sendMessage(data)
 		textField.text! = ""
@@ -18,10 +18,10 @@ extension ClassViewController: UITextFieldDelegate {
 	
 	
 	
-	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 		guard let text = textField.text else { return true }
 		
 		let newLength = text.utf16.count + string.utf16.count - range.length
-		return newLength <= self.msglength.integerValue // Bool
+		return newLength <= self.msglength.intValue // Bool
 	}
 }

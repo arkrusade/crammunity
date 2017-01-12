@@ -18,18 +18,18 @@ class CrammateSearchViewCell: UITableViewCell {
 	
 	var delegate: CrammateAdditionViewCellDelegate?
 	
-	@IBAction func onAddCrammateButtonTapped(sender: UIButton) {
+	@IBAction func onAddCrammateButtonTapped(_ sender: UIButton) {
 		if !isClassmate
 		{
 			print("adding classmates between cur: \(Constants.Firebase.currentUser.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectAddCrammateUser: user)
-			addToClassButton.setImage(Constants.Images.add, forState: .Normal)
+			addToClassButton.setImage(Constants.Images.add, for: UIControlState())
 		}
 		else
 		{
 			print("removing friends between cur: \(Constants.Firebase.currentUser.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectRemoveCrammateUser: user)
-			addToClassButton.setImage(Constants.Images.remove, forState: .Normal)
+			addToClassButton.setImage(Constants.Images.remove, for: UIControlState())
 		}
 	}
 }

@@ -11,8 +11,8 @@ import Firebase
 import FirebaseDatabase
 
 protocol CrammateAdditionViewCellDelegate: class {
-	func cell(cell: CrammateSearchViewCell, didSelectAddCrammateUser user: FIRDataSnapshot)
-	func cell(cell: CrammateSearchViewCell, didSelectRemoveCrammateUser user: FIRDataSnapshot)
+	func cell(_ cell: CrammateSearchViewCell, didSelectAddCrammateUser user: FIRDataSnapshot)
+	func cell(_ cell: CrammateSearchViewCell, didSelectRemoveCrammateUser user: FIRDataSnapshot)
 }
 
 
@@ -54,7 +54,7 @@ class CrammateAdditionViewController: UIViewController
 			crammates = []
 			crammatesUIDS = []
 			
-			_crammatesHandle = crammatesQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
+			_crammatesHandle = crammatesQuery!.observe(.childAdded, with: { snapshot in
 				if snapshot.exists() {
 					if !(snapshot.key == Constants.Firebase.currentUser.uid) {
 						self.crammates.append(snapshot)
@@ -66,7 +66,7 @@ class CrammateAdditionViewController: UIViewController
 					ErrorHandling.defaultErrorHandler("error in crammate loading")
 				}
 			})
-			_removeCrammatesHandle = crammatesQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
+			_removeCrammatesHandle = crammatesQuery!.observe(.childRemoved, with: { snapshot in
 				if snapshot.exists() {
 					//TODO: change to didset?
 					self.crammates = self.crammates.filter({$0.key != snapshot.key})
@@ -92,7 +92,7 @@ class CrammateAdditionViewController: UIViewController
 			
 			friends = []
 			friendsUIDS = []
-			_friendsHandle = friendsQuery!.observeEventType(.ChildAdded, withBlock: { snapshot in
+			_friendsHandle = friendsQuery!.observe(.childAdded, with: { snapshot in
 				if snapshot.exists() {
 					if !(self.crammatesUIDS.contains(snapshot.key) || snapshot.key == Constants.Firebase.currentUser.uid)
 					{
@@ -103,7 +103,7 @@ class CrammateAdditionViewController: UIViewController
 					ErrorHandling.defaultErrorHandler("error in user loading")
 				}
 			})
-			_removeFriendsHandle = friendsQuery!.observeEventType(.ChildRemoved, withBlock: { snapshot in
+			_removeFriendsHandle = friendsQuery!.observe(.childRemoved, with: { snapshot in
 				if snapshot.exists() {
 					//TODO: change to didset?
 					self.friends = self.friends.filter({$0.key != snapshot.key})
@@ -119,19 +119,19 @@ class CrammateAdditionViewController: UIViewController
 	
 	//	// this view can be in two different states
 	enum State {
-		case DefaultMode
-		case SearchMode
+		case defaultMode
+		case searchMode
 	}
 	//
 	//	// whenever the state changes, perform one of the two queries
-	var state: State = .DefaultMode {
+	var state: State = .defaultMode {
 		didSet {
 			switch (state) {
-			case .DefaultMode:
+			case .defaultMode:
 				friendsQuery = FirebaseHelper.friendsQuery()
 				crammatesQuery = FirebaseHelper.crammatesQuery(cramClass!)
 				
-			case .SearchMode:
+			case .searchMode:
 				let searchText = searchBar?.text ?? ""
 				friendsQuery = FirebaseHelper.friendsQuery(searchText)
 				crammatesQuery = FirebaseHelper.crammatesQuery(cramClass!, byUsername: searchText)
@@ -145,16 +145,16 @@ class CrammateAdditionViewController: UIViewController
 		super.viewDidLoad()
 		
 		
-		state = .DefaultMode
+		state = .defaultMode
 	}
 	deinit {
 		crammates = []
 		friends = []
 	}
 	
-	@IBAction func unwindToClassViewControllerFromCrammateAddition(segue: UIButton) {
+	@IBAction func unwindToClassViewControllerFromCrammateAddition(_ segue: UIButton) {
 		print("unwinding to class view from crammate addition")
-		self.dismissViewControllerAnimated(true, completion: nil)
+		self.dismiss(animated: true, completion: nil)
 	}
 
 }
@@ -163,20 +163,20 @@ class CrammateAdditionViewController: UIViewController
 
 extension CrammateAdditionViewController: UISearchBarDelegate {
 	
-	func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
 		searchBar.setShowsCancelButton(true, animated: true)
-		state = .SearchMode
+		state = .searchMode
 	}
 	
 	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
 		searchBar.text = ""
 		searchBar.setShowsCancelButton(false, animated: true)
-		state = .DefaultMode
+		state = .defaultMode
 	}
 	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		friendsQuery = FirebaseHelper.friendsQuery(searchText)
 		crammatesQuery = FirebaseHelper.crammatesQuery(cramClass!, byUsername: searchText)
 		
@@ -187,15 +187,15 @@ extension CrammateAdditionViewController: UISearchBarDelegate {
 
 extension CrammateAdditionViewController: CrammateAdditionViewCellDelegate {
 	
-	func cell(cell: CrammateSearchViewCell, didSelectAddCrammateUser user: FIRDataSnapshot) {
+	func cell(_ cell: CrammateSearchViewCell, didSelectAddCrammateUser user: FIRDataSnapshot) {
 		//set crammates in database
-		Constants.Firebase.UserArray.child(user.key).observeSingleEventOfType(.Value, withBlock: { (snapshot) -> Void in
+		Constants.Firebase.UserArray.child(user.key).observeSingleEvent(of: .value, with: { (snapshot) -> Void in
 			FirebaseHelper.addUserToClass(snapshot, cramClass: self.cramClass!)
 		})
 	}
 	
-	func cell(cell: CrammateSearchViewCell, didSelectRemoveCrammateUser user: FIRDataSnapshot) {
-		Constants.Firebase.UserArray.child(user.key).child("friends").child(user.key).observeSingleEventOfType(.Value, withBlock: { (snapshot) -> Void in
+	func cell(_ cell: CrammateSearchViewCell, didSelectRemoveCrammateUser user: FIRDataSnapshot) {
+		Constants.Firebase.UserArray.child(user.key).child("friends").child(user.key).observeSingleEvent(of: .value, with: { (snapshot) -> Void in
 			FirebaseHelper.removeUserFromClass(snapshot, cramClass: self.cramClass!)
 		})
 	}
@@ -207,13 +207,13 @@ extension CrammateAdditionViewController: CrammateAdditionViewCellDelegate {
 
 // MARK: TableView Data Source
 extension CrammateAdditionViewController: UITableViewDataSource {
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		// 1
 		// Return the number of sections.
 		return 1
 	}
 	
-	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if tableView == self.crammatesTableView
 		{
 			return "Crammates"
@@ -223,7 +223,7 @@ extension CrammateAdditionViewController: UITableViewDataSource {
 			return "Friends"
 		}
 	}
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		let count: Int?
 		if tableView == self.friendsTableView
 		{
@@ -236,14 +236,14 @@ extension CrammateAdditionViewController: UITableViewDataSource {
 		return count!
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell: CrammateSearchViewCell
 		
 		if tableView == self.friendsTableView {
-			cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! CrammateSearchViewCell
+			cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! CrammateSearchViewCell
 			let user = friends[indexPath.row]
 			cell.user = user
-			cell.usernameLabel.text = user.value!.valueForKey("username") as? String
+			cell.usernameLabel.text = (user.value! as AnyObject).value(forKey: "username") as? String
 			cell.imageView?.image = Constants.Images.defaultProfile
 			cell.delegate = self
 			
@@ -252,10 +252,10 @@ extension CrammateAdditionViewController: UITableViewDataSource {
 		}
 		else
 		{
-			cell = tableView.dequeueReusableCellWithIdentifier("CrammateCell", forIndexPath: indexPath) as! CrammateSearchViewCell
+			cell = tableView.dequeueReusableCell(withIdentifier: "CrammateCell", for: indexPath) as! CrammateSearchViewCell
 			let crammate = crammates[indexPath.row]
 			cell.user = crammate
-			cell.usernameLabel.text = crammate.value!.valueForKey("username") as? String
+			cell.usernameLabel.text = (crammate.value! as AnyObject).value(forKey: "username") as? String
 			cell.imageView?.image = Constants.Images.defaultProfile
 			cell.delegate = self
 			

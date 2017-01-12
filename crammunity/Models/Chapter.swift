@@ -32,9 +32,9 @@ struct Chapter {
 	{
 		UID = snapshot.key
 		ref = snapshot.ref
-		name = snapshot.value?.valueForKey(ChapterFKs.name) as? String
+		name = (snapshot.value as AnyObject).value(forKey: ChapterFKs.name) as? String
 		if snapshot.hasChild(ChapterFKs.MessagesArray) {
-			let ms = snapshot.childSnapshotForPath(ChapterFKs.MessagesArray)
+			let ms = snapshot.childSnapshot(forPath: ChapterFKs.MessagesArray)
 			for childSnap in ms.children
 			{
 				self.messages?.append(ChatTextMessage(snapshot: childSnap as! FIRDataSnapshot))
@@ -43,7 +43,7 @@ struct Chapter {
 		
 		
 	}
-	mutating func addTextMessage(message: ChatTextMessage)
+	mutating func addTextMessage(_ message: ChatTextMessage)
 	{
 		if messages != nil {
 			self.messages!.append(message)
@@ -52,13 +52,13 @@ struct Chapter {
 			self.messages = [message]
 		}
 	}
-	mutating func setFromSnapshot(snapshot: FIRDataSnapshot) {
+	mutating func setFromSnapshot(_ snapshot: FIRDataSnapshot) {
 		self = Chapter.init(snapshot: snapshot)
 	}
 	//TODO: beware of async
 	init(chapterRef: FIRDatabaseReference)
 	{
-		chapterRef.observeSingleEventOfType(.Value, withBlock:  {(snapshot) -> Void in
+		chapterRef.observeSingleEvent(of: .value, with:  {(snapshot) -> Void in
 			self.setFromSnapshot(snapshot)
 			
 		})

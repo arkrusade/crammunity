@@ -19,18 +19,18 @@ class FriendSearchViewCell: UITableViewCell {
 	
 	var delegate: FriendSearchViewCellDelegate?
 	
-	@IBAction func onFriendButtonTapped(sender: UIButton) {
+	@IBAction func onFriendButtonTapped(_ sender: UIButton) {
 		if !isFriend
 		{
 			print("adding friends between cur: \(Constants.Firebase.currentUser.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectFriendUser: user)
-			friendButton.setImage(Constants.Images.add, forState: .Normal)
+			friendButton.setImage(Constants.Images.add, for: UIControlState())
 		}
 		else
 		{
 			print("removing friends between cur: \(Constants.Firebase.currentUser.uid)) and other: \(user.key)")
 			delegate?.cell(self, didSelectUnFriendUser: user)
-			friendButton.setImage(Constants.Images.remove, forState: .Normal)
+			friendButton.setImage(Constants.Images.remove, for: UIControlState())
 		}
 	}
 }

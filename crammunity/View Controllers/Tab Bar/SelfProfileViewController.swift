@@ -36,46 +36,46 @@ passwordTextField
 //	@IBOutlet var textFieldArray: [UITextField]!
 //TODO: didset with old and new active fields
 //change to separate window or to tableview
-	func becameFirstResponder(textField: UITextField)
+	func becameFirstResponder(_ textField: UITextField)
 	{
 		switch textField {
 		case nameTextField:
-			displayNameTextField.userInteractionEnabled = false
-			emailTextField.userInteractionEnabled = false
-			gradeTextField.userInteractionEnabled = false
-			passwordTextField.userInteractionEnabled = false
-			passwordTextField.secureTextEntry = true
+			displayNameTextField.isUserInteractionEnabled = false
+			emailTextField.isUserInteractionEnabled = false
+			gradeTextField.isUserInteractionEnabled = false
+			passwordTextField.isUserInteractionEnabled = false
+			passwordTextField.isSecureTextEntry = true
 		case displayNameTextField:
-			nameTextField.userInteractionEnabled = false
-			emailTextField.userInteractionEnabled = false
-			gradeTextField.userInteractionEnabled = false
-			passwordTextField.userInteractionEnabled = false
-			passwordTextField.secureTextEntry = true
+			nameTextField.isUserInteractionEnabled = false
+			emailTextField.isUserInteractionEnabled = false
+			gradeTextField.isUserInteractionEnabled = false
+			passwordTextField.isUserInteractionEnabled = false
+			passwordTextField.isSecureTextEntry = true
 		case emailTextField:
-			displayNameTextField.userInteractionEnabled = false
-			nameTextField.userInteractionEnabled = false
-			gradeTextField.userInteractionEnabled = false
-			passwordTextField.userInteractionEnabled = false
-			passwordTextField.secureTextEntry = true
+			displayNameTextField.isUserInteractionEnabled = false
+			nameTextField.isUserInteractionEnabled = false
+			gradeTextField.isUserInteractionEnabled = false
+			passwordTextField.isUserInteractionEnabled = false
+			passwordTextField.isSecureTextEntry = true
 		case gradeTextField:
-			displayNameTextField.userInteractionEnabled = false
-			emailTextField.userInteractionEnabled = false
-			nameTextField.userInteractionEnabled = false
-			passwordTextField.userInteractionEnabled = false
-			passwordTextField.secureTextEntry = true
+			displayNameTextField.isUserInteractionEnabled = false
+			emailTextField.isUserInteractionEnabled = false
+			nameTextField.isUserInteractionEnabled = false
+			passwordTextField.isUserInteractionEnabled = false
+			passwordTextField.isSecureTextEntry = true
 		case passwordTextField:
-			displayNameTextField.userInteractionEnabled = false
-			emailTextField.userInteractionEnabled = false
-			gradeTextField.userInteractionEnabled = false
-			nameTextField.userInteractionEnabled = false
+			displayNameTextField.isUserInteractionEnabled = false
+			emailTextField.isUserInteractionEnabled = false
+			gradeTextField.isUserInteractionEnabled = false
+			nameTextField.isUserInteractionEnabled = false
 			
 		default:
-			nameTextField.userInteractionEnabled = false
-			displayNameTextField.userInteractionEnabled = false
-			emailTextField.userInteractionEnabled = false
-			gradeTextField.userInteractionEnabled = false
-			passwordTextField.userInteractionEnabled = false
-			passwordTextField.secureTextEntry = true
+			nameTextField.isUserInteractionEnabled = false
+			displayNameTextField.isUserInteractionEnabled = false
+			emailTextField.isUserInteractionEnabled = false
+			gradeTextField.isUserInteractionEnabled = false
+			passwordTextField.isUserInteractionEnabled = false
+			passwordTextField.isSecureTextEntry = true
 		}
 	}
 //	@IBAction func onEditNameButtonTap(sender: UIButton)
@@ -86,7 +86,7 @@ passwordTextField
 //			self.becameFirstResponder(nameTextField)
 //		}
 //	}
-	@IBAction func onEditDisplayNameButtonTap(sender: UIButton)
+	@IBAction func onEditDisplayNameButtonTap(_ sender: UIButton)
 	{
 		ErrorHandling.delayedFeatureAlert()
 
@@ -96,7 +96,7 @@ passwordTextField
 //			self.becameFirstResponder(displayNameTextField)
 //		}
 	}
-	@IBAction func onEditEmailButtonTap(sender: UIButton)
+	@IBAction func onEditEmailButtonTap(_ sender: UIButton)
 	{
 		ErrorHandling.delayedFeatureAlert()
 
@@ -106,7 +106,7 @@ passwordTextField
 //			self.becameFirstResponder(emailTextField)
 //		}
 	}
-	@IBAction func onEditGradeButtonTap(sender: UIButton)
+	@IBAction func onEditGradeButtonTap(_ sender: UIButton)
 	{
 		ErrorHandling.delayedFeatureAlert()
 //		gradeTextField.userInteractionEnabled = !gradeTextField.userInteractionEnabled
@@ -115,7 +115,7 @@ passwordTextField
 //			self.becameFirstResponder(gradeTextField)
 //		}
 	}
-	@IBAction func onEditProfilePictureButtonTap(sender: UIButton)
+	@IBAction func onEditProfilePictureButtonTap(_ sender: UIButton)
 	{
 		//TODO:		print("changing profile picture")
 		ErrorHandling.delayedFeatureAlert()
@@ -135,7 +135,7 @@ passwordTextField
 //			}
 //		}
 	}
-	@IBAction func onEditPasswordButtonTap(sender: UIButton)
+	@IBAction func onEditPasswordButtonTap(_ sender: UIButton)
 	{
 		ErrorHandling.delayedFeatureAlert()
 //		passwordTextField.userInteractionEnabled = !passwordTextField.userInteractionEnabled
@@ -148,13 +148,13 @@ passwordTextField
 	}
 	
 	
-	@IBAction func signOut(sender: AnyObject) {
+	@IBAction func signOut(_ sender: AnyObject) {
 		let firebaseAuth = FIRAuth.auth()
 		do {
 			try firebaseAuth?.signOut()
 			AppState.sharedInstance.signedIn = false
 			MeasurementHelper.sendLogoutEvent()//send to analytics
-			dismissViewControllerAnimated(false, completion: nil)
+			dismiss(animated: false, completion: nil)
 
 		} catch let signOutError as NSError {
 			ErrorHandling.defaultErrorHandler("Error signing out", desc: "\(signOutError.description)")
@@ -186,11 +186,11 @@ passwordTextField
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
-		nameTextField.userInteractionEnabled = false
-		displayNameTextField.userInteractionEnabled = false
-		emailTextField.userInteractionEnabled = false
-		gradeTextField.userInteractionEnabled = false
-		passwordTextField.userInteractionEnabled = false
+		nameTextField.isUserInteractionEnabled = false
+		displayNameTextField.isUserInteractionEnabled = false
+		emailTextField.isUserInteractionEnabled = false
+		gradeTextField.isUserInteractionEnabled = false
+		passwordTextField.isUserInteractionEnabled = false
 		loadProfile()
         // Do any additional setup after loading the view.
     }

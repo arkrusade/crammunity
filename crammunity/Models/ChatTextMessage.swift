@@ -26,7 +26,7 @@ struct ChatTextMessage {
 //		return mdata
 //	}
 	
-	mutating func setFromDict(dict: [String: String])
+	mutating func setFromDict(_ dict: [String: String])
 	{
 		for key in dict.keys {
 			switch key {
@@ -55,7 +55,7 @@ struct ChatTextMessage {
 		
 		
 	}//TODO: clean up
-	mutating func setFromSnapshot(snapshot: FIRDataSnapshot)
+	mutating func setFromSnapshot(_ snapshot: FIRDataSnapshot)
 	{
 		let message = ChatTextMessage(dict: snapshot.value as! [String : String])
 		self = ChatTextMessage(ref: snapshot.ref, username: message.username, message: message.text, chapterUID: message.chapterUID)
@@ -83,7 +83,7 @@ struct ChatTextMessage {
 	}
 	init(ref: FIRDatabaseReference)
 	{
-		ref.observeSingleEventOfType(.Value, withBlock: {(snapshot) -> Void in
+		ref.observeSingleEvent(of: .value, with: {(snapshot) -> Void in
 			self.setFromSnapshot(snapshot)
 		})
 	}

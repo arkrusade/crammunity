@@ -27,7 +27,7 @@ class Class {
 	}
 	init(snap: FIRDataSnapshot)
 	{
-		className = snap.value?.valueForKey(CramClassFKs.name) as? String
+		className = (snap.value as AnyObject).value(forKey: CramClassFKs.name) as? String
 
 		
 		classUID = snap.key
@@ -38,8 +38,8 @@ class Class {
 	init(ref: FIRDatabaseReference)
 	{
 		self.ref = ref
-		ref.observeSingleEventOfType(.Value, withBlock:  {(snapshot) -> Void in
-			self.className = snapshot.value?.valueForKey(CramClassFKs.name) as? String
+		ref.observeSingleEvent(of: .value, with:  {(snapshot) -> Void in
+			self.className = (snapshot.value as AnyObject).value(forKey: CramClassFKs.name) as? String
 			self.classUID = snapshot.key
 			
 		})

@@ -10,6 +10,19 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 
 class SignUpViewController: UIViewController {
@@ -26,7 +39,7 @@ class SignUpViewController: UIViewController {
 	@IBAction func SignUpButtonTapped()
 	{
 		//TODO: change to alerts
-		if (EmailTextField.text!.rangeOfString(Constants.emailRegex, options: .RegularExpressionSearch)) == nil
+		if (EmailTextField.text!.range(of: Constants.emailRegex, options: .regularExpression)) == nil
 		{
 			ErrorHandling.defaultErrorHandler(InvalidSignUpTitle, desc: "Must be valid email")
 			return
@@ -54,14 +67,14 @@ class SignUpViewController: UIViewController {
 		}
 	}
 	
-	@IBAction func viewTapped(sender: AnyObject?)
+	@IBAction func viewTapped(_ sender: AnyObject?)
 	{
 		EmailTextField.resignFirstResponder()
 		UsernameTextField.resignFirstResponder()
 		PasswordTextField.resignFirstResponder()
 		PasswordConfirmTextField.resignFirstResponder()
 	}
-	func signedUp(user: FIRUser?)
+	func signedUp(_ user: FIRUser?)
 	{
 		//TODO: get this and login to be same method
 		
@@ -76,11 +89,11 @@ class SignUpViewController: UIViewController {
 		AppState.sharedInstance.photoURL = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		
-		NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
+		NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NotificationKeys.SignedIn), object: nil, userInfo: nil)
 		Constants.Firebase.currentUser = (FIRAuth.auth()?.currentUser)!
 		
 		loginVC.isSignedUp = true
-		self.dismissViewControllerAnimated(false, completion: nil)
+		self.dismiss(animated: false, completion: nil)
 	}
     override func viewDidLoad() {
         super.viewDidLoad()

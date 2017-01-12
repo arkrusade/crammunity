@@ -24,39 +24,39 @@ class ClassSettingsViewController: UIViewController, UITableViewDelegate, UITabl
 	}
 
 // MARK: TableView Data Source
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		// 1
 		// Return the number of sections.
 		return settingsList.count
 	}
 	
-	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let headerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 40))
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
 		let titleView = UITextView(frame: headerView.frame)
 		titleView.text = settingsList[section].title
 		titleView.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
 		let gradient: CAGradientLayer = CAGradientLayer.init(layer: titleView)
 		gradient.frame = headerView.bounds
-		gradient.colors = [(UIColor(red: 0.89, green: 0.90, blue: 0.92, alpha: 1.00).CGColor as AnyObject), (UIColor(red: 0.82, green: 0.82, blue: 0.85, alpha: 1.00).CGColor as AnyObject)]
-		titleView.layer.insertSublayer(gradient, atIndex: 0)
+		gradient.colors = [(UIColor(red: 0.89, green: 0.90, blue: 0.92, alpha: 1.00).cgColor as AnyObject), (UIColor(red: 0.82, green: 0.82, blue: 0.85, alpha: 1.00).cgColor as AnyObject)]
+		titleView.layer.insertSublayer(gradient, at: 0)
 
 		headerView.addSubview(titleView)
 		return headerView
 	}
 	
-	func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 40
 	}
 	
-	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return settingsList[section].title
 	}
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return settingsList[section].list.count
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell", forIndexPath: indexPath)
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath)
 		//TODO: change cells to constants
 		cell.textLabel?.text = settingsList[indexPath.section].list[indexPath.row]
 		cell.backgroundColor = UIColor(colorLiteralRed: 230/256, green: 230/256, blue: 230/256, alpha: 1)

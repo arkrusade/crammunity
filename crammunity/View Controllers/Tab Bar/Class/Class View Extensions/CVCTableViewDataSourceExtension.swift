@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 extension ClassViewController: UITableViewDataSource {
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard !chapters.isEmpty else {
 			return 0
 		}
@@ -23,7 +23,7 @@ extension ClassViewController: UITableViewDataSource {
 		}
 	}
 	
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		// 1
 		// Return the number of sections.
 		guard self.chapters.count != 0 else
@@ -33,7 +33,7 @@ extension ClassViewController: UITableViewDataSource {
 		return self.chapters.count
 	}
 	
-	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		guard !chapters.isEmpty else {
 			return ""
 		}
@@ -44,10 +44,10 @@ extension ClassViewController: UITableViewDataSource {
 
 	
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		//TODO: deal with non chapter messages
 		// Dequeue cell
-		let cell = tableView.dequeueReusableCellWithIdentifier("MessageCell") as! MessageViewCell
+		let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell") as! MessageViewCell
 		
 		
 		//TODO:-Cells as constants
@@ -66,7 +66,7 @@ extension ClassViewController: UITableViewDataSource {
 		else if let imageURL = message.imageURL {
 			var image = Constants.Images.defaultProfile
 			if imageURL.hasPrefix("gs://") {
-				FIRStorage.storage().referenceForURL(imageURL).dataWithMaxSize(INT64_MAX){ (data, error) in
+				FIRStorage.storage().reference(forURL: imageURL).data(withMaxSize: INT64_MAX){ (data, error) in
 					if let error = error {
 						ErrorHandling.defaultErrorHandler("Error downloading image", desc: error.description)
 						
@@ -79,7 +79,7 @@ extension ClassViewController: UITableViewDataSource {
 				}
 			}
 				
-			else if let url = NSURL(string:imageURL), data = NSData(contentsOfURL: url) {
+			else if let url = URL(string:imageURL), let data = try? Data(contentsOf: url) {
 				cell.imageView?.image = UIImage.init(data: data)
 			}
 			cell.profileImageView?.image = image

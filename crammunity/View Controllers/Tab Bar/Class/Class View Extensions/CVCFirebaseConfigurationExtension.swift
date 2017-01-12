@@ -14,7 +14,7 @@ extension ClassViewController{
 //		messagesRef = Constants.Firebase.CramClassArray.child(classRef.key).child(CramClassFKs.MessagesArray)
 		chapterRef = Constants.Firebase.CramClassArray.child(classRef.key).child(CramClassFKs.ChapterArray)
 		self.currentChapter = defaultChapter
-		_chapterHandle = chapterRef.observeEventType(.ChildAdded, withBlock: { snapshot in
+		_chapterHandle = chapterRef.observe(.childAdded, with: { snapshot in
 			if snapshot.exists() {
 				self.chapters.append(Chapter(snapshot: snapshot))
 				self.chapterUIDS.append(snapshot.key)
@@ -25,7 +25,7 @@ extension ClassViewController{
 		})
 		//TODO: edit classFKS
 		CramClassFKs.currentChapter
-		_currChapterHandle = classRef.child(CramClassFKs.currentChapter).observeEventType(.ChildAdded, withBlock: { snapshot in
+		_currChapterHandle = classRef.child(CramClassFKs.currentChapter).observe(.childAdded, with: { snapshot in
 			if snapshot.exists() {
 				var chap = Chapter.init(snapshot: snapshot)
 				chap.ref = self.classRef.child(CramClassFKs.ChapterArray).child(snapshot.key)
@@ -35,16 +35,16 @@ extension ClassViewController{
 				self.currentChapter = self.defaultChapter
 			}
 		})
-		_currChapterRemoveHandle = classRef.child(CramClassFKs.currentChapter).observeEventType(.ChildRemoved, withBlock: { snapshot in
+		_currChapterRemoveHandle = classRef.child(CramClassFKs.currentChapter).observe(.childRemoved, with: { snapshot in
 			self.currentChapter = self.defaultChapter
 		})
 		
 		//find new messages
-		_messageHandle = chapterRef.observeEventType(.ChildChanged, withBlock: { snapshot in
+		_messageHandle = chapterRef.observe(.childChanged, with: { snapshot in
 			if snapshot.exists() {
 				if self.chapterUIDS.contains(snapshot.key)
 				{
-					self.chapters[self.chapterUIDS.indexOf(snapshot.key)!] = Chapter(snapshot: snapshot)
+					self.chapters[self.chapterUIDS.index(of: snapshot.key)!] = Chapter(snapshot: snapshot)
 					//TODO: make more efficient by only changing messages
 					
 				}
@@ -57,7 +57,7 @@ extension ClassViewController{
 	}
 	//TODO: add storage in specific class
 	func configureStorage() {
-		storageRef = FIRStorage.storage().referenceForURL("gs://crammunity.appspot.com/")
+		storageRef = FIRStorage.storage().reference(forURL: "gs://crammunity.appspot.com/")
 	}
 	
 	func configureRemoteConfig() {
@@ -83,12 +83,12 @@ extension ClassViewController{
 		// fetched and cached config would be considered expired because it would have been fetched
 		// more than cacheExpiration seconds ago. Thus the next fetch would go to the server unless
 		// throttling is in progress. The default expiration duration is 43200 (12 hours).
-		remoteConfig.fetchWithExpirationDuration(expirationDuration) { (status, error) in
-			if (status == .Success) {
+		remoteConfig.fetch(withExpirationDuration: expirationDuration) { (status, error) in
+			if (status == .success) {
 				print("Config fetched!")
 				self.remoteConfig.activateFetched()
 				let friendlyMsgLength = self.remoteConfig["friendly_msg_length"]
-				if (friendlyMsgLength.source != .Static) {
+				if (friendlyMsgLength.source != .static) {
 					self.msglength = friendlyMsgLength.numberValue!
 					print("Friendly msg length config: \(self.msglength)")
 				}

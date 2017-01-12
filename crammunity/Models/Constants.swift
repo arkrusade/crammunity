@@ -8,7 +8,7 @@
 import Firebase
 
 
-typealias ErrorRef = (title: String, desc: String, ref: FIRDatabaseReference, time: NSDate)
+typealias ErrorRef = (title: String, desc: String, ref: FIRDatabaseReference, time: Date)
 
 struct ErrorFirebaseKeys {
 	static let title = "title"
