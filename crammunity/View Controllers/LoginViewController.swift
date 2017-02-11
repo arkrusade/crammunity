@@ -25,23 +25,53 @@ class LoginViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+        print("login view loaded")
+
+        if let login = CacheHelper.sharedInstance.retrieveLogin()
+        {
+            
+            self.login(login)
+        }
 		
-		print("login view loaded")
-//		testLogin()
 		
 	}
-	//TODO: remove testlogin
-	func testLogin()
-	{
-		FIRAuth.auth()!.signIn(withEmail: "test@test.com", password: "testtesttest") { (user, error) in
-			if let error = error {
-				ErrorHandling.defaultErrorHandler("Test Sign in failed:", desc: error.localizedDescription)
-			} else {
-				print ("Test Signed in with uid:", user!.uid)
-				self.signedIn(user)
-			}
-		}
-	}
+    private func login(_ creds: Credentials) {
+        EmailTextField.text = creds.username
+        PasswordTextField.text = creds.password
+        login(username: creds.username, password: creds.password)
+    }
+
+    private func login(username: String, password: String) {
+        FIRAuth.auth()!.signIn(withEmail: username, password: password) { (user, error) in
+            if let error = error {
+                if(error._code == 17008)
+                {
+                    ErrorHandling.defaultError(self.InvalidLoginTitle, desc: "Invalid email", sender: self)
+                }
+                else if(error._code == 17009)
+                {
+                    ErrorHandling.defaultError(self.InvalidLoginTitle, desc: "Invalid email/password combination", sender: self)
+                }
+                else if(error._code == 17011)
+                {
+                    ErrorHandling.defaultError(self.InvalidLoginTitle, desc: "User does not exist", sender: self)
+                }
+                else if(error._code == 17999)
+                {
+                    ErrorHandling.defaultError(self.InvalidLoginTitle, error: error, sender: self)//(error.userInfo[NSUnderlyingErrorKey]?.userInfo["FIRAuthErrorUserInfoDeserializedResponseKey"] as! NSDictionary).value(forKey: "message") as! String)
+                }
+                    //successful sign in
+                else {
+                    ErrorHandling.defaultError(self.InvalidLoginTitle, desc: "Unknown error: \(error)", sender: self)
+                }
+                
+            } else {
+                print ("Signed in with uid:", user!.uid)
+                self.signedIn(user)
+            }
+        }
+    }
+	
 	
 	@IBAction func viewTapped(_ sender: AnyObject) {
 		self.EmailTextField.resignFirstResponder()
@@ -53,39 +83,12 @@ class LoginViewController: UIViewController {
 		//TODO: add alertviewcontrollers
 		//also with sign in
 		viewTapped(self)
-		guard PasswordTextField.text != "" else {
-			ErrorHandling.defaultErrorHandler(InvalidLoginTitle, desc: "Missing Password")
+		guard PasswordTextField.text != "" && EmailTextField.text != nil else {
+            ErrorHandling.defaultError(InvalidLoginTitle, desc: "Missing Values", sender: self)
 			return
 		}
-		FIRAuth.auth()!.signIn(withEmail: EmailTextField.text!, password: PasswordTextField.text!) { (user, error) in
-			if let error = error {
-				if(error.code == 17008)
-				{
-					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: "Invalid email")
-				}
-				else if(error.code == 17009)
-				{
-					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: "Invalid email/password combination")
-				}
-				else if(error.code == 17011)
-				{
-					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: "User does not exist")
-				}
-				else if(error.code == 17999)
-				{
-					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: (error.userInfo[NSUnderlyingErrorKey]?.userInfo["FIRAuthErrorUserInfoDeserializedResponseKey"] as! NSDictionary).value(forKey: "message") as! String)
-				}
-				//successful sign in
-				else {
-					ErrorHandling.defaultErrorHandler(self.InvalidLoginTitle, desc: "Unknown error: \(error)")
-				}
-									
-			} else {
-				print ("Signed in with uid:", user!.uid)
-				self.signedIn(user)
-			}
-		}
-	}
+		login(username: EmailTextField.text!, password: PasswordTextField.text!)
+    }
 	
 	@IBAction func didRequestPasswordReset(_ sender: AnyObject) {
 		let prompt = UIAlertController.init(title: nil, message: "Email:", preferredStyle: UIAlertControllerStyle.alert)
@@ -96,7 +99,7 @@ class LoginViewController: UIViewController {
 			}
 			FIRAuth.auth()?.sendPasswordReset(withEmail: userInput!) { (error) in
 				if let error = error {
-					ErrorHandling.defaultErrorHandler("Password Reset Error", desc: error.localizedDescription)
+					ErrorHandling.defaultError("Password Reset Error", desc: error.localizedDescription, sender: self)
 					return
 				}
 			}
@@ -109,20 +112,19 @@ class LoginViewController: UIViewController {
 	
 	func signedIn(_ user: FIRUser?)
 	{
-		
-
-		
-		
 		AppState.sharedInstance.displayName = user?.displayName ?? user?.email
 		AppState.sharedInstance.photoURL = user?.photoURL
 		AppState.sharedInstance.signedIn = true
 		NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NotificationKeys.SignedIn), object: nil, userInfo: nil)
 		
+        if CacheHelper.sharedInstance.retrieveLogin() != nil {
+            CacheHelper.sharedInstance.storeLogin(EmailTextField.text!, password: PasswordTextField.text!)
+        }
 		
-		//TODO: make this cleaner
+		//TODO: make this cleaner, and move to appstate
 		Constants.Firebase.currentUser = (FIRAuth.auth()?.currentUser)!
 		Constants.Firebase.FriendsArray = Constants.Firebase.UserArray.child((Constants.Firebase.currentUser.uid)).child("friends")
-		FirebaseHelper.friendsRef = Constants.Firebase.FriendsArray
+		FirebaseHelper.shared.friendsRef = Constants.Firebase.FriendsArray
 		AppState.sharedInstance.userRef = Constants.Firebase.UserArray.child(Constants.Firebase.currentUser.uid)
 		
 		if user?.displayName != "test@test.com"  {

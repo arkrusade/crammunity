@@ -120,7 +120,7 @@ class MasterViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
 			//TODO: why doesnt this exit
-			FirebaseHelper.removeCurrentUserFromClass(classes[indexPath.row])
+			FirebaseHelper.shared.removeCurrentUserFromClass(classes[indexPath.row])
 //		    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 		} else if editingStyle == .insert {
 		    print("inserted")

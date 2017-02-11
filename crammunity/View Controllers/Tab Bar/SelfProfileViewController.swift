@@ -88,7 +88,7 @@ passwordTextField
 //	}
 	@IBAction func onEditDisplayNameButtonTap(_ sender: UIButton)
 	{
-		ErrorHandling.delayedFeatureAlert()
+		ErrorHandling.delayedFeatureAlert(self)
 
 //		displayNameTextField.userInteractionEnabled = !displayNameTextField.userInteractionEnabled
 //		if displayNameTextField.canBecomeFirstResponder() {
@@ -98,7 +98,7 @@ passwordTextField
 	}
 	@IBAction func onEditEmailButtonTap(_ sender: UIButton)
 	{
-		ErrorHandling.delayedFeatureAlert()
+		ErrorHandling.delayedFeatureAlert(self)
 
 //		emailTextField.userInteractionEnabled = !emailTextField.userInteractionEnabled
 //		if emailTextField.canBecomeFirstResponder() {
@@ -108,7 +108,7 @@ passwordTextField
 	}
 	@IBAction func onEditGradeButtonTap(_ sender: UIButton)
 	{
-		ErrorHandling.delayedFeatureAlert()
+		ErrorHandling.delayedFeatureAlert(self)
 //		gradeTextField.userInteractionEnabled = !gradeTextField.userInteractionEnabled
 //		if gradeTextField.canBecomeFirstResponder() {
 //			gradeTextField.becomeFirstResponder()
@@ -118,7 +118,7 @@ passwordTextField
 	@IBAction func onEditProfilePictureButtonTap(_ sender: UIButton)
 	{
 		//TODO:		print("changing profile picture")
-		ErrorHandling.delayedFeatureAlert()
+		ErrorHandling.delayedFeatureAlert(self)
 //		if let user = FIRAuth.auth()?.currentUser {
 //			let changeRequest = user.profileChangeRequest()
 //			
@@ -127,7 +127,7 @@ passwordTextField
 //				NSURL(string: "http://2.bp.blogspot.com/-tJ2_NJor6_I/Ti9NIhFswUI/AAAAAAAAAdE/yiETNvP1c1g/s1600/Business+Card1.jpg")
 //			changeRequest.commitChangesWithCompletion { error in
 //				if let error = error {
-//					ErrorHandling.defaultErrorHandler(error)
+//					ErrorHandling.defaultError(error)
 //				} else {
 //					//					AppState.sharedInstance.photoURL = usera.photoURL
 //					// Profile updated.
@@ -137,7 +137,7 @@ passwordTextField
 	}
 	@IBAction func onEditPasswordButtonTap(_ sender: UIButton)
 	{
-		ErrorHandling.delayedFeatureAlert()
+		ErrorHandling.delayedFeatureAlert(self)
 //		passwordTextField.userInteractionEnabled = !passwordTextField.userInteractionEnabled
 //		if passwordTextField.canBecomeFirstResponder() {
 //			passwordTextField.secureTextEntry = false
@@ -157,7 +157,7 @@ passwordTextField
 			dismiss(animated: false, completion: nil)
 
 		} catch let signOutError as NSError {
-			ErrorHandling.defaultErrorHandler("Error signing out", desc: "\(signOutError.description)")
+            ErrorHandling.defaultError("Error signing out", desc: "\(signOutError.description)", sender: self)
 		}
 	}
 	

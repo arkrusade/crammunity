@@ -63,7 +63,7 @@ class CrammateAdditionViewController: UIViewController
 						self.friendsUIDS = self.friendsUIDS.filter({$0 != snapshot.key})
 					}
 				} else {
-					ErrorHandling.defaultErrorHandler("error in crammate loading")
+                    ErrorHandling.defaultError("Error", desc: "Failed crammate loading", sender: self)
 				}
 			})
 			_removeCrammatesHandle = crammatesQuery!.observe(.childRemoved, with: { snapshot in
@@ -75,7 +75,7 @@ class CrammateAdditionViewController: UIViewController
 					self.friends.append(snapshot)
 					self.friendsUIDS.append(snapshot.key)
 				} else {
-					ErrorHandling.defaultErrorHandler("error in crammate removing")
+                    ErrorHandling.defaultError("Error", desc: "Failed crammate removing", sender: self)
 				}
 			})
 			friendsTableView.reloadData()
@@ -100,7 +100,7 @@ class CrammateAdditionViewController: UIViewController
 						self.friendsUIDS.append(snapshot.key)
 					}
 				} else {
-					ErrorHandling.defaultErrorHandler("error in user loading")
+                    ErrorHandling.defaultError(desc: "Error in user loading", sender: self)
 				}
 			})
 			_removeFriendsHandle = friendsQuery!.observe(.childRemoved, with: { snapshot in
@@ -109,7 +109,7 @@ class CrammateAdditionViewController: UIViewController
 					self.friends = self.friends.filter({$0.key != snapshot.key})
 					self.friendsUIDS = self.friendsUIDS.filter({$0 != snapshot.key})
 				} else {
-					ErrorHandling.defaultErrorHandler("error in friend removing")
+                    ErrorHandling.defaultError(desc: "Error in friend removing", sender: self)
 				}
 			})
 			friendsTableView.reloadData()
@@ -128,13 +128,13 @@ class CrammateAdditionViewController: UIViewController
 		didSet {
 			switch (state) {
 			case .defaultMode:
-				friendsQuery = FirebaseHelper.friendsQuery()
-				crammatesQuery = FirebaseHelper.crammatesQuery(cramClass!)
+				friendsQuery = FirebaseHelper.shared.friendsQuery()
+				crammatesQuery = FirebaseHelper.shared.crammatesQuery(cramClass!)
 				
 			case .searchMode:
 				let searchText = searchBar?.text ?? ""
-				friendsQuery = FirebaseHelper.friendsQuery(searchText)
-				crammatesQuery = FirebaseHelper.crammatesQuery(cramClass!, byUsername: searchText)
+                friendsQuery = FirebaseHelper.shared.friendsQuery(byUsername: searchText)
+				crammatesQuery = FirebaseHelper.shared.crammatesQuery(cramClass!, byUsername: searchText)
 				
 			}
 		}
@@ -177,8 +177,8 @@ extension CrammateAdditionViewController: UISearchBarDelegate {
 	}
 	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		friendsQuery = FirebaseHelper.friendsQuery(searchText)
-		crammatesQuery = FirebaseHelper.crammatesQuery(cramClass!, byUsername: searchText)
+        friendsQuery = FirebaseHelper.shared.friendsQuery(byUsername: searchText)
+		crammatesQuery = FirebaseHelper.shared.crammatesQuery(cramClass!, byUsername: searchText)
 		
 	}
 }
@@ -190,13 +190,13 @@ extension CrammateAdditionViewController: CrammateAdditionViewCellDelegate {
 	func cell(_ cell: CrammateSearchViewCell, didSelectAddCrammateUser user: FIRDataSnapshot) {
 		//set crammates in database
 		Constants.Firebase.UserArray.child(user.key).observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-			FirebaseHelper.addUserToClass(snapshot, cramClass: self.cramClass!)
+			FirebaseHelper.shared.addUserToClass(snapshot, cramClass: self.cramClass!)
 		})
 	}
 	
 	func cell(_ cell: CrammateSearchViewCell, didSelectRemoveCrammateUser user: FIRDataSnapshot) {
 		Constants.Firebase.UserArray.child(user.key).child("friends").child(user.key).observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-			FirebaseHelper.removeUserFromClass(snapshot, cramClass: self.cramClass!)
+			FirebaseHelper.shared.removeUserFromClass(snapshot, cramClass: self.cramClass!)
 		})
 	}
 	

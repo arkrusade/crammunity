@@ -19,15 +19,16 @@ extension ClassViewController{
 				self.chapters.append(Chapter(snapshot: snapshot))
 				self.chapterUIDS.append(snapshot.key)
 			} else {
-				ErrorHandling.defaultErrorHandler("error in chapter loading")
+                ErrorHandling.defaultError(desc: "error in chapter loading", sender: self)
 				
 			}
 		})
 		//TODO: edit classFKS
-		CramClassFKs.currentChapter
+		//CramClassFKs.currentChapter
+        
 		_currChapterHandle = classRef.child(CramClassFKs.currentChapter).observe(.childAdded, with: { snapshot in
 			if snapshot.exists() {
-				var chap = Chapter.init(snapshot: snapshot)
+				let chap = Chapter.init(snapshot: snapshot)
 				chap.ref = self.classRef.child(CramClassFKs.ChapterArray).child(snapshot.key)
 				self.currentChapter = chap
 			}
@@ -50,7 +51,7 @@ extension ClassViewController{
 				}
 				
 			} else {
-				ErrorHandling.defaultErrorHandler("error in message loading")
+                ErrorHandling.defaultError(desc: "error in message loading", sender: self)
 				
 			}
 		})
@@ -93,7 +94,7 @@ extension ClassViewController{
 					print("Friendly msg length config: \(self.msglength)")
 				}
 			} else {
-				ErrorHandling.defaultErrorHandler("Config not fetched", desc: "\(error?.description)")
+				ErrorHandling.defaultError("Config not fetched", desc: "\(error?.localizedDescription)", sender: self)
 			}
 		}
 	}

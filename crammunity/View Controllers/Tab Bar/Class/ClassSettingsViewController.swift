@@ -19,7 +19,7 @@ class ClassSettingsViewController: UIViewController, UITableViewDelegate, UITabl
 	override func viewDidLoad() {
 		titleBar.title = "Settings"
 		if AppState.sharedInstance.signedIn && AppState.sharedInstance.displayName == nil{
-							ErrorHandling.defaultErrorHandler(NSError(domain: "Login", code: 0, userInfo: ["description":"Cannot find username"]))
+							ErrorHandling.defaultError(NSError(domain: "Login", code: 0, userInfo: ["description":"Cannot find username"]))
 		}
 	}
 

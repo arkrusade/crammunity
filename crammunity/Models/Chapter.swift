@@ -9,7 +9,7 @@
 import UIKit
 
 import Firebase
-struct Chapter {
+class Chapter {
 	var UID: String!
 	var name: String?
 	var messages: [ChatTextMessage]? = []
@@ -43,7 +43,7 @@ struct Chapter {
 		
 		
 	}
-	mutating func addTextMessage(_ message: ChatTextMessage)
+	func addTextMessage(_ message: ChatTextMessage)
 	{
 		if messages != nil {
 			self.messages!.append(message)
@@ -52,16 +52,15 @@ struct Chapter {
 			self.messages = [message]
 		}
 	}
-	mutating func setFromSnapshot(_ snapshot: FIRDataSnapshot) {
-		self = Chapter.init(snapshot: snapshot)
-	}
+
 	//TODO: beware of async
-	init(chapterRef: FIRDatabaseReference)
-	{
-		chapterRef.observeSingleEvent(of: .value, with:  {(snapshot) -> Void in
-			self.setFromSnapshot(snapshot)
-			
-		})
-		
-	}
+//	init(chapterRef: FIRDatabaseReference)
+//	{
+//		chapterRef.observeSingleEvent(of: .value, with:  {(snapshot) -> Void in
+//			self.setFromSnapshot(snapshot)
+//            
+//			
+//		})
+//		
+//	}
 }

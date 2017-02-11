@@ -61,7 +61,7 @@ class MessageViewCell: UITableViewCell {
 			let desc = alert.textFields![0].text
 			if desc! != "" {
 				self.reportingUserUID = FIRAuth.auth()!.currentUser!.uid
-				FirebaseHelper.postReport(.Message, title: "Message Report by \(self.reportingUserUID)", reportingUserUID: self.reportingUserUID!, desc: desc!, ref: self.messageRef!)
+				FirebaseHelper.shared.postReport(.Message, title: "Message Report by \(self.reportingUserUID)", reportingUserUID: self.reportingUserUID!, desc: desc!, ref: self.messageRef!)
 				let confirm = UIAlertController(title: "Reported User", message: "", preferredStyle: .alert)
 				confirm.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 				self.presentingViewController.present(confirm, animated: true, completion: nil)

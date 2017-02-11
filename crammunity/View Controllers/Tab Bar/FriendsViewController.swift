@@ -56,7 +56,7 @@ class FriendsViewController: UIViewController
 					self.notFriends = self.notFriends.filter({$0.key != snapshot.key})
 					self.notFriendsUIDS = self.notFriendsUIDS.filter({$0 != snapshot.key})
 				} else {
-					ErrorHandling.defaultErrorHandler("error in friend loading")
+                    ErrorHandling.defaultError("Error", desc: "Failed friend loading", sender: self)
 				}
 			})
 			_removeFriendsHandle = friendsQuery!.observe(.childRemoved, with: { snapshot in
@@ -69,7 +69,7 @@ class FriendsViewController: UIViewController
 					self.notFriendsUIDS.append(snapshot.key)
 
 				} else {
-					ErrorHandling.defaultErrorHandler("error in friend removing")
+                    ErrorHandling.defaultError("Error", desc: "Failed friend removing", sender: self)
 				}
 			})
 		}
@@ -94,7 +94,7 @@ class FriendsViewController: UIViewController
 
 					}
 				} else {
-					ErrorHandling.defaultErrorHandler("error in user loading")
+                    ErrorHandling.defaultError("Error", desc: "Failed user loading", sender: self)
 				}
 			})
 			_removeUsersHandle = usersQuery!.observe(.childRemoved, with: { snapshot in
@@ -103,7 +103,7 @@ class FriendsViewController: UIViewController
 					self.notFriends = self.notFriends.filter({$0.key != snapshot.key})
 					self.notFriendsUIDS = self.notFriendsUIDS.filter({$0 != snapshot.key})
 				} else {
-					ErrorHandling.defaultErrorHandler("error in friend removing")
+                    ErrorHandling.defaultError("Error", desc: "Failed user removing", sender: self)
 				}
 			})
 		}
@@ -120,13 +120,18 @@ class FriendsViewController: UIViewController
 		didSet {
 			switch (state) {
 			case .defaultMode:
-				usersQuery = FirebaseHelper.usersQuery()
-				friendsQuery = FirebaseHelper.friendsQuery()
+				usersQuery = FirebaseHelper.shared.emptyQuery()
+				friendsQuery = FirebaseHelper.shared.emptyQuery()
 				
 			case .searchMode:
-				let searchText = searchBar?.text ?? ""
-				usersQuery = FirebaseHelper.usersQuery(searchText)
-				friendsQuery = FirebaseHelper.friendsQuery(searchText)
+                if let searchText = searchBar?.text, searchText != "" {
+                usersQuery = FirebaseHelper.shared.usersQuery(byUsername: searchText)
+                friendsQuery = FirebaseHelper.shared.friendsQuery(byUsername: searchText)
+                }
+                else {
+                    usersQuery = FIRDatabaseQuery()
+                    friendsQuery = FIRDatabaseQuery()
+                }
 
 			}
 		}
@@ -140,7 +145,7 @@ class FriendsViewController: UIViewController
 	*/
 //	func updateList(results: [PFObject]?, error: NSError?) {
 //		if let error = error {
-//			ErrorHandling.defaultErrorHandler(error)
+//			ErrorHandling.defaultError(error)
 //		}
 //		self.users = results as? [PFUser] ?? []
 //		self.tableView.reloadData()
@@ -158,6 +163,7 @@ class FriendsViewController: UIViewController
 		friends = []
 		notFriends = []
 		friendsQuery = nil
+        usersQuery = nil
 	}
 }
 
@@ -179,8 +185,8 @@ extension FriendsViewController: UISearchBarDelegate {
 	}
 	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		usersQuery = FirebaseHelper.usersQuery(searchText)
-		friendsQuery = FirebaseHelper.friendsQuery(searchText)
+        usersQuery = FirebaseHelper.shared.usersQuery(byUsername: searchText)
+        friendsQuery = FirebaseHelper.shared.friendsQuery(byUsername: searchText)
 
 	}
 }
@@ -196,13 +202,13 @@ extension FriendsViewController: FriendSearchViewCellDelegate {
 	func cell(_ cell: FriendSearchViewCell, didSelectFriendUser user: FIRDataSnapshot) {
 		//set friends in database
 		Constants.Firebase.UserArray.child(user.key).observeSingleEvent(of: .value) { (snapshot) -> Void in
-			FirebaseHelper.addFriend(snapshot)
+			FirebaseHelper.shared.addFriend(snapshot)
 		}
 	}
 	
 	func cell(_ cell: FriendSearchViewCell, didSelectUnFriendUser user: FIRDataSnapshot) {
 		Constants.Firebase.UserArray.child(user.key).child("friends").child(user.key).observeSingleEvent(of: .value) { (snapshot) -> Void in
-			FirebaseHelper.removeFriend(snapshot)
+			FirebaseHelper.shared.removeFriend(snapshot)
 		}
 	}
 	

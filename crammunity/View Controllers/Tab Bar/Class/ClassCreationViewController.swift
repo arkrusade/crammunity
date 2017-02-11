@@ -26,7 +26,7 @@ class ClassCreationViewController: UIViewController {
 		}
 		else{
 			
-			self.classRef = FirebaseHelper.createClass(self.newClassNameTextField.text!)
+			self.classRef = FirebaseHelper.shared.createClass(self.newClassNameTextField.text!)
 			dismissToMasterViewController(self)
 			//TODO: change to loading class and adding friends
 

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		368C5CB11E4ED0C3007EDE1C /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 368C5CB01E4ED0C3007EDE1C /* KeychainWrapper.m */; };
+		36ECD05C1E4EAE21007D1C88 /* CacheHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36ECD05B1E4EAE21007D1C88 /* CacheHelper.swift */; };
+		36ECD0611E4EAF2E007D1C88 /* MeasurementHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36ECD0601E4EAF2E007D1C88 /* MeasurementHelper.swift */; };
 		AD01E66D1D24768A00751657 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01E66C1D24768A00751657 /* AppDelegate.swift */; };
 		AD01E6741D24768A00751657 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD01E6721D24768A00751657 /* Main.storyboard */; };
 		AD01E6761D24768A00751657 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD01E6751D24768A00751657 /* Assets.xcassets */; };
@@ -27,7 +30,6 @@
 		AD8F183C1D46969B008B3642 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8F18381D46969B008B3642 /* ErrorHandling.swift */; };
 		AD8F183D1D46969B008B3642 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8F18391D46969B008B3642 /* FirebaseHelper.swift */; };
 		AD8F183E1D46969B008B3642 /* PhotoTakingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8F183B1D46969B008B3642 /* PhotoTakingHelper.swift */; };
-		AD96F5461D36DCED00038FD7 /* MeasurementHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */; };
 		ADA2D6AD1D5A7EB200F6B34D /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA2D6AC1D5A7EB200F6B34D /* Chapter.swift */; };
 		ADA2D6AF1D5A9C2E00F6B34D /* ChatTextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA2D6AE1D5A9C2E00F6B34D /* ChatTextMessage.swift */; };
 		ADAA3BAD1D36BB330038EEC4 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA3BAC1D36BB330038EEC4 /* AppState.swift */; };
@@ -50,6 +52,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		368C5CAF1E4ED0BC007EDE1C /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeychainWrapper.h; path = KeychainWrapper/KeychainWrapper.h; sourceTree = SOURCE_ROOT; };
+		368C5CB01E4ED0C3007EDE1C /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeychainWrapper.m; path = KeychainWrapper/KeychainWrapper.m; sourceTree = SOURCE_ROOT; };
+		36ECD05B1E4EAE21007D1C88 /* CacheHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheHelper.swift; sourceTree = "<group>"; };
+		36ECD05F1E4EAEEC007D1C88 /* crammunity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "crammunity-Bridging-Header.h"; sourceTree = "<group>"; };
+		36ECD0601E4EAF2E007D1C88 /* MeasurementHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementHelper.swift; sourceTree = "<group>"; };
+		36ECD0631E4EAFE9007D1C88 /* crammunity.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = crammunity.entitlements; sourceTree = "<group>"; };
 		3B322EF38DBB3BDDADD3403C /* Pods-crammunity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-crammunity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-crammunity/Pods-crammunity.debug.xcconfig"; sourceTree = "<group>"; };
 		692D5EFC2CE45CF1E9CE172B /* Pods_crammunity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_crammunity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD01E6691D24768A00751657 /* crammunity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = crammunity.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,7 +82,6 @@
 		AD8F18381D46969B008B3642 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		AD8F18391D46969B008B3642 /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		AD8F183B1D46969B008B3642 /* PhotoTakingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTakingHelper.swift; sourceTree = "<group>"; };
-		AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementHelper.swift; sourceTree = "<group>"; };
 		ADA2D6AC1D5A7EB200F6B34D /* Chapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		ADA2D6AE1D5A9C2E00F6B34D /* ChatTextMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTextMessage.swift; sourceTree = "<group>"; };
 		ADAA3BAC1D36BB330038EEC4 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -108,6 +115,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		368C5CAE1E4ED08F007EDE1C /* KeychainWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				368C5CB01E4ED0C3007EDE1C /* KeychainWrapper.m */,
+				368C5CAF1E4ED0BC007EDE1C /* KeychainWrapper.h */,
+			);
+			name = KeychainWrapper;
+			sourceTree = "<group>";
+		};
 		59428670B5DBFC1B98F0F440 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,19 +153,21 @@
 		AD01E66B1D24768A00751657 /* crammunity */ = {
 			isa = PBXGroup;
 			children = (
+				368C5CAE1E4ED08F007EDE1C /* KeychainWrapper */,
+				36ECD0631E4EAFE9007D1C88 /* crammunity.entitlements */,
+				AD01E66C1D24768A00751657 /* AppDelegate.swift */,
+				ADAA3BAE1D36BB480038EEC4 /* Constants.swift */,
+				36ECD05F1E4EAEEC007D1C88 /* crammunity-Bridging-Header.h */,
 				AD01E66A1D24768A00751657 /* Products */,
 				AD8F18361D46969B008B3642 /* Helpers */,
 				AD01E6851D258CD100751657 /* Models */,
 				AD01E6821D24784500751657 /* Views */,
 				AD01E6901D25941D00751657 /* View Controllers */,
-				ADAA3BAE1D36BB480038EEC4 /* Constants.swift */,
-				AD01E66C1D24768A00751657 /* AppDelegate.swift */,
 				AD01E6721D24768A00751657 /* Main.storyboard */,
 				AD01E6751D24768A00751657 /* Assets.xcassets */,
 				AD01E6771D24768A00751657 /* LaunchScreen.storyboard */,
 				AD01E67A1D24768A00751657 /* Info.plist */,
 				AD52A7801D340BAD003D9D11 /* GoogleService-Info.plist */,
-				AD96F5451D36DCED00038FD7 /* MeasurementHelper.swift */,
 				ADACA1911D398E7500C22DB8 /* File */,
 			);
 			path = crammunity;
@@ -216,8 +234,10 @@
 		AD8F18371D46969B008B3642 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				36ECD0601E4EAF2E007D1C88 /* MeasurementHelper.swift */,
 				AD8F18381D46969B008B3642 /* ErrorHandling.swift */,
 				AD8F18391D46969B008B3642 /* FirebaseHelper.swift */,
+				36ECD05B1E4EAE21007D1C88 /* CacheHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -393,11 +413,12 @@
 			files = (
 				AD7952361D58FB1B00A548F7 /* CVCTextFieldDelegateExtension.swift in Sources */,
 				ADA2D6AD1D5A7EB200F6B34D /* Chapter.swift in Sources */,
+				36ECD05C1E4EAE21007D1C88 /* CacheHelper.swift in Sources */,
 				AD885ACD1D4812660072329B /* CustomHeaderCell.swift in Sources */,
+				368C5CB11E4ED0C3007EDE1C /* KeychainWrapper.m in Sources */,
 				AD7952381D59088300A548F7 /* ClassSettingsViewCell.swift in Sources */,
 				ADAA3BAF1D36BB480038EEC4 /* Constants.swift in Sources */,
 				ADDF00E51D4C190800A3FC2E /* FriendsViewController.swift in Sources */,
-				AD96F5461D36DCED00038FD7 /* MeasurementHelper.swift in Sources */,
 				AD8F183D1D46969B008B3642 /* FirebaseHelper.swift in Sources */,
 				AD01E66D1D24768A00751657 /* AppDelegate.swift in Sources */,
 				ADDF00E61D4C190800A3FC2E /* FVCTableDataSource.swift in Sources */,
@@ -415,6 +436,7 @@
 				ADAA629C1D356C950037BCC9 /* SignUpViewController.swift in Sources */,
 				ADDF00ED1D50050A00A3FC2E /* MessageCell.swift in Sources */,
 				AD8F183E1D46969B008B3642 /* PhotoTakingHelper.swift in Sources */,
+				36ECD0611E4EAF2E007D1C88 /* MeasurementHelper.swift in Sources */,
 				AD8F183C1D46969B008B3642 /* ErrorHandling.swift in Sources */,
 				AD7952341D58FB1B00A548F7 /* CVCKeyboardDodging.swift in Sources */,
 				ADAA3BAD1D36BB330038EEC4 /* AppState.swift in Sources */,
@@ -549,12 +571,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: peter2424@hotmail.com (Z44KRN28GZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.1.0;
+				DEVELOPMENT_TEAM = F83KA8FTRJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = crammunity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orctech.crammunity.01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "crammunity/crammunity-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -568,12 +592,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: peter2424@hotmail.com (Z44KRN28GZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.1.0;
+				DEVELOPMENT_TEAM = F83KA8FTRJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = crammunity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orctech.crammunity.01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "crammunity/crammunity-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

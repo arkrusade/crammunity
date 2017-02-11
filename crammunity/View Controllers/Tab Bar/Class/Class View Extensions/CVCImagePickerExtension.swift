@@ -39,7 +39,7 @@ extension ClassViewController: UIImagePickerControllerDelegate
 				self.storageRef.child(filePath)
 					.putFile(imageFile!, metadata: nil) { (metadata, error) in
 						if let error = error {
-							ErrorHandling.defaultErrorHandler("Error uploading image", desc: error.description)
+							ErrorHandling.defaultError("Error uploading image", error: error, sender: self)
 							return
 						}
 						self.sendMessage([MessageFKs.imageURL: self.storageRef.child((metadata?.path)!).description])
@@ -56,7 +56,7 @@ extension ClassViewController: UIImagePickerControllerDelegate
 			self.storageRef.child(imagePath)
 				.put(imageData!, metadata: metadata) { (metadata, error) in
 					if let error = error {
-						ErrorHandling.defaultErrorHandler("Error uploading image", desc: error.description)
+                        ErrorHandling.defaultError("Error uploading image", error: error, sender: nil)
 						return
 					}
 					self.sendMessage([MessageFKs.imageURL: self.storageRef.child((metadata?.path)!).description])

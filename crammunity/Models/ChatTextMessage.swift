@@ -7,7 +7,7 @@
 //
 
 import Firebase
-struct ChatTextMessage {
+class ChatTextMessage {
 //	var UID: String!
 	var messageRef: FIRDatabaseReference!
 	var text: String?
@@ -26,7 +26,7 @@ struct ChatTextMessage {
 //		return mdata
 //	}
 	
-	mutating func setFromDict(_ dict: [String: String])
+	func setFromDict(_ dict: [String: String])
 	{
 		for key in dict.keys {
 			switch key {
@@ -55,10 +55,10 @@ struct ChatTextMessage {
 		
 		
 	}//TODO: clean up
-	mutating func setFromSnapshot(_ snapshot: FIRDataSnapshot)
+    convenience init(_ snapshot: FIRDataSnapshot)
 	{
 		let message = ChatTextMessage(dict: snapshot.value as! [String : String])
-		self = ChatTextMessage(ref: snapshot.ref, username: message.username, message: message.text, chapterUID: message.chapterUID)
+		self.init(ref: snapshot.ref, username: message.username, message: message.text, chapterUID: message.chapterUID)
 		self.imageURL = message.imageURL
 		self.isReported = message.isReported
 
@@ -75,17 +75,17 @@ struct ChatTextMessage {
 		self.text = message
 		self.chapterUID = chapterUID
 	}
-	init(snapshot: FIRDataSnapshot)
+	convenience init(snapshot: FIRDataSnapshot)
 	{
 		let message: [String: String] = snapshot.value as! NSDictionary as! [String : String]
 		self.init(ref: snapshot.ref, username: message["name"], message: message["text"], chapterUID: message["chapter"])
 		
 	}
-	init(ref: FIRDatabaseReference)
-	{
-		ref.observeSingleEvent(of: .value, with: {(snapshot) -> Void in
-			self.setFromSnapshot(snapshot)
-		})
-	}
+//	init(ref: FIRDatabaseReference)
+//	{
+//		ref.observeSingleEvent(of: .value, with: {(snapshot) -> Void in
+//			self.init(snapshot)
+//		})
+//	}
 }
 //TODO

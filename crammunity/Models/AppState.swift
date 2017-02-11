@@ -31,29 +31,34 @@ class AppState: NSObject {
 	var userRef: FIRDatabaseReference?
 
 	
-	func getProfileImage(_ callback: @escaping (UIImage?, NSError?) -> Void) {
+	func getProfileImage(_ callback: @escaping (UIImage?, Error?) -> Void) {
 		if let imageURL = photoURL
 		{
             //TODO: optional
 			if imageURL.absoluteString.hasPrefix("gs://") {
 				FIRStorage.storage().reference(forURL: imageURL.absoluteString).data(withMaxSize: INT64_MAX){ (data, error) in
 					if let error = error {
-						ErrorHandling.defaultErrorHandler(error)
+						ErrorHandling.defaultError(error)
 						return
 					}
 					callback(UIImage(data: data!), nil)
 				}
 			}
 			else{
-			Alamofire.request(.GET,imageURL).response(){
-				(_, _, data, error) in
-				guard error == nil else {
-					callback(nil, error)
-					return
-				}
-				let image = UIImage(data: data! as Data)
-				callback(image, nil)
-			}
+                let r = Alamofire.request(imageURL)
+                r.response(completionHandler: { (response) in
+                    
+                        guard response.error != nil && response.data != nil else {
+                            callback(nil, response.error)
+                            return
+                        }
+                        if let image = UIImage(data: response.data!)
+                        {
+                            callback(image, nil)
+                        }
+                
+                })
+
 			}
 		}
 	}

@@ -50,7 +50,7 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 	var msglength: NSNumber = 0
 	
 	
-	@IBOutlet weak var banner: GADBannerView!
+	//@IBOutlet weak var banner: GADBannerView!
 
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var sendButton: UIButton!
@@ -122,7 +122,7 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 			let name = alert.textFields![0].text
 			if name != nil && name != "" {
 				let n = name!
-				let chapter = FirebaseHelper.createChapter(n, cramClassUID: self.classUID)
+				let chapter = FirebaseHelper.shared.createChapter(withName: n, UID: self.classUID)
 				//TODO: add database interaction
 				let confirm = UIAlertController(title: "Changed Chapter to \(chapter.name!)", message: "", preferredStyle: .alert)
 				confirm.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -150,8 +150,8 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 		configureStorage()
 		configureRemoteConfig()
 		fetchConfig()
-		loadAd()
-		logViewLoaded()
+//		loadAd()
+//		logViewLoaded()
 
 		// Listen for keyboard events and animate text field as necessary
 		NotificationCenter.default.addObserver(self,
@@ -203,20 +203,20 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 		textFieldShouldReturn(textField)
 	}
 	
-	@IBAction func didPressCrash(_ sender: AnyObject) {
-		FIRCrashMessage("Cause Crash button clicked")
-		fatalError("asdf")
-	}
-	
-	func logViewLoaded() {
-		FIRCrashMessage("View loaded")
-	}
+//	@IBAction func didPressCrash(_ sender: AnyObject) {
+//		FIRCrashMessage("Cause Crash button clicked")
+//		fatalError("asdf")
+//	}
+//	
+//	func logViewLoaded() {
+//		FIRCrashMessage("View loaded")
+//	}
 	//TODO: add ad view
-	func loadAd() {
+//	func loadAd() {
 //		self.banner.adUnitID = kBannerAdUnitID
 //		self.banner.rootViewController = self
 //		self.banner.loadRequest(GADRequest())
-	}
+//	}
 	func sendMessage(_ data: [String: String]) {
 		
 		var mdata = data
@@ -224,22 +224,22 @@ class ClassViewController: UIViewController, UITableViewDelegate, UINavigationCo
 		if let photoURL = AppState.sharedInstance.photoURL {
 			mdata[MessageFKs.photoURL] = photoURL.absoluteString
 		}
-		var message = ChatTextMessage(dict: mdata)
+		let message = ChatTextMessage(dict: mdata)
 		//TODO: make profile load with user
 		//add user to message
 		
-//		if let chap = currentChapter {
-//			mdata["chapter"] = chap.UID
-//			FirebaseHelper.addTextMessageToChapter(chap, messageUID: messageRef.key)
-//		}
+		if let chap = currentChapter {
+			mdata["chapter"] = chap.UID
+			FirebaseHelper.shared.addTextMessageToChapter(chap, message: message)
+		}
 		
 		//TODO: fix chapter constants
 		// Push data to Firebase Database
-//		if let currentChapter = currentChapter {
+		if let currentChapter = currentChapter {
 			message.messageRef = currentChapter.ref.childByAutoId()
 			message.chapterUID = currentChapter.ref.key
-			FirebaseHelper.addTextMessageToChapter(currentChapter, message: message)
-//		}
+			FirebaseHelper.shared.addTextMessageToChapter(currentChapter, message: message)
+		}
 		
 
 		//Send to Analytics

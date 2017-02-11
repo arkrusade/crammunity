@@ -41,25 +41,25 @@ class SignUpViewController: UIViewController {
 		//TODO: change to alerts
 		if (EmailTextField.text!.range(of: Constants.emailRegex, options: .regularExpression)) == nil
 		{
-			ErrorHandling.defaultErrorHandler(InvalidSignUpTitle, desc: "Must be valid email")
+			ErrorHandling.defaultError(InvalidSignUpTitle, desc: "Must be valid email", sender: self)
 			return
 		}
 		else if UsernameTextField.text?.characters.count < 6 {
-			ErrorHandling.defaultErrorHandler(InvalidSignUpTitle, desc: "Must have username longer than 6 characters")
+			ErrorHandling.defaultError(InvalidSignUpTitle, desc: "Must have username longer than 6 characters", sender: self)
 			return
 		}
 		else if PasswordTextField.text?.characters.count < 8 || PasswordConfirmTextField.text?.characters.count < 8 {
-			ErrorHandling.defaultErrorHandler(InvalidSignUpTitle, desc: "Must have password longer than 8 characters")
+			ErrorHandling.defaultError(InvalidSignUpTitle, desc: "Must have password longer than 8 characters", sender: self)
 			return
 		}
 		
 		
 		else if (PasswordTextField.text! != PasswordConfirmTextField.text!) {
-			ErrorHandling.defaultErrorHandler(InvalidSignUpTitle, desc: "Passwords must match")
+            ErrorHandling.defaultError(InvalidSignUpTitle, desc: "Passwords must match", sender: self)
 			return
 		}
 		else {
-			FirebaseHelper.createUser(EmailTextField.text!, pw: PasswordTextField.text!, username: UsernameTextField.text!, callback: { user in
+			FirebaseHelper.shared.createUser(EmailTextField.text!, pw: PasswordTextField.text!, username: UsernameTextField.text!, callback: { user in
 				self.signedUp(user)
 			})
 			//TODO: add grade/age

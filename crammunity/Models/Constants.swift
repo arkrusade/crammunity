@@ -9,6 +9,9 @@ import Firebase
 
 
 typealias ErrorRef = (title: String, desc: String, ref: FIRDatabaseReference, time: Date)
+typealias Credentials = (username: String, password: String)
+typealias Closure = ()
+typealias ClosureVoid = () -> Void
 
 struct ErrorFirebaseKeys {
 	static let title = "title"

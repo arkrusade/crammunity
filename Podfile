@@ -18,14 +18,14 @@ target 'crammunity' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Database'
   #pod 'Firebase/Invites'
-  pod 'Firebase/DynamicLinks'
-  pod 'Firebase/Crash'
+  #pod 'Firebase/DynamicLinks'
+  #pod 'Firebase/Crash'
   pod 'Firebase/RemoteConfig'
   pod 'Firebase/Auth'
-  pod 'Firebase/AppIndexing'
+  #pod 'Firebase/AppIndexing'
   pod 'Firebase/Storage'
-  #pod 'Alamofire', '~> 3.4.1'
-  #pod 'AlamofireImage'
+  pod 'Alamofire'#, '~> 3.4.1'
+  pod 'AlamofireImage'
   
 end
 

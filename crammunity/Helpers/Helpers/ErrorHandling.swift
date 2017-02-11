@@ -1,17 +1,13 @@
 //
 //  ErrorHandling.swift
-//  Makestagram
+//  dcdsnotify
 //
-//  Created by Benjamin Encz on 4/10/15.
-//  Copyright (c) 2015 Make School. All rights reserved.
+//  Created by Peter J. Lee on 8/25/16.
+//  Copyright © 2016 orctech. All rights reserved.
 //
 
 import UIKit
-//import ConvenienceKit
 
-/**
-This struct provides basic Error handling functionality.
-*/
 struct ErrorHandling {
 	
 	static let ErrorTitle           = "Error"
@@ -22,45 +18,60 @@ struct ErrorHandling {
 	static let DelayedFeatureMessage	= "Sorry, this feature is not yet available"
 	
 	/**
-	This default error handler presents an Alert View on the topmost View Controller
+	This default error handler presents an Alert View on the sending View Controller
 	*/
-	static func delayedFeatureAlert()
-	{
-		let alert = UIAlertController(title: DelayedFeatureTitle, message: DelayedFeatureMessage, preferredStyle: UIAlertControllerStyle.alert)
-		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.default, handler: nil))
-		
-		let window = UIApplication.shared.windows[0]
-		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
-	}
-	static func defaultErrorHandler(_ error: NSError) {
-		let alert = UIAlertController(title: ErrorTitle, message: error.description, preferredStyle: UIAlertControllerStyle.alert)
-		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.default, handler: nil))
-		
-		let window = UIApplication.shared.windows[0]
-		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
-	}
-	static func defaultErrorHandler(_ desc: String) {
-		let alert = UIAlertController(title: ErrorTitle, message: desc, preferredStyle: UIAlertControllerStyle.alert)
-		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.default, handler: nil))
-		
-		let window = UIApplication.shared.windows[0]
-		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
-	}
-	static func defaultErrorHandler(_ title: String, desc: String) {
-		let alert = UIAlertController(title: title, message: desc, preferredStyle: UIAlertControllerStyle.alert)
-		alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.default, handler: nil))
-		
-		let window = UIApplication.shared.windows[0]
-		window.rootViewController?.presentViewControllerFromTopViewController(alert, animated: true, completion: nil)
-	}
-	
-	/**
-	A PFBooleanResult callback block that only handles error cases. You can pass this to completion blocks of Parse Requests
-	*/
-	static func errorHandlingCallback(_ success: Bool, error: NSError?) -> Void {
-		if let error = error {
-			ErrorHandling.defaultErrorHandler(error)
-		}
-	}
-	
+    //TODO: add report error ability
+    static func delayedFeatureAlert(_ sender: UIViewController?)
+    {
+        defaultError(DelayedFeatureTitle, desc: DelayedFeatureMessage, sender: sender)
+    }
+    //MARK: Error
+    static func defaultError(_ error: Error) {
+        defaultError(ErrorTitle, desc: error.localizedDescription, sender: nil)
+    }
+    static func defaultError(_ error: Error, sender: UIViewController?) {
+        defaultError(ErrorTitle, desc: error.localizedDescription, sender: sender)
+    }
+    static func defaultError(_ error: Error, sender: UIViewController?, completion: ClosureVoid?) {
+        displayAlert(ErrorTitle, desc: error.localizedDescription, sender: sender, completion: completion)
+    }
+    static func defaultError(_ title: String, desc: String, sender: UIViewController?) {
+        displayAlert(title, desc: desc, sender: sender, completion: nil)
+    }
+    static func defaultError(_ title: String, error: Error, sender: UIViewController?) {
+        displayAlert(title, desc: error.localizedDescription, sender: sender, completion: nil)
+    }
+    static func defaultError(desc: String, sender: UIViewController?) {
+        displayAlert(ErrorTitle, desc: desc, sender: sender, completion: nil)
+    }
+    
+    
+
+    //MARK: Alert
+    static func displayAlert(_ title: String, desc: String, sender: UIViewController?, completion: ClosureVoid?) {
+        
+        let alert = UIAlertController(title: title, message: desc, preferredStyle: UIAlertControllerStyle.alert)
+        var handler: ((UIAlertAction) -> Void)?
+        if let completion = completion {
+            handler = {(UIAlertAction) -> Void in
+                completion()
+            }
+        }
+        else
+        {
+            handler = nil
+        }
+        
+        alert.addAction(UIAlertAction(title: ErrorOKButtonTitle, style: UIAlertActionStyle.default, handler: handler))
+        let view: UIViewController
+        view = (sender == nil ? UIApplication.shared.windows[0].rootViewController : sender)!
+            
+        
+        OperationQueue.main.addOperation {
+            
+            view.present(alert, animated: true, completion: nil)
+        }
+    }
 }
+
+	

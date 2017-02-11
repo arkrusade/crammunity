@@ -68,7 +68,7 @@ extension ClassViewController: UITableViewDataSource {
 			if imageURL.hasPrefix("gs://") {
 				FIRStorage.storage().reference(forURL: imageURL).data(withMaxSize: INT64_MAX){ (data, error) in
 					if let error = error {
-						ErrorHandling.defaultErrorHandler("Error downloading image", desc: error.description)
+                        ErrorHandling.defaultError("Error downloading image", error: error, sender: self)
 						
 						return
 					}
@@ -108,7 +108,7 @@ extension ClassViewController: UITableViewDataSource {
 				
 			}
 			else{
-				ErrorHandling.defaultErrorHandler("missing name")
+                ErrorHandling.defaultError(desc: "missing name", sender: nil)
 			}
 		}
 		
