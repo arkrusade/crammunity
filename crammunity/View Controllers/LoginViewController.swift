@@ -29,19 +29,17 @@ class LoginViewController: UIViewController {
 
         if let login = CacheHelper.sharedInstance.retrieveLogin()
         {
-            
-            self.login(login)
+            EmailTextField.text = login.username
+            PasswordTextField.text = login.password
+            self.login(username: login.username, password: login.password)
         }
 		
 		
 	}
-    private func login(_ creds: Credentials) {
-        EmailTextField.text = creds.username
-        PasswordTextField.text = creds.password
-        login(username: creds.username, password: creds.password)
-    }
+    
 
     private func login(username: String, password: String) {
+        
         FIRAuth.auth()!.signIn(withEmail: username, password: password) { (user, error) in
             if let error = error {
                 if(error._code == 17008)
@@ -117,9 +115,9 @@ class LoginViewController: UIViewController {
 		AppState.sharedInstance.signedIn = true
 		NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NotificationKeys.SignedIn), object: nil, userInfo: nil)
 		
-        if CacheHelper.sharedInstance.retrieveLogin() != nil {
+//        if CacheHelper.sharedInstance.retrieveLogin() == nil {
             CacheHelper.sharedInstance.storeLogin(EmailTextField.text!, password: PasswordTextField.text!)
-        }
+//        }
 		
 		//TODO: make this cleaner, and move to appstate
 		Constants.Firebase.currentUser = (FIRAuth.auth()?.currentUser)!
@@ -148,9 +146,28 @@ class LoginViewController: UIViewController {
 			}
 			else if id == Constants.Segues.LoginToMain
 			{
+                EmailTextField.text = ""
+                PasswordTextField.text = ""
 				self.isSignedUp = false
 			}
 			
 		}
 	}
+}
+extension LoginViewController: UITextViewDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if EmailTextField.isFirstResponder
+        {
+            PasswordTextField.becomeFirstResponder()
+            return true
+        }
+        else if PasswordTextField.isFirstResponder
+        {
+            PasswordTextField.resignFirstResponder()
+            onLoginButtonTap(self)
+            return true
+        }
+        return false
+    }
+
 }

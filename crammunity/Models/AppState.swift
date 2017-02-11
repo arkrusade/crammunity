@@ -21,6 +21,7 @@ class AppState: NSObject {
 				uid = nil
 				photoURL = nil
 				userRef = nil
+                CacheHelper.clearAll()
 			}
 		}
 	}

@@ -17,7 +17,7 @@ class CacheHelper {
         ErrorHandling.displayAlert("Cache Cleared!", desc: "", sender: sender, completion: nil)
     }
     static func clearLogin() {
-        sharedInstance.MyKeychainWrapper.mySetObject("password", forKey: kSecValueData)
+        sharedInstance.MyKeychainWrapper.mySetObject("", forKey: kSecValueData)
         sharedInstance.MyKeychainWrapper.writeToKeychain()
         UserDefaults.standard.removeObject(forKey: "username")
         UserDefaults.standard.set(false, forKey: "hasLoginKey")
@@ -33,16 +33,13 @@ class CacheHelper {
             return nil
         }
     }
-    func storeLogin(_ login: Credentials) {
-        storeLogin(login.username, password: login.password)
-    }
+    
     func storeLogin(_ username: String, password: String) {
-        if !UserDefaults.standard.bool(forKey: "hasLoginKey") {//TODO: beware, will not overwrite
+//        if !UserDefaults.standard.bool(forKey: "hasLoginKey") {//TODO: beware, will not overwrite
             UserDefaults.standard.setValue(username, forKey: "username")
-        }
+//        }
         
         MyKeychainWrapper.mySetObject(password, forKey: kSecValueData)
-        MyKeychainWrapper.writeToKeychain()
         UserDefaults.standard.set(true, forKey: "hasLoginKey")
         UserDefaults.standard.synchronize()
     }

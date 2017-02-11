@@ -148,7 +148,7 @@ passwordTextField
 	}
 	
 	
-	@IBAction func signOut(_ sender: AnyObject) {
+	@IBAction func logOut(_ sender: AnyObject) {
 		let firebaseAuth = FIRAuth.auth()
 		do {
 			try firebaseAuth?.signOut()
@@ -156,8 +156,8 @@ passwordTextField
 			MeasurementHelper.sendLogoutEvent()//send to analytics
 			dismiss(animated: false, completion: nil)
 
-		} catch let signOutError as NSError {
-            ErrorHandling.defaultError("Error signing out", desc: "\(signOutError.description)", sender: self)
+		} catch let logOutError as NSError {
+            ErrorHandling.defaultError("Error signing out", desc: "\(logOutError.description)", sender: self)
 		}
 	}
 	
@@ -181,7 +181,7 @@ passwordTextField
 //		}
 //		
 //	}
-	@IBOutlet weak var signOutButton: UIButton!
+	@IBOutlet weak var logOutButton: UIButton!
 	
 	override func viewDidLoad() {
         super.viewDidLoad()

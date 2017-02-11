@@ -74,7 +74,7 @@ class FirebaseHelper
 	}
 	func usersQuery(byUsername: String) -> FIRDatabaseQuery
 	{
-		return usersRef.queryOrdered(byChild: "username").queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)").queryLimited(toFirst: 20)
+		return usersRef.queryOrdered(byChild: "username").queryStarting(atValue: byUsername.lowercased()).queryEnding(atValue: "\(byUsername.lowercased())\(lastU)").queryLimited(toFirst: 20)
 	}
 	func usersQuery(limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
 	{
@@ -83,7 +83,7 @@ class FirebaseHelper
             return FIRDatabaseQuery()
         }
 
-		return usersRef.queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo).queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
+		return usersRef.queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo).queryStarting(atValue: byUsername.lowercased()).queryEnding(atValue: "\(byUsername.lowercased())\(lastU)")
 	}
 	
 	
@@ -102,7 +102,7 @@ class FirebaseHelper
 	}
 	func friendsQuery(byUsername: String) -> FIRDatabaseQuery
 	{
-		return friendsRef.queryOrdered(byChild: "username").queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
+		return friendsRef.queryOrdered(byChild: "username").queryStarting(atValue: byUsername.lowercased()).queryEnding(atValue: "\(byUsername.lowercased())\(lastU)")
 	}
 	func friendsQuery(limitedTo num: UInt, byUsername: String) -> FIRDatabaseQuery
 	{
@@ -111,7 +111,7 @@ class FirebaseHelper
             return FIRDatabaseQuery()
         }
 
-		return friendsRef.queryOrdered(byChild: "username").queryLimited(toFirst: num).queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
+		return friendsRef.queryOrdered(byChild: "username").queryLimited(toFirst: num).queryStarting(atValue: byUsername.lowercased()).queryEnding(atValue: "\(byUsername.lowercased())\(lastU)")
 	}
 	
 	
@@ -129,7 +129,7 @@ class FirebaseHelper
 	}
 	func crammatesQuery(_ classRef: FIRDatabaseReference, byUsername: String) -> FIRDatabaseQuery
 	{
-		return classRef.child("members").queryOrdered(byChild: "username").queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
+		return classRef.child("members").queryOrdered(byChild: "username").queryStarting(atValue: byUsername.lowercased()).queryEnding(atValue: "\(byUsername.lowercased())\(lastU)")
 	}
 	func crammatesQuery(_ classRef: FIRDatabaseReference, limitedTo: UInt, byUsername: String) -> FIRDatabaseQuery
 	{
@@ -137,7 +137,7 @@ class FirebaseHelper
         {
             return FIRDatabaseQuery()
         }
-		return classRef.child("members").queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo).queryStarting(atValue: byUsername).queryEnding(atValue: "\(byUsername)\(lastU)")
+		return classRef.child("members").queryOrdered(byChild: "username").queryLimited(toFirst: limitedTo).queryStarting(atValue: byUsername.lowercased()).queryEnding(atValue: "\(byUsername.lowercased())\(lastU)")
 	}
 
         
@@ -172,10 +172,10 @@ class FirebaseHelper
 				let uid = user?.uid
 				UserDefaults.standard.setValue(uid, forKey: "uid")
 				AppState.sharedInstance.userRef = Constants.Firebase.UserArray.child(uid!)
-				Constants.Firebase.UserSearchArray.child(uid!).setValue(["username": username])
+				Constants.Firebase.UserSearchArray.child(uid!).setValue(["username": username.lowercased()])
 				Constants.Firebase.UserArray.child(uid!).setValue(["username": username])
 				AppState.sharedInstance.userRef = Constants.Firebase.UserArray.child(uid!)
-
+                //TODO: check for dup usernames
 				print ("Created user with uid: \(user!.uid) and username: \(username)")
 				
 				//set default profile pic and username

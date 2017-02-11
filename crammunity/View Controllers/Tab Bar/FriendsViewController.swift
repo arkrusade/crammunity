@@ -125,8 +125,8 @@ class FriendsViewController: UIViewController
 				
 			case .searchMode:
                 if let searchText = searchBar?.text, searchText != "" {
-                usersQuery = FirebaseHelper.shared.usersQuery(byUsername: searchText)
-                friendsQuery = FirebaseHelper.shared.friendsQuery(byUsername: searchText)
+                    usersQuery = FirebaseHelper.shared.usersQuery(byUsername: searchText)
+                    friendsQuery = FirebaseHelper.shared.friendsQuery(byUsername: searchText)
                 }
                 else {
                     usersQuery = FIRDatabaseQuery()
@@ -185,9 +185,7 @@ extension FriendsViewController: UISearchBarDelegate {
 	}
 	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        usersQuery = FirebaseHelper.shared.usersQuery(byUsername: searchText)
-        friendsQuery = FirebaseHelper.shared.friendsQuery(byUsername: searchText)
-
+        state = .searchMode
 	}
 }
 
